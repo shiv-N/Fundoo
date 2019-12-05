@@ -1,0 +1,8 @@
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\CommonLayerModel\bin\Debug\netcoreapp2.1\CommonLayerModel.deps.json
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\CommonLayerModel\bin\Debug\netcoreapp2.1\CommonLayerModel.dll
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\CommonLayerModel\bin\Debug\netcoreapp2.1\CommonLayerModel.pdb
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\CommonLayerModel\obj\Debug\netcoreapp2.1\CommonLayerModel.csprojAssemblyReference.cache
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\CommonLayerModel\obj\Debug\netcoreapp2.1\CommonLayerModel.AssemblyInfoInputs.cache
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\CommonLayerModel\obj\Debug\netcoreapp2.1\CommonLayerModel.AssemblyInfo.cs
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\CommonLayerModel\obj\Debug\netcoreapp2.1\CommonLayerModel.dll
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\CommonLayerModel\obj\Debug\netcoreapp2.1\CommonLayerModel.pdb

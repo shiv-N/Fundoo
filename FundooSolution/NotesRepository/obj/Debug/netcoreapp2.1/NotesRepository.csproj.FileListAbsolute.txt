@@ -1,0 +1,11 @@
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\NotesRepository\bin\Debug\netcoreapp2.1\CommonLayerModel.dll
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\NotesRepository\obj\Debug\netcoreapp2.1\NotesRepository.csprojAssemblyReference.cache
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\NotesRepository\obj\Debug\netcoreapp2.1\NotesRepository.AssemblyInfoInputs.cache
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\NotesRepository\obj\Debug\netcoreapp2.1\NotesRepository.AssemblyInfo.cs
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\NotesRepository\bin\Debug\netcoreapp2.1\NotesRepository.deps.json
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\NotesRepository\bin\Debug\netcoreapp2.1\NotesRepository.dll
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\NotesRepository\bin\Debug\netcoreapp2.1\NotesRepository.pdb
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\NotesRepository\bin\Debug\netcoreapp2.1\CommonLayerModel.pdb
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\NotesRepository\obj\Debug\netcoreapp2.1\NotesRepository.csproj.CopyComplete
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\NotesRepository\obj\Debug\netcoreapp2.1\NotesRepository.dll
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\NotesRepository\obj\Debug\netcoreapp2.1\NotesRepository.pdb

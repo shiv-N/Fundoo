@@ -1,0 +1,13 @@
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\BusinessManager\bin\Debug\netcoreapp2.1\BusinessManager.deps.json
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\BusinessManager\bin\Debug\netcoreapp2.1\BusinessManager.dll
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\BusinessManager\bin\Debug\netcoreapp2.1\BusinessManager.pdb
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\BusinessManager\bin\Debug\netcoreapp2.1\CommonLayerModel.dll
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\BusinessManager\bin\Debug\netcoreapp2.1\NotesRepository.dll
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\BusinessManager\bin\Debug\netcoreapp2.1\NotesRepository.pdb
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\BusinessManager\bin\Debug\netcoreapp2.1\CommonLayerModel.pdb
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\BusinessManager\obj\Debug\netcoreapp2.1\BusinessManager.csprojAssemblyReference.cache
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\BusinessManager\obj\Debug\netcoreapp2.1\BusinessManager.AssemblyInfoInputs.cache
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\BusinessManager\obj\Debug\netcoreapp2.1\BusinessManager.AssemblyInfo.cs
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\BusinessManager\obj\Debug\netcoreapp2.1\BusinessManager.csproj.CopyComplete
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\BusinessManager\obj\Debug\netcoreapp2.1\BusinessManager.dll
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\BusinessManager\obj\Debug\netcoreapp2.1\BusinessManager.pdb
