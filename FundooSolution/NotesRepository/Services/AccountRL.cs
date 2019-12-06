@@ -19,7 +19,7 @@ namespace NotesRepository.Services
     {
         SqlConnection connection = new SqlConnection(@"Data Source=(localDB)\localhost;Initial Catalog=EmployeeDetails;Integrated Security=True");
 
-        private readonly ApplicationSettings applicationSettings;
+       // private readonly ApplicationSettings applicationSettings;
 
         //public AccountRL(IOptions<ApplicationSettings> applicationSettings)
         //{

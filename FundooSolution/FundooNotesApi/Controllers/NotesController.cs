@@ -22,9 +22,14 @@ namespace FundooNotesApi.Controllers
             this.note = note;
         }
         [HttpPost]
-        public IActionResult CreateNotes(AddNotesRequestModel model)
+        public IActionResult AddNotes(AddNotesRequestModel model)
         {
-            return Ok(note.CreateNotes(model));
+            return Ok(note.AddNotes(model));
+        }
+        [HttpPost("get")]
+        public IActionResult DisplayNotes(DisplayNoteRequestModel userId)
+        {
+            return Ok(note.DisplayNotes(userId));
         }
     }
 }

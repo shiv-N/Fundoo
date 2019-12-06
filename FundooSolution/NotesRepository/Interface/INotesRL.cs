@@ -7,6 +7,7 @@ namespace BusinessManager.Interface
 {
     public interface INotesRL 
     {
-        string CreateNotes(AddNotesRequestModel model);
+        string AddNotes(AddNotesRequestModel model);
+        IList<AddNotesRequestModel> DisplayNotes(DisplayNoteRequestModel userId);
     }
 }
