@@ -1,0 +1,7 @@
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\FundooNotesApi\bin\Debug\netcoreapp2.0\BusinessManager.dll
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\FundooNotesApi\bin\Debug\netcoreapp2.0\CommonLayerModel.dll
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\FundooNotesApi\bin\Debug\netcoreapp2.0\NotesRepository.dll
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\FundooNotesApi\obj\Debug\netcoreapp2.0\FundooNotesApi.csprojAssemblyReference.cache
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\FundooNotesApi\obj\Debug\netcoreapp2.0\FundooNotesApi.AssemblyInfoInputs.cache
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\FundooNotesApi\obj\Debug\netcoreapp2.0\FundooNotesApi.AssemblyInfo.cs
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\FundooNotesApi\obj\Debug\netcoreapp2.0\FundooNotesApi.RazorTargetAssemblyInfo.cache

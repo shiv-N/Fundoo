@@ -1,4 +1,5 @@
-﻿using CommonLayerModel.Models;
+﻿using CommonLayerModel.AccountModels;
+using CommonLayerModel.Models;
 using Microsoft.IdentityModel.Tokens;
 using NotesRepository.Interface;
 using System;
@@ -17,6 +18,15 @@ namespace NotesRepository.Services
     public class AccountRL : IAccountRL
     {
         SqlConnection connection = new SqlConnection(@"Data Source=(localDB)\localhost;Initial Catalog=EmployeeDetails;Integrated Security=True");
+
+        private readonly ApplicationSettings applicationSettings;
+
+        //public AccountRL(IOptions<ApplicationSettings> applicationSettings)
+        //{
+        //    this.applicationSettings = applicationSettings;
+        //}
+
+
         public string ForgotPassword(ForgotPassword model)
         {
             string email = model.Email;
@@ -129,7 +139,7 @@ namespace NotesRepository.Services
         }
         private static string GenrateJWTToken(string email,int id)
         {
-            var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SuperSecretKey@345fghhhhhhhhhhhhhhhhhhhhhhhhhhhhhfggggggg"));
+            var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SuperSecretKey@345fghhhhhhhhhhhhhhhhhhhhhhhhhhhhhfggggggg".ToString()));
             var signinCredentials = new SigningCredentials(secretkey, SecurityAlgorithms.HmacSha256);
             string userId = Convert.ToString(id);
             var claims = new List<Claim>

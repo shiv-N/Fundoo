@@ -13,8 +13,9 @@ using NotesRepository.Interface;
 namespace FundooNotesApi.Controllers
 {
     [Route("api/[controller]")]
-    //[ApiController]
+    [ApiController]
     //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize]
     public class AccountController : ControllerBase
     {
         private readonly IAccountBL account;
