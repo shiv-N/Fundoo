@@ -13,14 +13,24 @@ namespace BusinessManager.Services
         {
             this.notes = notes;
         }
-        public string AddNotes(AddNotesRequestModel model)
+        public string AddNotes(AddNotesRequestModel model, int userId)
         {
-            return notes.AddNotes(model); 
+            return notes.AddNotes(model,userId); 
         }
 
-        public IList<AddNotesRequestModel> DisplayNotes(DisplayNoteRequestModel userId)
+        public string DeleteNote(DeleteNoteRequestModel model, int userId)
+        {
+            return notes.DeleteNote(model,userId);
+        }
+
+        public IList<DisplayResponceModel> DisplayNotes(int userId)
         {
             return notes.DisplayNotes(userId);
+        }
+
+        public string EditNote(EditNoteRequestModel model, int userId)
+        {
+            return notes.EditNote(model,userId);
         }
     }
 }

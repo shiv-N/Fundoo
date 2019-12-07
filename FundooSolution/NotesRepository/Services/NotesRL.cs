@@ -11,11 +11,9 @@ namespace BusinessManager.Services
     public class NotesRL : INotesRL
     {
         SqlConnection connection = new SqlConnection(@"Data Source=(localDB)\localhost;Initial Catalog=EmployeeDetails;Integrated Security=True");
-        public string AddNotes(AddNotesRequestModel model)
+        public string AddNotes(AddNotesRequestModel model, int userId)
         {
-            SqlCommand command = new SqlCommand("spAddNote", connection);
-            command.CommandType = CommandType.StoredProcedure;
-
+            SqlCommand command = StoreProcedureConnection("spAddNote");
             command.Parameters.AddWithValue("Title", model.Title);
             command.Parameters.AddWithValue("MeassageDescription", model.Message);
             command.Parameters.AddWithValue("NoteImage", model.Image);
@@ -23,13 +21,14 @@ namespace BusinessManager.Services
             command.Parameters.AddWithValue("CreatedDATETime", model.CreatedDate);
             command.Parameters.AddWithValue("ModifiedDateTime", model.ModifiedDate);
             command.Parameters.AddWithValue("AddReminder", model.AddReminder);
-            command.Parameters.AddWithValue("UserId", model.UserId);
+            command.Parameters.AddWithValue("UserId", userId);
             command.Parameters.AddWithValue("IsPin", model.IsPin);
             command.Parameters.AddWithValue("IsNote", model.IsNote);
             command.Parameters.AddWithValue("IsArchive", model.IsArchive);
             command.Parameters.AddWithValue("IsTrash", model.IsTrash);
             connection.Open();
             int result = command.ExecuteNonQuery();
+            connection.Close();
             if (result != 0)
             {
                 return "Note added";
@@ -40,17 +39,17 @@ namespace BusinessManager.Services
             };
         }
 
-        public IList<AddNotesRequestModel> DisplayNotes(DisplayNoteRequestModel userId)
+        public IList<DisplayResponceModel> DisplayNotes(int userId)
         {
-            IList<AddNotesRequestModel> notes = new List<AddNotesRequestModel>();
+            IList<DisplayResponceModel> notes = new List<DisplayResponceModel>();
             SqlCommand command = StoreProcedureConnection("spDisplayNotesByUserId");
             connection.Open();
-            command.Parameters.AddWithValue("UserId", userId.UserId);
+            command.Parameters.AddWithValue("UserId", userId);
             command.ExecuteNonQuery();
             SqlDataReader dataReader = command.ExecuteReader();
             while (dataReader.Read())
             {
-                AddNotesRequestModel userDetails = new AddNotesRequestModel();
+                DisplayResponceModel userDetails = new DisplayResponceModel();
                 userDetails.Id = (int)dataReader["Id"];
                 userDetails.Title = dataReader["Title"].ToString();
                 userDetails.Message = dataReader["MeassageDescription"].ToString();
@@ -68,6 +67,47 @@ namespace BusinessManager.Services
             }
             connection.Close();
             return notes;
+        }
+
+        public string EditNote(EditNoteRequestModel model, int userId)
+        {
+            SqlCommand command = StoreProcedureConnection("spEditNote");
+            connection.Open();
+            command.Parameters.AddWithValue("Id", model.Id);
+            command.Parameters.AddWithValue("Title", model.Title);
+            command.Parameters.AddWithValue("MeassageDescription", model.Message);
+            command.Parameters.AddWithValue("NoteImage", model.Image);
+            command.Parameters.AddWithValue("Color", model.Color);
+            command.Parameters.AddWithValue("ModifiedDateTime", model.ModifiedDate);
+            command.Parameters.AddWithValue("UserId", userId);
+            int result = command.ExecuteNonQuery();
+            connection.Close();
+            if (result != 0)
+            {
+                return "Note edited";
+            }
+            else
+            {
+                return "Note did not edited";
+            };
+        }
+
+        public string DeleteNote(DeleteNoteRequestModel model,int userId)
+        {
+            SqlCommand command = StoreProcedureConnection("spDeleteNote");
+            command.Parameters.AddWithValue("Id", model.Id);
+            command.Parameters.AddWithValue("UserId", userId);
+            connection.Open();
+            int result = command.ExecuteNonQuery();
+            connection.Close();
+            if(result != 0)
+            {
+                return "Note deleted";
+            }
+            else
+            {
+                return "Note did not deleted";
+            };
         }
         private SqlCommand StoreProcedureConnection(string Name)
         {

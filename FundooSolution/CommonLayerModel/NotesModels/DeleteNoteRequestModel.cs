@@ -4,8 +4,8 @@ using System.Text;
 
 namespace CommonLayerModel.NotesModels
 {
-    public class DisplayNoteRequestModel
+    public class DeleteNoteRequestModel
     {
-        public int UserId { get; set; }     /// foreign key..
+        public int Id { get; set; }
     }
 }

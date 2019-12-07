@@ -4,8 +4,9 @@ using System.Text;
 
 namespace CommonLayerModel.NotesModels
 {
-    public class AddNotesRequestModel
+    public class DisplayResponceModel
     {
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Message { get; set; }
         public string Image { get; set; }
@@ -17,5 +18,6 @@ namespace CommonLayerModel.NotesModels
         public bool IsArchive { get; set; }
         public bool IsNote { get; set; }
         public bool IsTrash { get; set; }
+        public int UserId { get; set; }     /// foreign key..
     }
 }

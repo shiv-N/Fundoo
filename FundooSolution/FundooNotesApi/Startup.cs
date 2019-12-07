@@ -68,9 +68,12 @@ namespace FundooNotesApi
 
             services.AddTransient<IAccountBL, AccountBL>();
             services.AddTransient<IAccountRL, AccountRL>();
+
             services.AddTransient<INotesBL, NotesBL>();
             services.AddTransient<INotesRL, NotesRL>();
 
+            services.AddTransient<ILabelsBL, LabelsBL>();
+            services.AddTransient<ILabelsRL, LabelsRL>();
 
 
             //// swagger implementation

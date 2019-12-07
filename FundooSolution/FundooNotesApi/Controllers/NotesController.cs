@@ -24,12 +24,30 @@ namespace FundooNotesApi.Controllers
         [HttpPost]
         public IActionResult AddNotes(AddNotesRequestModel model)
         {
-            return Ok(note.AddNotes(model));
+            var userId = TokenUserId();
+            return Ok(note.AddNotes(model, userId));
         }
-        [HttpPost("get")]
-        public IActionResult DisplayNotes(DisplayNoteRequestModel userId)
+        [HttpGet]
+        public IActionResult DisplayNotes()
         {
+            var userId = TokenUserId();
             return Ok(note.DisplayNotes(userId));
+        }
+        [HttpPut("edit")]
+        public IActionResult EditNote(EditNoteRequestModel model)
+        {
+            var userId = TokenUserId();
+            return Ok(note.EditNote(model, userId));
+        }
+        [HttpDelete("delete")]
+        public IActionResult DeleteNote(DeleteNoteRequestModel model)
+        {
+            var userId = TokenUserId();
+            return Ok(note.DeleteNote(model,userId));
+        }
+        private int TokenUserId()
+        {
+            return Convert.ToInt32(User.FindFirst("Id").Value);
         }
     }
 }
