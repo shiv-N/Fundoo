@@ -1,33 +1,65 @@
-﻿using BusinessManager.Interface;
-using CommonLayerModel.LabelModels;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace BusinessManager.Services
 {
+    using BusinessManager.Interface;
+    using CommonLayerModel.LabelModels;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using System.Threading.Tasks;
+
+    /// <summary>
+    /// this is class LabelsBL
+    /// </summary>
+    /// <seealso cref="BusinessManager.Interface.ILabelsBL" />
     public class LabelsBL : ILabelsBL
     {
+        /// <summary>
+        /// The labels
+        /// </summary>
         ILabelsRL labels;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LabelsBL"/> class.
+        /// </summary>
+        /// <param name="labels">The labels.</param>
         public LabelsBL(ILabelsRL labels)
         {
             this.labels = labels;
         }
 
-
-        public string AddLabel(AddLabel model,int userId)
+        /// <summary>
+        /// Adds the label.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public async Task<string> AddLabel(AddLabel model,int userId)
         {
-            return labels.AddLabel(model, userId);
+            return await labels.AddLabel(model, userId);
         }
 
-        public string DeleteLabel(DeleteLabelRequest model,int userId)
+        /// <summary>
+        /// Deletes the label.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public async Task<string> DeleteLabel(DeleteLabelRequest model,int userId)
         {
-            return labels.DeleteLabel(model, userId);
+            return await labels.DeleteLabel(model, userId);
         }
 
-        public string EditLabel(EditLabel model,int userId)
+
+        /// <summary>
+        /// Edits the label.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public async Task<string> EditLabel(EditLabel model,int userId)
         {
-            return labels.EditLabel(model, userId);
+            return await labels.EditLabel(model, userId);
         }
     }
 }
