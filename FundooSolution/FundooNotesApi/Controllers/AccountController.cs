@@ -51,7 +51,8 @@ namespace FundooNotesApi.Controllers
         [AllowAnonymous]
         public IActionResult Login(LoginRequestModel model)
         {
-            return Ok(account.Login(model));
+            var results = account.Login(model);
+            return Ok(new { results });
 
         }
 
@@ -84,7 +85,6 @@ namespace FundooNotesApi.Controllers
         /// <returns></returns>
         [Route("reset")]
         [HttpPost]
-      
         public IActionResult ResetPassword(ResetPasswordModel token)
         {
             return Ok(account.ResetPassword(token));

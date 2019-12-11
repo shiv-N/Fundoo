@@ -2,6 +2,7 @@
 {
     using BusinessManager.Interface;
     using CommonLayerModel.NotesModels;
+    using Microsoft.AspNetCore.Http;
     using System;
     using System.Collections.Generic;
     using System.Text;
@@ -68,6 +69,11 @@
         public async Task<string> EditNote(EditNoteRequestModel model, int userId)
         {
             return await notes.EditNote(model,userId);
+        }
+
+        public async Task<string> UploadImage(IFormFile file, int userId)
+        {
+            return await notes.UploadImage(file,userId);
         }
     }
 }

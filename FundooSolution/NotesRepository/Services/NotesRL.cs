@@ -1,7 +1,10 @@
 ﻿namespace BusinessManager.Services
 {
     using BusinessManager.Interface;
+    using CloudinaryDotNet;
+    using CloudinaryDotNet.Actions;
     using CommonLayerModel.NotesModels;
+    using Microsoft.AspNetCore.Http;
     using System;
     using System.Collections.Generic;
     using System.Data;
@@ -180,6 +183,19 @@
             SqlCommand command = new SqlCommand(Name, connection);
             command.CommandType = CommandType.StoredProcedure;
             return command;
+        }
+
+        public async Task<string> UploadImage(IFormFile file, int userId)
+        {
+            Account account = new Account("dwccwljlx", "229849442634859", "uH92kJO07UQqLgJwqDduffnoZmY");
+            var Path = file.OpenReadStream();
+            Cloudinary cloudinary = new Cloudinary(account);
+            var uploadParams = new ImageUploadParams()
+            {
+                File = new FileDescription(file.FileName, Path),
+            };
+            var uploadResult = await cloudinary.UploadAsync(uploadParams);
+            return file.FileName;
         }
     }
 }

@@ -7,6 +7,8 @@ namespace FundooNotesApi.Controllers
     using System.Threading.Tasks;
     using BusinessManager.Interface;
     using BusinessManager.Services;
+    using CloudinaryDotNet;
+    using CloudinaryDotNet.Actions;
     using CommonLayerModel.NotesModels;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
@@ -80,6 +82,13 @@ namespace FundooNotesApi.Controllers
         {
             var userId = TokenUserId();
             return Ok(await note.DeleteNote(model,userId));
+        }
+        [HttpPost]
+        public async Task<IActionResult> UploadImage(IFormFile file)
+        {
+            var userId = TokenUserId();
+            string serverUrl = await note.UploadImage(file, userId);
+            return Ok(new { serverUrl });
         }
 
         /// <summary>

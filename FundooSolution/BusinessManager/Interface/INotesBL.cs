@@ -1,6 +1,7 @@
 ﻿namespace BusinessManager.Interface
 {
     using CommonLayerModel.NotesModels;
+    using Microsoft.AspNetCore.Http;
     using System;
     using System.Collections.Generic;
     using System.Text;
@@ -41,5 +42,6 @@
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
         Task<string> DeleteNote(DeleteNoteRequestModel model, int userId);
+        Task<string> UploadImage(IFormFile file,, int userId);
     }
 }
