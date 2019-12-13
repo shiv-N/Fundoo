@@ -43,6 +43,7 @@ namespace BusinessManager.Interface
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
         Task<string> DeleteNote(DeleteNoteRequestModel model, int userId);
-        Task<string> UploadImage(IFormFile file, int userId);
+        Task<string> UploadImage(IFormFile file, int noteId, int userId);
+        Task<string> archiveNote(int userId, int noteId);
     }
 }

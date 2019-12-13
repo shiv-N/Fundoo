@@ -173,6 +173,94 @@
             }
         }
 
+
+        public async Task<string> UploadImage(IFormFile file,int noteId, int userId)
+        {
+            try
+            {
+                Account account = new Account("dwccwljlx", "229849442634859", "uH92kJO07UQqLgJwqDduffnoZmY");
+                var Path = file.OpenReadStream();
+                Cloudinary cloudinary = new Cloudinary(account);
+                var uploadParams = new ImageUploadParams()
+                {
+                    File = new FileDescription(file.FileName, Path),
+                };
+                var uploadResult = await cloudinary.UploadAsync(uploadParams);
+                SqlCommand command = StoreProcedureConnection("spUpdateImage");
+                command.Parameters.AddWithValue("Id", noteId);
+                command.Parameters.AddWithValue("NoteImage", uploadResult.Uri.ToString());
+                command.Parameters.AddWithValue("UserId", userId);
+                connection.Open();
+                int result = command.ExecuteNonQuery();
+                connection.Close();
+                if (result != 0)
+                {
+                    return "Image Uploaded SuccessFully";
+                }
+                else
+                {
+                    return "Image is not Uploaded SuccessFully";
+                };
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<string> archiveNote(int userId,int noteId)
+        {
+            SqlConnection connection = new SqlConnection(@"Data Source=(localDB)\localhost;Initial Catalog=EmployeeDetails;Integrated Security=True");
+            //SqlCommand command = StoreProcedureConnection("spArchive");
+            SqlCommand command = new SqlCommand("spArchive", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            try
+            {
+                connection.Open();
+                command.Parameters.AddWithValue("@UserId", userId);
+                command.Parameters.AddWithValue("@Id", noteId);
+                int result = await command.ExecuteNonQueryAsync();
+                connection.Close();
+                //SqlDataReader dataReader = command.ExecuteReader();
+                //bool IsNote, IsArchive, IsTrash;
+                //if (dataReader.Read())
+                //{
+                //    IsNote = (bool)dataReader["IsNote"];
+                //    IsArchive = (bool)dataReader["IsArchive"];
+                //    IsTrash = (bool)dataReader["IsTrash"];
+                //    if (IsTrash == false)
+                //    {
+                //        if (IsArchive)
+                //        {
+                //            IsArchive = false;
+                //            IsNote = true;
+                //        }
+                //        else
+                //        {
+                //            IsArchive = true;
+                //            IsNote = false;
+                //        }
+                //        SqlCommand commandTwo = StoreProcedureConnection("spEditBoolAttribute");
+                //    }
+                //}
+                if (result != 0)
+                {
+                    return "archive successful";
+                }
+                else
+                {
+                    return "archive is not successful";
+                };
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+          
+            
+        }
+
+
         /// <summary>
         /// Stores the procedure connection.
         /// </summary>
@@ -185,17 +273,5 @@
             return command;
         }
 
-        public async Task<string> UploadImage(IFormFile file, int userId)
-        {
-            Account account = new Account("dwccwljlx", "229849442634859", "uH92kJO07UQqLgJwqDduffnoZmY");
-            var Path = file.OpenReadStream();
-            Cloudinary cloudinary = new Cloudinary(account);
-            var uploadParams = new ImageUploadParams()
-            {
-                File = new FileDescription(file.FileName, Path),
-            };
-            var uploadResult = await cloudinary.UploadAsync(uploadParams);
-            return file.FileName;
-        }
     }
 }

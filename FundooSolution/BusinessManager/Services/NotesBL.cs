@@ -71,9 +71,14 @@
             return await notes.EditNote(model,userId);
         }
 
-        public async Task<string> UploadImage(IFormFile file, int userId)
+        public async Task<string> UploadImage(IFormFile file, int noteId, int userId)
         {
-            return await notes.UploadImage(file,userId);
+            return await notes.UploadImage(file, noteId,userId);
+        }
+
+        public async Task<string> archiveNote(int userId, int noteId)
+        {
+            return await notes.archiveNote(userId, noteId);
         }
     }
 }

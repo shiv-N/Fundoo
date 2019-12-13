@@ -81,16 +81,30 @@ namespace FundooNotesApi.Controllers
         public async Task<IActionResult> DeleteNote(DeleteNoteRequestModel model)
         {
             var userId = TokenUserId();
-            return Ok(await note.DeleteNote(model,userId));
+            return Ok(await note.DeleteNote(model, userId));
         }
-        [HttpPost]
-        public async Task<IActionResult> UploadImage(IFormFile file)
+        [HttpPut("{noteId}")]
+        public async Task<IActionResult> UploadImage(IFormFile file, int noteId)
+        {
+            if (file != null && noteId != 0)
+            {
+                var userId = TokenUserId();
+                string result = await note.UploadImage(file, noteId, userId);
+                return Ok(new { result });
+            }
+            else
+            {
+                string result = "input should not be empty";
+                return Ok(new { result });
+            }
+        }
+        [HttpPut("archive/{noteId}")]
+        public async Task<IActionResult> archiveNote(int noteId)
         {
             var userId = TokenUserId();
-            string serverUrl = await note.UploadImage(file, userId);
-            return Ok(new { serverUrl });
+            string result = await note.archiveNote(noteId, userId);
+            return Ok(new { result });
         }
-
         /// <summary>
         /// Tokens the user identifier.
         /// </summary>

@@ -137,7 +137,9 @@ namespace NotesRepository.Services
             String encrypted = Convert.ToBase64String(encrypt);
             return encrypted;
         }
-        private static string GenrateJWTToken(string email,int id)
+
+
+        private static string GenrateJWTToken(string email, int id)
         {
             var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SuperSecretKey@345fghhhhhhhhhhhhhhhhhhhhhhhhhhhhhfggggggg".ToString()));
             var signinCredentials = new SigningCredentials(secretkey, SecurityAlgorithms.HmacSha256);
@@ -146,10 +148,11 @@ namespace NotesRepository.Services
                         {
                             new Claim("email", email),
                             ////new Claim(ClaimTypes.Role, "User")
-                            new Claim("id",userId)
+                            new Claim("id",userId),
+
                         };
             var tokenOptionOne = new JwtSecurityToken(
-              
+
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(130),
                 signingCredentials: signinCredentials
