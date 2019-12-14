@@ -5,3 +5,4 @@ C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\CommonLayerModel\obj\D
 C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\CommonLayerModel\obj\Debug\netcoreapp2.1\CommonLayerModel.AssemblyInfo.cs
 C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\CommonLayerModel\obj\Debug\netcoreapp2.1\CommonLayerModel.dll
 C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\CommonLayerModel\obj\Debug\netcoreapp2.1\CommonLayerModel.pdb
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\CommonLayerModel\obj\Debug\netcoreapp2.1\CommonLayerModel.csprojAssemblyReference.cache

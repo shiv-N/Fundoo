@@ -105,6 +105,28 @@ namespace FundooNotesApi.Controllers
             string result = await note.archiveNote(noteId, userId);
             return Ok(new { result });
         }
+        [HttpPut("Pin/{noteId}")]
+        public async Task<IActionResult> pinNote(int noteId)
+        {
+            var userId = TokenUserId();
+            string result = await note.pinNote(noteId, userId);
+            return Ok(new { result });
+        }
+        [HttpPut("trash/{noteId}")]
+        public async Task<IActionResult> trashNote(int noteId)
+        {
+            var userId = TokenUserId();
+            string result = await note.trashNote(noteId, userId);
+            return Ok(new { result });
+        }
+
+        [HttpPut("reminder/{noteId}")]
+        public async Task<IActionResult> ReminderNote(int noteId, AddReminderRequest reminder)
+        {
+            var userId = TokenUserId();
+            string result = await note.ReminderNote(noteId, userId, reminder);
+            return Ok(new { result });
+        }
         /// <summary>
         /// Tokens the user identifier.
         /// </summary>

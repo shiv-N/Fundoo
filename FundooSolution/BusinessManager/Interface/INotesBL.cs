@@ -43,6 +43,9 @@
         /// <returns></returns>
         Task<string> DeleteNote(DeleteNoteRequestModel model, int userId);
         Task<string> UploadImage(IFormFile file, int noteId, int userId);
-        Task<string> archiveNote(int userId, int noteId);
+        Task<string> archiveNote(int noteId, int userId);
+        Task<string> pinNote(int noteId, int userId);
+        Task<string> trashNote(int noteId, int userId);
+        Task<string> ReminderNote(int noteId, int userId, AddReminderRequest reminder);
     }
 }

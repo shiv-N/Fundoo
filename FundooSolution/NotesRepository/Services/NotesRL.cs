@@ -208,12 +208,9 @@
             }
         }
 
-        public async Task<string> archiveNote(int userId,int noteId)
+        public async Task<string> archiveNote(int noteId, int userId)
         {
-            SqlConnection connection = new SqlConnection(@"Data Source=(localDB)\localhost;Initial Catalog=EmployeeDetails;Integrated Security=True");
-            //SqlCommand command = StoreProcedureConnection("spArchive");
-            SqlCommand command = new SqlCommand("spArchive", connection);
-            command.CommandType = CommandType.StoredProcedure;
+            SqlCommand command = StoreProcedureConnection("spArchive");
             try
             {
                 connection.Open();
@@ -221,28 +218,6 @@
                 command.Parameters.AddWithValue("@Id", noteId);
                 int result = await command.ExecuteNonQueryAsync();
                 connection.Close();
-                //SqlDataReader dataReader = command.ExecuteReader();
-                //bool IsNote, IsArchive, IsTrash;
-                //if (dataReader.Read())
-                //{
-                //    IsNote = (bool)dataReader["IsNote"];
-                //    IsArchive = (bool)dataReader["IsArchive"];
-                //    IsTrash = (bool)dataReader["IsTrash"];
-                //    if (IsTrash == false)
-                //    {
-                //        if (IsArchive)
-                //        {
-                //            IsArchive = false;
-                //            IsNote = true;
-                //        }
-                //        else
-                //        {
-                //            IsArchive = true;
-                //            IsNote = false;
-                //        }
-                //        SqlCommand commandTwo = StoreProcedureConnection("spEditBoolAttribute");
-                //    }
-                //}
                 if (result != 0)
                 {
                     return "archive successful";
@@ -255,11 +230,84 @@
             catch(Exception e)
             {
                 throw e;
-            }
-          
-            
+            } 
         }
 
+        public async Task<string> pinNote(int noteId, int userId)
+        {
+            SqlCommand command = StoreProcedureConnection("spPin");
+            try
+            {
+                connection.Open();
+                command.Parameters.AddWithValue("@UserId", userId);
+                command.Parameters.AddWithValue("@Id", noteId);
+                int result = await command.ExecuteNonQueryAsync();
+                connection.Close();
+                if (result != 0)
+                {
+                    return "Pin successful";
+                }
+                else
+                {
+                    return "Pin is not successful";
+                };
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<string> trashNote(int noteId, int userId)
+        {
+            SqlCommand command = StoreProcedureConnection("spTrash");
+            try
+            {
+                connection.Open();
+                command.Parameters.AddWithValue("@UserId", userId);
+                command.Parameters.AddWithValue("@Id", noteId);
+                int result = await command.ExecuteNonQueryAsync();
+                connection.Close();
+                if (result != 0)
+                {
+                    return "Trash successful";
+                }
+                else
+                {
+                    return "Trash is not successful";
+                };
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public async Task<string> ReminderNote(int noteId, int userId, AddReminderRequest reminder)
+        {
+            SqlCommand command = StoreProcedureConnection("spReminder");
+            try
+            {
+                connection.Open();
+                command.Parameters.AddWithValue("@UserId", userId);
+                command.Parameters.AddWithValue("@Id", noteId);
+                command.Parameters.AddWithValue("@AddReminder", reminder.AddReminder);
+                command.Parameters.AddWithValue("@ModifiedDateTime", reminder.ModifiedDate);
+                int result = await command.ExecuteNonQueryAsync();
+                connection.Close();
+                if (result != 0)
+                {
+                    return "reminder set successfully";
+                }
+                else
+                {
+                    return "reminder is not set";
+                };
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
         /// <summary>
         /// Stores the procedure connection.
