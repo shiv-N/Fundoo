@@ -76,24 +76,29 @@
             return await notes.UploadImage(file, noteId,userId);
         }
 
-        public async Task<string> archiveNote(int noteId, int userId)
+        public async Task<string> ArchiveNote(int noteId, int userId)
         {
-            return await notes.archiveNote(noteId, userId);
+            return await notes.ArchiveNote(noteId, userId);
         }
 
-        public async Task<string> pinNote(int noteId, int userId)
+        public async Task<string> PinNote(int noteId, int userId)
         {
-            return await notes.pinNote(noteId, userId);
+            return await notes.PinNote(noteId, userId);
         }
-        public async Task<string> trashNote(int noteId, int userId)
+        public async Task<string> TrashNote(int noteId, int userId)
         {
-            return await notes.trashNote(noteId, userId);
+            return await notes.TrashNote(noteId, userId);
 
         }
 
         public async Task<string> ReminderNote(int noteId, int userId, AddReminderRequest reminder)
         {
             return await notes.ReminderNote(noteId,userId,reminder);
+        }
+
+        public async Task<string> ColourNote(int noteId, int userId, ColourRequestModel colourRequest)
+        {
+            return await notes.ColourNote(noteId, userId, colourRequest);
         }
     }
 }

@@ -7,8 +7,6 @@ namespace FundooNotesApi.Controllers
     using System.Threading.Tasks;
     using BusinessManager.Interface;
     using BusinessManager.Services;
-    using CloudinaryDotNet;
-    using CloudinaryDotNet.Actions;
     using CommonLayerModel.NotesModels;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
@@ -99,24 +97,24 @@ namespace FundooNotesApi.Controllers
             }
         }
         [HttpPut("archive/{noteId}")]
-        public async Task<IActionResult> archiveNote(int noteId)
+        public async Task<IActionResult> ArchiveNote(int noteId)
         {
             var userId = TokenUserId();
-            string result = await note.archiveNote(noteId, userId);
+            string result = await note.ArchiveNote(noteId, userId);
             return Ok(new { result });
         }
         [HttpPut("Pin/{noteId}")]
-        public async Task<IActionResult> pinNote(int noteId)
+        public async Task<IActionResult> PinNote(int noteId)
         {
             var userId = TokenUserId();
-            string result = await note.pinNote(noteId, userId);
+            string result = await note.PinNote(noteId, userId);
             return Ok(new { result });
         }
         [HttpPut("trash/{noteId}")]
-        public async Task<IActionResult> trashNote(int noteId)
+        public async Task<IActionResult> TrashNote(int noteId)
         {
             var userId = TokenUserId();
-            string result = await note.trashNote(noteId, userId);
+            string result = await note.TrashNote(noteId, userId);
             return Ok(new { result });
         }
 
@@ -125,6 +123,13 @@ namespace FundooNotesApi.Controllers
         {
             var userId = TokenUserId();
             string result = await note.ReminderNote(noteId, userId, reminder);
+            return Ok(new { result });
+        }
+        [HttpPut("color/{noteId}")]
+        public async Task<IActionResult> ColourNote(int noteId, ColourRequestModel colourRequest)
+        {
+            var userId = TokenUserId();
+            string result = await note.ColourNote(noteId, userId, colourRequest);
             return Ok(new { result });
         }
         /// <summary>

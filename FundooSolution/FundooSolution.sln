@@ -3,13 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FundooNotesApi", "FundooNotesApi\FundooNotesApi.csproj", "{791E0846-1F92-49B0-9D55-DC5C82FEADED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundooNotesApi", "FundooNotesApi\FundooNotesApi.csproj", "{791E0846-1F92-49B0-9D55-DC5C82FEADED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessManager", "BusinessManager\BusinessManager.csproj", "{1CCA7180-9BD4-448E-9A17-0E7C18E33BE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessManager", "BusinessManager\BusinessManager.csproj", "{1CCA7180-9BD4-448E-9A17-0E7C18E33BE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLayerModel", "CommonLayerModel\CommonLayerModel.csproj", "{B1AC4E1E-C9CE-446E-BE62-1EDD47337324}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonLayerModel", "CommonLayerModel\CommonLayerModel.csproj", "{B1AC4E1E-C9CE-446E-BE62-1EDD47337324}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotesRepository", "NotesRepository\NotesRepository.csproj", "{26E62B07-EF22-4D6D-A2BE-093FC54DA030}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotesRepository", "NotesRepository\NotesRepository.csproj", "{26E62B07-EF22-4D6D-A2BE-093FC54DA030}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "FundooDB", "FundooDB\FundooDB.sqlproj", "{B45C6E94-215B-4339-A121-C49A2384443E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FundooTestCases", "FundooTestCases\FundooTestCases.csproj", "{7BA3FBD8-BE75-47DD-A23C-5C6C73807B6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,16 @@ Global
 		{26E62B07-EF22-4D6D-A2BE-093FC54DA030}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26E62B07-EF22-4D6D-A2BE-093FC54DA030}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26E62B07-EF22-4D6D-A2BE-093FC54DA030}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B45C6E94-215B-4339-A121-C49A2384443E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B45C6E94-215B-4339-A121-C49A2384443E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B45C6E94-215B-4339-A121-C49A2384443E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{B45C6E94-215B-4339-A121-C49A2384443E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B45C6E94-215B-4339-A121-C49A2384443E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B45C6E94-215B-4339-A121-C49A2384443E}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{7BA3FBD8-BE75-47DD-A23C-5C6C73807B6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BA3FBD8-BE75-47DD-A23C-5C6C73807B6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BA3FBD8-BE75-47DD-A23C-5C6C73807B6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BA3FBD8-BE75-47DD-A23C-5C6C73807B6F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

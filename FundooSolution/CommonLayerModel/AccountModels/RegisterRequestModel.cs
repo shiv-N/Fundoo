@@ -5,16 +5,11 @@ using System.Text;
 
 namespace CommonLayerModel.Models
 {
+    /// <summary>
+    /// this is class RegisterRequestModel
+    /// </summary>
     public class RegisterRequestModel
     {
-        /// <summary>
-        /// Gets or sets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public int Id { get; set; }
-
         /// <summary>
         /// Gets or sets the first name.
         /// </summary>
@@ -75,13 +70,5 @@ namespace CommonLayerModel.Models
         [StringLength(250, MinimumLength = 3, ErrorMessage = "Name should be in between 3 and 250 character")]
         [DataType(DataType.MultilineText)]
         public string UserAddress { get; set; }
-
-        /// <summary>
-        /// Gets or sets the token.
-        /// </summary>
-        /// <value>
-        /// The token.
-        /// </value>
-        public string Token { get; set; }
     }
 }

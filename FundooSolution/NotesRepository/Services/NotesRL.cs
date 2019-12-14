@@ -208,7 +208,7 @@
             }
         }
 
-        public async Task<string> archiveNote(int noteId, int userId)
+        public async Task<string> ArchiveNote(int noteId, int userId)
         {
             SqlCommand command = StoreProcedureConnection("spArchive");
             try
@@ -233,7 +233,7 @@
             } 
         }
 
-        public async Task<string> pinNote(int noteId, int userId)
+        public async Task<string> PinNote(int noteId, int userId)
         {
             SqlCommand command = StoreProcedureConnection("spPin");
             try
@@ -258,7 +258,7 @@
             }
         }
 
-        public async Task<string> trashNote(int noteId, int userId)
+        public async Task<string> TrashNote(int noteId, int userId)
         {
             SqlCommand command = StoreProcedureConnection("spTrash");
             try
@@ -309,6 +309,32 @@
             }
         }
 
+        public async Task<string> ColourNote(int noteId, int userId, ColourRequestModel colourRequest)
+        {
+            SqlCommand command = StoreProcedureConnection("spColour");
+            try
+            {
+                connection.Open();
+                command.Parameters.AddWithValue("@UserId", userId);
+                command.Parameters.AddWithValue("@Id", noteId);
+                command.Parameters.AddWithValue("@Color", colourRequest.Color);
+                command.Parameters.AddWithValue("@ModifiedDateTime", colourRequest.ModifiedDate);
+                int result = await command.ExecuteNonQueryAsync();
+                connection.Close();
+                if (result != 0)
+                {
+                    return "color changed successfully";
+                }
+                else
+                {
+                    return "color is not changed.";
+                };
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         /// <summary>
         /// Stores the procedure connection.
         /// </summary>
