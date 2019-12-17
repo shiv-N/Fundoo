@@ -1196,7 +1196,6 @@
       },
       "BusinessManager/1.0.0": {
         "dependencies": {
-          "CloudinaryDotNet": "1.9.1",
           "NotesRepository": "1.0.0"
         },
         "runtime": {
@@ -1204,9 +1203,6 @@
         }
       },
       "CommonLayerModel/1.0.0": {
-        "dependencies": {
-          "CloudinaryDotNet": "1.9.1"
-        },
         "runtime": {
           "CommonLayerModel.dll": {}
         }

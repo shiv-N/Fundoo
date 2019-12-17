@@ -8,7 +8,6 @@
     ".NETCoreApp,Version=v2.1": {
       "BusinessManager/1.0.0": {
         "dependencies": {
-          "CloudinaryDotNet": "1.9.1",
           "NotesRepository": "1.0.0"
         },
         "runtime": {
@@ -32,6 +31,17 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll": {
+            "assemblyVersion": "2.1.0.0",
+            "fileVersion": "2.1.0.18136"
+          }
+        }
+      },
+      "Microsoft.Extensions.Configuration.Abstractions/2.1.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "2.1.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll": {
             "assemblyVersion": "2.1.0.0",
             "fileVersion": "2.1.0.18136"
           }
@@ -277,9 +287,6 @@
         }
       },
       "CommonLayerModel/1.0.0": {
-        "dependencies": {
-          "CloudinaryDotNet": "1.9.1"
-        },
         "runtime": {
           "CommonLayerModel.dll": {}
         }
@@ -289,6 +296,7 @@
           "CloudinaryDotNet": "1.9.1",
           "CommonLayerModel": "1.0.0",
           "Microsoft.AspNetCore.Http.Features": "2.1.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "2.1.0",
           "System.Data.SqlClient": "4.8.0",
           "System.IdentityModel.Tokens.Jwt": "5.6.0"
         },
@@ -317,6 +325,13 @@
       "sha512": "sha512-UmkUePxRjsQW0j5euFFscBwjvTu25b8+qIK/2fI3GvcqQ+mkwgbWNAT8b/Gkoei1m2bTWC07lSdutuRDPPLcJA==",
       "path": "microsoft.aspnetcore.http.features/2.1.0",
       "hashPath": "microsoft.aspnetcore.http.features.2.1.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Configuration.Abstractions/2.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lMmUjAKvY9r6QmxCS15iSb6ulhwnh0zp44NtnVJ+HIDLFmu4iej41U+dU58On8NRezmlgRXiQtLnBeZSzYNKQg==",
+      "path": "microsoft.extensions.configuration.abstractions/2.1.0",
+      "hashPath": "microsoft.extensions.configuration.abstractions.2.1.0.nupkg.sha512"
     },
     "Microsoft.Extensions.Primitives/2.1.0": {
       "type": "package",

@@ -26,6 +26,18 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll": {}
         }
       },
+      "Microsoft.Extensions.Configuration.Abstractions/2.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "2.1.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll": {}
+        }
+      },
       "Microsoft.Extensions.Primitives/2.1.0": {
         "type": "package",
         "dependencies": {
@@ -493,9 +505,6 @@
       "CommonLayerModel/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
-        "dependencies": {
-          "CloudinaryDotNet": "1.9.1"
-        },
         "compile": {
           "bin/placeholder/CommonLayerModel.dll": {}
         },
@@ -510,6 +519,7 @@
           "CloudinaryDotNet": "1.9.1",
           "CommonLayerModel": "1.0.0",
           "Microsoft.AspNetCore.Http.Features": "2.1.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "2.1.0",
           "System.Data.SqlClient": "4.8.0",
           "System.IdentityModel.Tokens.Jwt": "5.6.0"
         },
@@ -556,6 +566,19 @@
         "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.xml",
         "microsoft.aspnetcore.http.features.2.1.0.nupkg.sha512",
         "microsoft.aspnetcore.http.features.nuspec"
+      ]
+    },
+    "Microsoft.Extensions.Configuration.Abstractions/2.1.0": {
+      "sha512": "lMmUjAKvY9r6QmxCS15iSb6ulhwnh0zp44NtnVJ+HIDLFmu4iej41U+dU58On8NRezmlgRXiQtLnBeZSzYNKQg==",
+      "type": "package",
+      "path": "microsoft.extensions.configuration.abstractions/2.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.xml",
+        "microsoft.extensions.configuration.abstractions.2.1.0.nupkg.sha512",
+        "microsoft.extensions.configuration.abstractions.nuspec"
       ]
     },
     "Microsoft.Extensions.Primitives/2.1.0": {
@@ -1661,7 +1684,6 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
-      "CloudinaryDotNet >= 1.9.1",
       "Microsoft.NETCore.App >= 2.1.0",
       "NotesRepository >= 1.0.0"
     ]
@@ -1711,10 +1733,6 @@
     "frameworks": {
       "netcoreapp2.1": {
         "dependencies": {
-          "CloudinaryDotNet": {
-            "target": "Package",
-            "version": "[1.9.1, )"
-          },
           "Microsoft.NETCore.App": {
             "suppressParent": "All",
             "target": "Package",

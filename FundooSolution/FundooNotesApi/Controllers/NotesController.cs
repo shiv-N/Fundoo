@@ -40,11 +40,19 @@ namespace FundooNotesApi.Controllers
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns></returns>
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddNotes(AddNotesRequestModel model)
         {
-            var userId = TokenUserId();
-            return Ok(await note.AddNotes(model, userId));
+            if (model != null)
+            {
+                var userId = TokenUserId();
+                return Ok(await note.AddNotes(model, userId));
+            }
+            else
+            {
+                string result = "Input should not be empty!!!";
+                return Ok(new { result });
+            }
         }
 
         /// <summary>
@@ -56,6 +64,7 @@ namespace FundooNotesApi.Controllers
         {
             var userId = TokenUserId();
             return Ok(note.DisplayNotes(userId));
+
         }
 
         /// <summary>
@@ -63,11 +72,20 @@ namespace FundooNotesApi.Controllers
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns></returns>
-        [HttpPut("edit")]
+        [HttpPut]
         public async Task<IActionResult> EditNote(EditNoteRequestModel model)
         {
-            var userId = TokenUserId();
-            return Ok(await note.EditNote(model, userId));
+            if (model != null)
+            {
+                var userId = TokenUserId();
+                string result = await note.EditNote(model, userId);
+                return Ok(new { result });
+            }
+            else
+            {
+                string result = "Input should not be empty!!!";
+                return Ok(new { result });
+            }
         }
 
         /// <summary>
@@ -75,13 +93,21 @@ namespace FundooNotesApi.Controllers
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns></returns>
-        [HttpDelete("delete")]
-        public async Task<IActionResult> DeleteNote(DeleteNoteRequestModel model)
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> DeleteNote(int Id)
         {
             var userId = TokenUserId();
-            return Ok(await note.DeleteNote(model, userId));
+            string result = await note.DeleteNote(Id, userId);
+            return Ok(new { result });
         }
-        [HttpPut("{noteId}")]
+
+        /// <summary>
+        /// Uploads the image.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <param name="noteId">The note identifier.</param>
+        /// <returns></returns>
+        [HttpPut("Image/{noteId}")]
         public async Task<IActionResult> UploadImage(IFormFile file, int noteId)
         {
             if (file != null && noteId != 0)
@@ -96,6 +122,12 @@ namespace FundooNotesApi.Controllers
                 return Ok(new { result });
             }
         }
+
+        /// <summary>
+        /// Archives the note.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <returns></returns>
         [HttpPut("archive/{noteId}")]
         public async Task<IActionResult> ArchiveNote(int noteId)
         {
@@ -103,6 +135,12 @@ namespace FundooNotesApi.Controllers
             string result = await note.ArchiveNote(noteId, userId);
             return Ok(new { result });
         }
+
+        /// <summary>
+        /// Pins the note.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <returns></returns>
         [HttpPut("Pin/{noteId}")]
         public async Task<IActionResult> PinNote(int noteId)
         {
@@ -110,7 +148,13 @@ namespace FundooNotesApi.Controllers
             string result = await note.PinNote(noteId, userId);
             return Ok(new { result });
         }
-        [HttpPut("trash/{noteId}")]
+
+        /// <summary>
+        /// Trashes the note.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <returns></returns>
+        [HttpPut("Trash/{noteId}")]
         public async Task<IActionResult> TrashNote(int noteId)
         {
             var userId = TokenUserId();
@@ -118,14 +162,27 @@ namespace FundooNotesApi.Controllers
             return Ok(new { result });
         }
 
-        [HttpPut("reminder/{noteId}")]
+        /// <summary>
+        /// Reminders the note.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <param name="reminder">The reminder.</param>
+        /// <returns></returns>
+        [HttpPut("Reminder/{noteId}")]
         public async Task<IActionResult> ReminderNote(int noteId, AddReminderRequest reminder)
         {
             var userId = TokenUserId();
             string result = await note.ReminderNote(noteId, userId, reminder);
             return Ok(new { result });
         }
-        [HttpPut("color/{noteId}")]
+
+        /// <summary>
+        /// Colours the note.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <param name="colourRequest">The colour request.</param>
+        /// <returns></returns>
+        [HttpPut("Color/{noteId}")]
         public async Task<IActionResult> ColourNote(int noteId, ColourRequestModel colourRequest)
         {
             var userId = TokenUserId();

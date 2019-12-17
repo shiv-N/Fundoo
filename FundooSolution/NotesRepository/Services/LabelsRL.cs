@@ -3,6 +3,7 @@ namespace BusinessManager.Services
 {
     using BusinessManager.Interface;
     using CommonLayerModel.LabelModels;
+    using Microsoft.Extensions.Configuration;
     using System;
     using System.Collections.Generic;
     using System.Data;
@@ -16,10 +17,11 @@ namespace BusinessManager.Services
     /// <seealso cref="BusinessManager.Interface.ILabelsRL" />
     public class LabelsRL : ILabelsRL
     {
-        /// <summary>
-        /// The connection
-        /// </summary>
-        SqlConnection connection = new SqlConnection(@"Data Source=(localDB)\localhost;Initial Catalog=EmployeeDetails;Integrated Security=True");
+        IConfiguration configuration;
+        public LabelsRL(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
 
         /// <summary>
         /// Adds the label.
@@ -31,7 +33,8 @@ namespace BusinessManager.Services
         {
             try
             {
-                SqlCommand command = StoreProcedureConnection("spAddLabel");
+                SqlConnection connection = DBConnection();
+                SqlCommand command = StoreProcedureConnection("spAddLabel", connection);
                 connection.Open();
                 command.Parameters.AddWithValue("LabelName", model.LabelName);
                 command.Parameters.AddWithValue("UserId", userId);
@@ -63,7 +66,8 @@ namespace BusinessManager.Services
         {
             try
             {
-                SqlCommand command = StoreProcedureConnection("spEditLabel");
+                SqlConnection connection = DBConnection();
+                SqlCommand command = StoreProcedureConnection("spEditLabel", connection);
                 connection.Open();
                 command.Parameters.AddWithValue("Id", model.Id);
                 command.Parameters.AddWithValue("LabelName", model.LabelName);
@@ -80,10 +84,15 @@ namespace BusinessManager.Services
                     return "Label did not edited";
                 };
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
+        }
+
+        private SqlConnection DBConnection()
+        {
+            return new SqlConnection(configuration["Data:ConnectionString"]);
         }
 
         /// <summary>
@@ -96,7 +105,8 @@ namespace BusinessManager.Services
         {
             try
             {
-                SqlCommand command = StoreProcedureConnection("spDeleteLabel");
+                SqlConnection connection = DBConnection();
+                SqlCommand command = StoreProcedureConnection("spDeleteLabel", connection);
                 command.Parameters.AddWithValue("Id", model.Id);
                 command.Parameters.AddWithValue("UserId", userId);
                 connection.Open();
@@ -122,7 +132,7 @@ namespace BusinessManager.Services
         /// </summary>
         /// <param name="Name">The name.</param>
         /// <returns></returns>
-        private SqlCommand StoreProcedureConnection(string Name)
+        private SqlCommand StoreProcedureConnection(string Name, SqlConnection connection)
         {
             SqlCommand command = new SqlCommand(Name, connection);
             command.CommandType = CommandType.StoredProcedure;

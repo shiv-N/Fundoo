@@ -57,7 +57,7 @@
             //});
 
             ////jwt authentication
-            var key = Encoding.UTF8.GetBytes("SuperSecretKey@345fghhhhhhhhhhhhhhhhhhhhhhhhhhhhhfggggggg");
+            var key = Encoding.UTF8.GetBytes(Configuration["Data:key"]);
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

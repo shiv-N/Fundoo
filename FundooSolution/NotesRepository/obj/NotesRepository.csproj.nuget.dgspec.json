@@ -41,10 +41,6 @@
       "frameworks": {
         "netcoreapp2.1": {
           "dependencies": {
-            "CloudinaryDotNet": {
-              "target": "Package",
-              "version": "[1.9.1, )"
-            },
             "Microsoft.NETCore.App": {
               "suppressParent": "All",
               "target": "Package",
@@ -112,6 +108,10 @@
               "version": "[1.9.1, )"
             },
             "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
               "target": "Package",
               "version": "[2.1.0, )"
             },

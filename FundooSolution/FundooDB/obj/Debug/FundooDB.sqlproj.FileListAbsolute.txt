@@ -1,0 +1,6 @@
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\FundooDB\bin\Debug\FundooDB.dacpac
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\FundooDB\bin\Debug\FundooDB.dll
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\FundooDB\bin\Debug\FundooDB.pdb
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\FundooDB\obj\Debug\FundooDB.sqlprojAssemblyReference.cache
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\FundooDB\obj\Debug\FundooDB.dll
+C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\FundooDB\obj\Debug\FundooDB.pdb

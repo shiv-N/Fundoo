@@ -1,5 +1,6 @@
 ﻿using CommonLayerModel.AccountModels;
 using CommonLayerModel.Models;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using NotesRepository.Interface;
 using System;
@@ -12,25 +13,30 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace NotesRepository.Services
 {
+    /// <summary>
+    /// this is class AccountRL
+    /// </summary>
+    /// <seealso cref="NotesRepository.Interface.IAccountRL" />
     public class AccountRL : IAccountRL
     {
-        SqlConnection connection = new SqlConnection(@"Data Source=(localDB)\localhost;Initial Catalog=EmployeeDetails;Integrated Security=True");
+        IConfiguration configuration;
+        public AccountRL(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
 
-       // private readonly ApplicationSettings applicationSettings;
-
-        //public AccountRL(IOptions<ApplicationSettings> applicationSettings)
-        //{
-        //    this.applicationSettings = applicationSettings;
-        //}
-
-
+        /// <summary>
+        /// Forgots the password.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         public string ForgotPassword(ForgotPassword model)
         {
+            SqlConnection connection = DBConnection();
             string email = model.Email;
-            SqlCommand command = StoreProcedureConnection("spForgotPassword");
+            SqlCommand command = StoreProcedureConnection("spForgotPassword", connection);
             command.Parameters.AddWithValue("@Email", model.Email);
             connection.Open();
             SqlDataReader dataReader = command.ExecuteReader();
@@ -42,15 +48,21 @@ namespace NotesRepository.Services
                 //msmq.SendToMsmq(token, model.Email);
                 return "ForgotPasswordConformation, token : " + token;
             }
-            return string.Empty;
+            return "forgotPassword is not conformed";
         }
 
+        /// <summary>
+        /// Logins the specified model.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         public string Login(LoginRequestModel model)
         {
             try
             {
+                SqlConnection connection = DBConnection();
                 string encrypted = EncryptPassword(model.Password);
-                SqlCommand command = StoreProcedureConnection("spLogin");
+                SqlCommand command = StoreProcedureConnection("spLogin", connection);
                 command.Parameters.AddWithValue("@Email", model.Email);
                 command.Parameters.AddWithValue("@Password", encrypted);
                 connection.Open();
@@ -74,6 +86,12 @@ namespace NotesRepository.Services
             }
         }
 
+        /// <summary>
+        /// Registers the asynchronous.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">Password</exception>
         public async Task<string> RegisterAsync(RegisterRequestModel model)
         {
             try
@@ -84,8 +102,9 @@ namespace NotesRepository.Services
                 }
                 else
                 {
+                    SqlConnection connection = DBConnection();
                     string encrypted = EncryptPassword(model.Password);
-                    SqlCommand command = StoreProcedureConnection("spInsertUser");
+                    SqlCommand command = StoreProcedureConnection("spInsertUser", connection);
                     command.Parameters.AddWithValue("FirstName", model.FirstName);
                     command.Parameters.AddWithValue("LastName", model.LastName);
                     command.Parameters.AddWithValue("PhoneNumber", model.PhoneNumber);
@@ -111,11 +130,22 @@ namespace NotesRepository.Services
             }
         }
 
+        private SqlConnection DBConnection()
+        {
+            return new SqlConnection(configuration["Data:ConnectionString"]);
+        }
+
+        /// <summary>
+        /// Resets the password.
+        /// </summary>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
         public string ResetPassword(ResetPasswordModel token)
         {
+            SqlConnection connection = DBConnection();
             token = DecodeToken(token);
             string encrypted = EncryptPassword(token.Password);
-            SqlCommand command = StoreProcedureConnection("spUpdatePasswordByEmail");
+            SqlCommand command = StoreProcedureConnection("spUpdatePasswordByEmail", connection);
             command.Parameters.AddWithValue("@Email", token.Email);
             command.Parameters.AddWithValue("@Password", encrypted);
             connection.Open();
@@ -123,12 +153,24 @@ namespace NotesRepository.Services
             connection.Close();
             return "Email:"+token.Email+" Id: "+token.Id;
         }
-        private SqlCommand StoreProcedureConnection(string Name)
+
+        /// <summary>
+        /// Stores the procedure connection.
+        /// </summary>
+        /// <param name="Name">The name.</param>
+        /// <returns></returns>
+        private SqlCommand StoreProcedureConnection(string Name, SqlConnection connection)
         {
             SqlCommand command = new SqlCommand(Name, connection);
             command.CommandType = CommandType.StoredProcedure;
             return command;
         }
+
+        /// <summary>
+        /// Encrypts the password.
+        /// </summary>
+        /// <param name="Password">The password.</param>
+        /// <returns></returns>
         private static string EncryptPassword(string Password)
         {
             var provider = new SHA1CryptoServiceProvider();
@@ -138,10 +180,15 @@ namespace NotesRepository.Services
             return encrypted;
         }
 
-
-        private static string GenrateJWTToken(string email, int id)
+        /// <summary>
+        /// Genrates the JWT token.
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        private string GenrateJWTToken(string email, int id)
         {
-            var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SuperSecretKey@345fghhhhhhhhhhhhhhhhhhhhhhhhhhhhhfggggggg".ToString()));
+            var secretkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Data:key"]));
             var signinCredentials = new SigningCredentials(secretkey, SecurityAlgorithms.HmacSha256);
             string userId = Convert.ToString(id);
             var claims = new List<Claim>
@@ -160,6 +207,12 @@ namespace NotesRepository.Services
             string token = new JwtSecurityTokenHandler().WriteToken(tokenOptionOne);
             return token;
         }
+
+        /// <summary>
+        /// Decodes the token.
+        /// </summary>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
         private static ResetPasswordModel DecodeToken(ResetPasswordModel token)
         {
             var stream = token.Token;

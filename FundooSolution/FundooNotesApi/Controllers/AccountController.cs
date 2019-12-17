@@ -14,7 +14,6 @@ namespace FundooNotesApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Authorize]
     public class AccountController : ControllerBase
     {
@@ -60,7 +59,7 @@ namespace FundooNotesApi.Controllers
         /// this is mehtod ForgotPassword
         /// </summary>
         /// <param name="model"></param>
-        /// <returns></returns>
+        /// <returns> IActionResult result</returns>
         [HttpPost("forgot")]
         [AllowAnonymous]
         public IActionResult ForgotPassword(ForgotPassword model)

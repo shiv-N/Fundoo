@@ -52,10 +52,26 @@ namespace FundooTest.UserAccount
 
             var modelForgotPassword = new ForgotPassword()
             {
-                Email = "shiva@Gmail.com"
+                Email = "abc@gmail.com"
             };
             var dataForgotPassword = business.ForgotPassword(modelForgotPassword);
             Assert.NotNull(dataForgotPassword);
+        }
+        [Fact]
+        public void AccountResetPassword()
+        {
+            AccountBL business = objectIntialize();
+
+            var modelResetPasswordModel = new ResetPasswordModel()
+            {
+                Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFiY0BnbWFpbC5jb20iLCJpZCI6IjQwMDMiLCJleHAiOjE1NzY0ODQwMjN9.vldqNZeR993p3ok4AhE6QbHmgLl_Dylz1GGlisidSyU",
+                Password = "qwerty",
+                Email = "shiva@Gmail.com",
+                Id = "2"
+
+            };
+            var dataResetPasswordModel = business.ResetPassword(modelResetPasswordModel);
+            Assert.NotNull(dataResetPasswordModel);
         }
         private static AccountBL objectIntialize()
         {

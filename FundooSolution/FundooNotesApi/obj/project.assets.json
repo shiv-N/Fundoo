@@ -4557,7 +4557,6 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
         "dependencies": {
-          "CloudinaryDotNet": "1.9.1",
           "NotesRepository": "1.0.0"
         },
         "compile": {
@@ -4570,9 +4569,6 @@
       "CommonLayerModel/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
-        "dependencies": {
-          "CloudinaryDotNet": "1.9.1"
-        },
         "compile": {
           "bin/placeholder/CommonLayerModel.dll": {}
         },
@@ -4587,6 +4583,7 @@
           "CloudinaryDotNet": "1.9.1",
           "CommonLayerModel": "1.0.0",
           "Microsoft.AspNetCore.Http.Features": "2.1.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "2.1.0",
           "System.Data.SqlClient": "4.8.0",
           "System.IdentityModel.Tokens.Jwt": "5.6.0"
         },

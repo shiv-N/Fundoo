@@ -5,6 +5,7 @@
     using CloudinaryDotNet.Actions;
     using CommonLayerModel.NotesModels;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Configuration;
     using System;
     using System.Collections.Generic;
     using System.Data;
@@ -18,10 +19,11 @@
     /// <seealso cref="BusinessManager.Interface.INotesRL" />
     public class NotesRL : INotesRL
     {
-        /// <summary>
-        /// The connection
-        /// </summary>
-        SqlConnection connection = new SqlConnection(@"Data Source=(localDB)\localhost;Initial Catalog=EmployeeDetails;Integrated Security=True");
+        IConfiguration configuration;
+        public NotesRL(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
 
         /// <summary>
         /// Adds the notes.
@@ -33,7 +35,8 @@
         {
             try
             {
-                SqlCommand command = StoreProcedureConnection("spAddNote");
+                SqlConnection connection = DBConnection();
+                SqlCommand command = StoreProcedureConnection("spAddNote", connection);
                 command.Parameters.AddWithValue("Title", model.Title);
                 command.Parameters.AddWithValue("MeassageDescription", model.Message);
                 command.Parameters.AddWithValue("NoteImage", model.Image);
@@ -73,8 +76,9 @@
         {
             try
             {
+                SqlConnection connection = DBConnection();
                 IList<DisplayResponceModel> notes = new List<DisplayResponceModel>();
-                SqlCommand command = StoreProcedureConnection("spDisplayNotesByUserId");
+                SqlCommand command = StoreProcedureConnection("spDisplayNotesByUserId", connection);
                 connection.Open();
                 command.Parameters.AddWithValue("UserId", userId);
                 command.ExecuteNonQuery();
@@ -116,7 +120,8 @@
         {
             try
             {
-                SqlCommand command = StoreProcedureConnection("spEditNote");
+                SqlConnection connection = DBConnection();
+                SqlCommand command = StoreProcedureConnection("spEditNote", connection);
                 connection.Open();
                 command.Parameters.AddWithValue("Id", model.Id);
                 command.Parameters.AddWithValue("Title", model.Title);
@@ -148,12 +153,13 @@
         /// <param name="model">The model.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<string> DeleteNote(DeleteNoteRequestModel model,int userId)
+        public async Task<string> DeleteNote(int Id, int userId)
         {
             try
             {
-                SqlCommand command = StoreProcedureConnection("spDeleteNote");
-                command.Parameters.AddWithValue("Id", model.Id);
+                SqlConnection connection = DBConnection();
+                SqlCommand command = StoreProcedureConnection("spDeleteNote", connection);
+                command.Parameters.AddWithValue("Id", Id);
                 command.Parameters.AddWithValue("UserId", userId);
                 connection.Open();
                 int result = await command.ExecuteNonQueryAsync();
@@ -173,12 +179,19 @@
             }
         }
 
-
+        /// <summary>
+        /// Uploads the image.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <param name="noteId">The note identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public async Task<string> UploadImage(IFormFile file,int noteId, int userId)
         {
             try
             {
-                Account account = new Account("dwccwljlx", "229849442634859", "uH92kJO07UQqLgJwqDduffnoZmY");
+                SqlConnection connection = DBConnection();
+                Account account = new Account(configuration["Data:CloudName"], configuration["Data:API_Key"], configuration["Data:API_Secret"]);
                 var Path = file.OpenReadStream();
                 Cloudinary cloudinary = new Cloudinary(account);
                 var uploadParams = new ImageUploadParams()
@@ -186,7 +199,7 @@
                     File = new FileDescription(file.FileName, Path),
                 };
                 var uploadResult = await cloudinary.UploadAsync(uploadParams);
-                SqlCommand command = StoreProcedureConnection("spUpdateImage");
+                SqlCommand command = StoreProcedureConnection("spUpdateImage", connection);
                 command.Parameters.AddWithValue("Id", noteId);
                 command.Parameters.AddWithValue("NoteImage", uploadResult.Uri.ToString());
                 command.Parameters.AddWithValue("UserId", userId);
@@ -208,11 +221,18 @@
             }
         }
 
+        /// <summary>
+        /// Archives the note.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public async Task<string> ArchiveNote(int noteId, int userId)
         {
-            SqlCommand command = StoreProcedureConnection("spArchive");
             try
             {
+                SqlConnection connection = DBConnection();
+                SqlCommand command = StoreProcedureConnection("spArchive", connection);
                 connection.Open();
                 command.Parameters.AddWithValue("@UserId", userId);
                 command.Parameters.AddWithValue("@Id", noteId);
@@ -233,9 +253,16 @@
             } 
         }
 
+        /// <summary>
+        /// Pins the note.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public async Task<string> PinNote(int noteId, int userId)
         {
-            SqlCommand command = StoreProcedureConnection("spPin");
+            SqlConnection connection = DBConnection();
+            SqlCommand command = StoreProcedureConnection("spPin", connection);
             try
             {
                 connection.Open();
@@ -258,9 +285,16 @@
             }
         }
 
+        /// <summary>
+        /// Trashes the note.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public async Task<string> TrashNote(int noteId, int userId)
         {
-            SqlCommand command = StoreProcedureConnection("spTrash");
+            SqlConnection connection = DBConnection();
+            SqlCommand command = StoreProcedureConnection("spTrash", connection);
             try
             {
                 connection.Open();
@@ -282,9 +316,18 @@
                 throw e;
             }
         }
+
+        /// <summary>
+        /// Reminders the note.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="reminder">The reminder.</param>
+        /// <returns></returns>
         public async Task<string> ReminderNote(int noteId, int userId, AddReminderRequest reminder)
         {
-            SqlCommand command = StoreProcedureConnection("spReminder");
+            SqlConnection connection = DBConnection();
+            SqlCommand command = StoreProcedureConnection("spReminder", connection);
             try
             {
                 connection.Open();
@@ -309,9 +352,17 @@
             }
         }
 
+        /// <summary>
+        /// Colours the note.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="colourRequest">The colour request.</param>
+        /// <returns></returns>
         public async Task<string> ColourNote(int noteId, int userId, ColourRequestModel colourRequest)
         {
-            SqlCommand command = StoreProcedureConnection("spColour");
+            SqlConnection connection = DBConnection();
+            SqlCommand command = StoreProcedureConnection("spColour", connection);
             try
             {
                 connection.Open();
@@ -335,12 +386,18 @@
                 throw e;
             }
         }
+
+        private SqlConnection DBConnection()
+        {
+            return new SqlConnection(configuration["Data:ConnectionString"]);
+        }
+
         /// <summary>
         /// Stores the procedure connection.
         /// </summary>
         /// <param name="Name">The name.</param>
         /// <returns></returns>
-        private SqlCommand StoreProcedureConnection(string Name)
+        private SqlCommand StoreProcedureConnection(string Name, SqlConnection connection)
         {
             SqlCommand command = new SqlCommand(Name, connection);
             command.CommandType = CommandType.StoredProcedure;
