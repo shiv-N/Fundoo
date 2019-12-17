@@ -16,7 +16,7 @@
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns></returns>
-        Task<string> RegisterAsync(RegisterRequestModel model);
+        Task<bool> RegisterAsync(RegisterRequestModel model);
 
         /// <summary>
         /// Logins the specified model.
@@ -37,6 +37,6 @@
         /// </summary>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        string ResetPassword(ResetPasswordModel token);
+        ResetPasswordModel ResetPassword(ResetPasswordModel token);
     }
 }

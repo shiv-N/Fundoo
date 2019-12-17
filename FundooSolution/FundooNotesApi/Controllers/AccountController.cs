@@ -37,7 +37,25 @@ namespace FundooNotesApi.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> RegisterAsync(RegisterRequestModel model)
         {
-            return Ok(await account.RegisterAsync(model));
+            string status;
+            if (model != null)
+            {
+                if(await account.RegisterAsync(model))
+                {
+                    status = "User is Registered SuccessFully";
+                    return Ok(new { status, model });
+                }
+                else
+                {
+                    status = "Data is not Registered";
+                    return Ok(new { status, model });
+                }
+            }
+            else
+            {
+                status = "Insufficients details....";
+                return Ok(new { status, model });
+            }
         }
 
         /// <summary>
@@ -50,8 +68,26 @@ namespace FundooNotesApi.Controllers
         [AllowAnonymous]
         public IActionResult Login(LoginRequestModel model)
         {
-            var results = account.Login(model);
-            return Ok(new { results });
+            string status,token;
+            if (model != null)
+            {
+                token = account.Login(model);
+                if (token != string.Empty)
+                {
+                    status = "Login successful!! ";
+                    return Ok(new { status, token, model });
+                }
+                else
+                {
+                    status = "Invalid credentials";
+                    return Ok(new { status, model });
+                }
+            }
+            else
+            {
+                status = "Invalid credentials";
+                return Ok(new { status, model });
+            }
 
         }
 
@@ -64,16 +100,27 @@ namespace FundooNotesApi.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPassword(ForgotPassword model)
         {
-            string userToken = account.ForgotPassword(model);
-            if (userToken != string.Empty)
+            string status, Token;
+            if (model != null)
             {
-                var passwordRestLink = Url.Action("ResetPassword", "Account",
-                    new { email = model.Email, token = userToken }, Request.Scheme);
-                return Ok(userToken);
+                Token = account.ForgotPassword(model);
+                if (Token != string.Empty)
+                {
+                    var passwordRestLink = Url.Action("ResetPassword", "Account",
+                        new { email = model.Email, token = Token }, Request.Scheme);
+                    status = "Forgot password conformation";
+                    return Ok(new { status, Token, model });
+                }
+                else
+                {
+                    status = "Invalid email";
+                    return Ok(new { status, model });
+                }
             }
             else
             {
-                return Ok("Invalid email");
+                status = "Email Should not be empty";
+                return Ok(new { status,model });
             }
         }
 
@@ -84,9 +131,28 @@ namespace FundooNotesApi.Controllers
         /// <returns></returns>
         [Route("reset")]
         [HttpPost]
-        public IActionResult ResetPassword(ResetPasswordModel token)
+        public IActionResult ResetPassword(ResetPasswordModel model)
         {
-            return Ok(account.ResetPassword(token));
+            string status;
+            if (model != null)
+            {
+                ResetPasswordModel responseModel = account.ResetPassword(model); ;
+                if (responseModel.Id != string.Empty)
+                {
+                    status = "reset password conformation";
+                    return Ok(new { status, responseModel });
+                }
+                else
+                {
+                    status = "reset password is not conformation";
+                    return Ok(new { status, model });
+                }
+            }
+            else
+            {
+                status = "Invalid Credential";
+                return Ok(new { status, model });
+            }
         }
     }
 }

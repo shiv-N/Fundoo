@@ -46,9 +46,9 @@ namespace NotesRepository.Services
                 string token = GenrateJWTToken(email,id);
                 //msmq = new MsmqSender();
                 //msmq.SendToMsmq(token, model.Email);
-                return "ForgotPasswordConformation, token : " + token;
+                return token;
             }
-            return "forgotPassword is not conformed";
+            return string.Empty;
         }
 
         /// <summary>
@@ -92,41 +92,34 @@ namespace NotesRepository.Services
         /// <param name="model">The model.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">Password</exception>
-        public async Task<string> RegisterAsync(RegisterRequestModel model)
+        public async Task<bool> RegisterAsync(RegisterRequestModel model)
         {
             try
             {
-                if (model.Password == null)
+                SqlConnection connection = DBConnection();
+                string encrypted = EncryptPassword(model.Password);
+                SqlCommand command = StoreProcedureConnection("spInsertUser", connection);
+                command.Parameters.AddWithValue("FirstName", model.FirstName);
+                command.Parameters.AddWithValue("LastName", model.LastName);
+                command.Parameters.AddWithValue("PhoneNumber", model.PhoneNumber);
+                command.Parameters.AddWithValue("Email", model.Email);
+                command.Parameters.AddWithValue("Password", encrypted);
+                command.Parameters.AddWithValue("UserAddress", model.UserAddress);
+                connection.Open();
+                int result = await command.ExecuteNonQueryAsync();
+                connection.Close();
+                if (result != 0)
                 {
-                    throw new ArgumentNullException("Password");
+                    return true;
                 }
                 else
                 {
-                    SqlConnection connection = DBConnection();
-                    string encrypted = EncryptPassword(model.Password);
-                    SqlCommand command = StoreProcedureConnection("spInsertUser", connection);
-                    command.Parameters.AddWithValue("FirstName", model.FirstName);
-                    command.Parameters.AddWithValue("LastName", model.LastName);
-                    command.Parameters.AddWithValue("PhoneNumber", model.PhoneNumber);
-                    command.Parameters.AddWithValue("Email", model.Email);
-                    command.Parameters.AddWithValue("Password", encrypted);
-                    command.Parameters.AddWithValue("UserAddress", model.UserAddress);
-                    connection.Open();
-                    int result = await command.ExecuteNonQueryAsync();
-                    connection.Close();
-                    if (result != 0)
-                    {
-                        return "User is Registered SuccessFully";
-                    }
-                    else
-                    {
-                        return "Data is not Registered";
-                    }
+                    return false;
                 }
             }
             catch (Exception e)
             {
-                return "Data is not Registered. it throws exception as following.\n" + e.Message;
+                throw e;
             }
         }
 
@@ -140,7 +133,7 @@ namespace NotesRepository.Services
         /// </summary>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        public string ResetPassword(ResetPasswordModel token)
+        public ResetPasswordModel ResetPassword(ResetPasswordModel token)
         {
             SqlConnection connection = DBConnection();
             token = DecodeToken(token);
@@ -149,9 +142,13 @@ namespace NotesRepository.Services
             command.Parameters.AddWithValue("@Email", token.Email);
             command.Parameters.AddWithValue("@Password", encrypted);
             connection.Open();
-            SqlDataReader dataReader = command.ExecuteReader();
+            int result = command.ExecuteNonQuery();
+            if (result == 0)
+            {
+                token.Id = string.Empty;
+            }
             connection.Close();
-            return "Email:"+token.Email+" Id: "+token.Id;
+            return token;
         }
 
         /// <summary>
