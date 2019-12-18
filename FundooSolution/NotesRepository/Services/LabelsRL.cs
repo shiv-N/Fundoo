@@ -29,7 +29,7 @@ namespace BusinessManager.Services
         /// <param name="model">The model.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<string> AddLabel(AddLabel model,int userId)
+        public async Task<bool> AddLabel(AddLabel model,int userId)
         {
             try
             {
@@ -43,11 +43,11 @@ namespace BusinessManager.Services
                 connection.Close();
                 if (result != 0)
                 {
-                    return "Label added";
+                    return true;
                 }
                 else
                 {
-                    return "Label did not added";
+                    return false;
                 };
             }
             catch(Exception e)
@@ -62,7 +62,7 @@ namespace BusinessManager.Services
         /// <param name="model">The model.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<string> EditLabel(EditLabel model,int userId)
+        public async Task<bool> EditLabel(EditLabel model,int userId)
         {
             try
             {
@@ -77,11 +77,11 @@ namespace BusinessManager.Services
                 connection.Close();
                 if (result != 0)
                 {
-                    return "Label edited";
+                    return true;
                 }
                 else
                 {
-                    return "Label did not edited";
+                    return false;
                 };
             }
             catch (Exception e)
@@ -101,7 +101,7 @@ namespace BusinessManager.Services
         /// <param name="model">The model.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<string> DeleteLabel(DeleteLabelRequest model,int userId)
+        public async Task<bool> DeleteLabel(DeleteLabelRequest model,int userId)
         {
             try
             {
@@ -114,11 +114,11 @@ namespace BusinessManager.Services
                 connection.Close();
                 if (result != 0)
                 {
-                    return "Label deleted";
+                    return true;
                 }
                 else
                 {
-                    return "Label did not deleted";
+                    return false;
                 };
             }
             catch(Exception e)

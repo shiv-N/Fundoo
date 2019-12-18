@@ -34,7 +34,7 @@ namespace BusinessManager.Services
         /// <param name="model">The model.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<string> AddLabel(AddLabel model,int userId)
+        public async Task<bool> AddLabel(AddLabel model,int userId)
         {
             return await labels.AddLabel(model, userId);
         }
@@ -45,7 +45,7 @@ namespace BusinessManager.Services
         /// <param name="model">The model.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<string> DeleteLabel(DeleteLabelRequest model,int userId)
+        public async Task<bool> DeleteLabel(DeleteLabelRequest model,int userId)
         {
             return await labels.DeleteLabel(model, userId);
         }
@@ -57,7 +57,7 @@ namespace BusinessManager.Services
         /// <param name="model">The model.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<string> EditLabel(EditLabel model,int userId)
+        public async Task<bool> EditLabel(EditLabel model,int userId)
         {
             return await labels.EditLabel(model, userId);
         }

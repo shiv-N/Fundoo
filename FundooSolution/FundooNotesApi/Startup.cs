@@ -90,7 +90,7 @@
             //// swagger implementation
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1.0", new Info { Title = "My Demo API", Version = "v1.0", Description = "fundoo" });
+                c.SwaggerDoc("v1.0", new Info { Title = "Fundoo", Version = "v1.0", Description = "fundoo" });
                 //   c.OperationFilter<FileUploadedOperation>(); ////Register File Upload Operation Filter
                 //c.DescribeAllEnumsAsStrings();
                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme
@@ -130,7 +130,7 @@
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "My Demo API (V 1.0)");
+                c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "Fundoo (V 1.0)");
             });
             app.UseAuthentication();
 //// app.UseHttpsRedirection();

@@ -3,6 +3,7 @@
     using BusinessManager.Interface;
     using CommonLayerModel.Models;
     using NotesRepository.Interface;
+    using ServiceStack.Redis;
     using System;
     using System.Collections.Generic;
     using System.Text;
@@ -38,7 +39,6 @@
             string Token = notesRL.ForgotPassword(model);
             return Token;
         }
-
         /// <summary>
         /// Logins the specified model.
         /// </summary>
@@ -46,7 +46,20 @@
         /// <returns></returns>
         public string Login(LoginRequestModel model)
         {
-            string token = notesRL.Login(model);
+            string token;
+            RedisEndpoint redisEndpoint = new RedisEndpoint("localhost", 6379);
+            using (RedisClient client = new RedisClient(redisEndpoint))
+            {
+                if (client.Get<string>(model.Email + model.Password)==null)
+                {
+                    token = notesRL.Login(model);
+                    client.Set<string>(model.Email + model.Password, token);
+                }
+                else
+                {
+                    token = client.Get<string>(model.Email + model.Password);
+                }
+            }
             return  token;  
         }
 

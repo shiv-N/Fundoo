@@ -18,7 +18,7 @@ namespace BusinessManager.Interface
         /// <param name="model">The model.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        Task<string> AddLabel(AddLabel model,int userId);
+        Task<bool> AddLabel(AddLabel model,int userId);
 
         /// <summary>
         /// Edits the label.
@@ -26,7 +26,7 @@ namespace BusinessManager.Interface
         /// <param name="model">The model.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        Task<string> EditLabel(EditLabel model,int userId);
+        Task<bool> EditLabel(EditLabel model,int userId);
 
         /// <summary>
         /// Deletes the label.
@@ -34,6 +34,6 @@ namespace BusinessManager.Interface
         /// <param name="model">The model.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        Task<string> DeleteLabel(DeleteLabelRequest model,int userId);
+        Task<bool> DeleteLabel(DeleteLabelRequest model,int userId);
     }
 }

@@ -34,7 +34,7 @@
         /// <param name="model">The model.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<string> AddNotes(AddNotesRequestModel model, int userId)
+        public async Task<bool> AddNotes(AddNotesRequestModel model, int userId)
         {
             return await notes.AddNotes(model,userId); 
         }
@@ -45,7 +45,7 @@
         /// <param name="model">The model.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<string> DeleteNote(int Id, int userId)
+        public async Task<bool> DeleteNote(int Id, int userId)
         {
             return await notes.DeleteNote(Id, userId);
         }
@@ -66,7 +66,7 @@
         /// <param name="model">The model.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<string> EditNote(EditNoteRequestModel model, int userId)
+        public async Task<bool> EditNote(EditNoteRequestModel model, int userId)
         {
             return await notes.EditNote(model,userId);
         }
@@ -78,7 +78,7 @@
         /// <param name="noteId">The note identifier.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<string> UploadImage(IFormFile file, int noteId, int userId)
+        public async Task<bool> UploadImage(IFormFile file, int noteId, int userId)
         {
             return await notes.UploadImage(file, noteId,userId);
         }
@@ -89,7 +89,7 @@
         /// <param name="noteId">The note identifier.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<string> ArchiveNote(int noteId, int userId)
+        public async Task<bool> ArchiveNote(int noteId, int userId)
         {
             return await notes.ArchiveNote(noteId, userId);
         }
@@ -100,7 +100,7 @@
         /// <param name="noteId">The note identifier.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<string> PinNote(int noteId, int userId)
+        public async Task<bool> PinNote(int noteId, int userId)
         {
             return await notes.PinNote(noteId, userId);
         }
@@ -111,7 +111,7 @@
         /// <param name="noteId">The note identifier.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<string> TrashNote(int noteId, int userId)
+        public async Task<bool> TrashNote(int noteId, int userId)
         {
             return await notes.TrashNote(noteId, userId);
 
@@ -124,7 +124,7 @@
         /// <param name="userId">The user identifier.</param>
         /// <param name="reminder">The reminder.</param>
         /// <returns></returns>
-        public async Task<string> ReminderNote(int noteId, int userId, AddReminderRequest reminder)
+        public async Task<bool> ReminderNote(int noteId, int userId, AddReminderRequest reminder)
         {
             return await notes.ReminderNote(noteId,userId,reminder);
         }
@@ -136,7 +136,7 @@
         /// <param name="userId">The user identifier.</param>
         /// <param name="colourRequest">The colour request.</param>
         /// <returns></returns>
-        public async Task<string> ColourNote(int noteId, int userId, ColourRequestModel colourRequest)
+        public async Task<bool> ColourNote(int noteId, int userId, ColourRequestModel colourRequest)
         {
             return await notes.ColourNote(noteId, userId, colourRequest);
         }

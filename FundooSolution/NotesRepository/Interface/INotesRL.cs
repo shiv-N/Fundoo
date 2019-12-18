@@ -19,7 +19,7 @@ namespace BusinessManager.Interface
         /// <param name="model">The model.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        Task<string> AddNotes(AddNotesRequestModel model, int userId);
+        Task<bool> AddNotes(AddNotesRequestModel model, int userId);
 
         /// <summary>
         /// Displays the notes.
@@ -34,7 +34,7 @@ namespace BusinessManager.Interface
         /// <param name="model">The model.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        Task<string> EditNote(EditNoteRequestModel model, int userId);
+        Task<bool> EditNote(EditNoteRequestModel model, int userId);
 
         /// <summary>
         /// Deletes the note.
@@ -42,7 +42,7 @@ namespace BusinessManager.Interface
         /// <param name="model">The model.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        Task<string> DeleteNote(int Id, int userId);
+        Task<bool> DeleteNote(int Id, int userId);
 
         /// <summary>
         /// Uploads the image.
@@ -51,7 +51,7 @@ namespace BusinessManager.Interface
         /// <param name="noteId">The note identifier.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        Task<string> UploadImage(IFormFile file, int noteId, int userId);
+        Task<bool> UploadImage(IFormFile file, int noteId, int userId);
 
         /// <summary>
         /// Archives the note.
@@ -59,7 +59,7 @@ namespace BusinessManager.Interface
         /// <param name="noteId">The note identifier.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        Task<string> ArchiveNote(int noteId,int userId);
+        Task<bool> ArchiveNote(int noteId,int userId);
 
         /// <summary>
         /// Pins the note.
@@ -67,7 +67,7 @@ namespace BusinessManager.Interface
         /// <param name="noteId">The note identifier.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        Task<string> PinNote(int noteId, int userId);
+        Task<bool> PinNote(int noteId, int userId);
 
         /// <summary>
         /// Trashes the note.
@@ -75,7 +75,7 @@ namespace BusinessManager.Interface
         /// <param name="noteId">The note identifier.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        Task<string> TrashNote(int noteId, int userId);
+        Task<bool> TrashNote(int noteId, int userId);
 
         /// <summary>
         /// Reminders the note.
@@ -84,7 +84,7 @@ namespace BusinessManager.Interface
         /// <param name="userId">The user identifier.</param>
         /// <param name="reminder">The reminder.</param>
         /// <returns></returns>
-        Task<string> ReminderNote(int noteId, int userId, AddReminderRequest reminder);
+        Task<bool> ReminderNote(int noteId, int userId, AddReminderRequest reminder);
 
         /// <summary>
         /// Colours the note.
@@ -93,6 +93,6 @@ namespace BusinessManager.Interface
         /// <param name="userId">The user identifier.</param>
         /// <param name="colourRequest">The colour request.</param>
         /// <returns></returns>
-        Task<string> ColourNote(int noteId, int userId, ColourRequestModel colourRequest);
+        Task<bool> ColourNote(int noteId, int userId, ColourRequestModel colourRequest);
     }
 }

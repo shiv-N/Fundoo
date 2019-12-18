@@ -31,7 +31,7 @@
         /// <param name="model">The model.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<string> AddNotes(AddNotesRequestModel model, int userId)
+        public async Task<bool> AddNotes(AddNotesRequestModel model, int userId)
         {
             try
             {
@@ -54,11 +54,11 @@
                 connection.Close();
                 if (result != 0)
                 {
-                    return "Note added";
+                    return true;
                 }
                 else
                 {
-                    return "Note did not added";
+                    return false;
                 };
             }
             catch(Exception e)
@@ -116,7 +116,7 @@
         /// <param name="model">The model.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<string> EditNote(EditNoteRequestModel model, int userId)
+        public async Task<bool> EditNote(EditNoteRequestModel model, int userId)
         {
             try
             {
@@ -134,11 +134,11 @@
                 connection.Close();
                 if (result != 0)
                 {
-                    return "Note edited";
+                    return true;
                 }
                 else
                 {
-                    return "Note did not edited";
+                    return false;
                 };
             }
             catch(Exception e)
@@ -153,7 +153,7 @@
         /// <param name="model">The model.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<string> DeleteNote(int Id, int userId)
+        public async Task<bool> DeleteNote(int Id, int userId)
         {
             try
             {
@@ -166,11 +166,11 @@
                 connection.Close();
                 if(result != 0)
                 {
-                    return "Note deleted";
+                    return true;
                 }
                 else
                 {
-                    return "Note did not deleted";
+                    return false;
                 };
             }
             catch(Exception e)
@@ -186,7 +186,7 @@
         /// <param name="noteId">The note identifier.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<string> UploadImage(IFormFile file,int noteId, int userId)
+        public async Task<bool> UploadImage(IFormFile file,int noteId, int userId)
         {
             try
             {
@@ -208,11 +208,11 @@
                 connection.Close();
                 if (result != 0)
                 {
-                    return "Image Uploaded SuccessFully";
+                    return true;
                 }
                 else
                 {
-                    return "Image is not Uploaded SuccessFully";
+                    return false;
                 };
             }
             catch(Exception e)
@@ -227,7 +227,7 @@
         /// <param name="noteId">The note identifier.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<string> ArchiveNote(int noteId, int userId)
+        public async Task<bool> ArchiveNote(int noteId, int userId)
         {
             try
             {
@@ -240,11 +240,11 @@
                 connection.Close();
                 if (result != 0)
                 {
-                    return "archive successful";
+                    return true;
                 }
                 else
                 {
-                    return "archive is not successful";
+                    return false;
                 };
             }
             catch(Exception e)
@@ -259,7 +259,7 @@
         /// <param name="noteId">The note identifier.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<string> PinNote(int noteId, int userId)
+        public async Task<bool> PinNote(int noteId, int userId)
         {
             SqlConnection connection = DBConnection();
             SqlCommand command = StoreProcedureConnection("spPin", connection);
@@ -272,11 +272,11 @@
                 connection.Close();
                 if (result != 0)
                 {
-                    return "Pin successful";
+                    return true;
                 }
                 else
                 {
-                    return "Pin is not successful";
+                    return false;
                 };
             }
             catch (Exception e)
@@ -291,7 +291,7 @@
         /// <param name="noteId">The note identifier.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<string> TrashNote(int noteId, int userId)
+        public async Task<bool> TrashNote(int noteId, int userId)
         {
             SqlConnection connection = DBConnection();
             SqlCommand command = StoreProcedureConnection("spTrash", connection);
@@ -304,11 +304,11 @@
                 connection.Close();
                 if (result != 0)
                 {
-                    return "Trash successful";
+                    return true;
                 }
                 else
                 {
-                    return "Trash is not successful";
+                    return false;
                 };
             }
             catch (Exception e)
@@ -324,7 +324,7 @@
         /// <param name="userId">The user identifier.</param>
         /// <param name="reminder">The reminder.</param>
         /// <returns></returns>
-        public async Task<string> ReminderNote(int noteId, int userId, AddReminderRequest reminder)
+        public async Task<bool> ReminderNote(int noteId, int userId, AddReminderRequest reminder)
         {
             SqlConnection connection = DBConnection();
             SqlCommand command = StoreProcedureConnection("spReminder", connection);
@@ -339,11 +339,11 @@
                 connection.Close();
                 if (result != 0)
                 {
-                    return "reminder set successfully";
+                    return true;
                 }
                 else
                 {
-                    return "reminder is not set";
+                    return false;
                 };
             }
             catch (Exception e)
@@ -359,7 +359,7 @@
         /// <param name="userId">The user identifier.</param>
         /// <param name="colourRequest">The colour request.</param>
         /// <returns></returns>
-        public async Task<string> ColourNote(int noteId, int userId, ColourRequestModel colourRequest)
+        public async Task<bool> ColourNote(int noteId, int userId, ColourRequestModel colourRequest)
         {
             SqlConnection connection = DBConnection();
             SqlCommand command = StoreProcedureConnection("spColour", connection);
@@ -374,11 +374,11 @@
                 connection.Close();
                 if (result != 0)
                 {
-                    return "color changed successfully";
+                    return true;
                 }
                 else
                 {
-                    return "color is not changed.";
+                    return false;
                 };
             }
             catch (Exception e)

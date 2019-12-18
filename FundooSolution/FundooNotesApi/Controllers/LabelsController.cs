@@ -41,7 +41,16 @@ namespace FundooNotesApi.Controllers
         public async Task<IActionResult> AddLabel(AddLabel model)
         {
             int userId = TokenUserId();
-            return Ok(await labels.AddLabel(model, userId));
+            if(await labels.AddLabel(model, userId))
+            {
+                string status = "Label added";
+                return Ok(new { status,userId,model});
+            }
+            else
+            {
+                string status = "Label did not added";
+                return Ok(new { status, userId, model });
+            }
         }
 
         /// <summary>
@@ -53,7 +62,16 @@ namespace FundooNotesApi.Controllers
         public async Task<IActionResult> EditLabel(EditLabel model)
         {
             var userId = TokenUserId();
-            return Ok(await labels.EditLabel(model, userId));
+            if (await labels.EditLabel(model, userId))
+            {
+                string status = "Label edited";
+                return Ok(new { status, userId, model });
+            }
+            else
+            {
+                string status = "Label did not edited";
+                return Ok(new { status, userId, model });
+            }
         }
 
         /// <summary>
@@ -65,7 +83,16 @@ namespace FundooNotesApi.Controllers
         public async Task<IActionResult> DeleteLabel(DeleteLabelRequest model)
         {
             var userId = TokenUserId();
-            return Ok(await labels.DeleteLabel(model, userId));
+            if (await labels.DeleteLabel(model, userId))
+            {
+                string status = "Label deleted";
+                return Ok(new { status, userId, model });
+            }
+            else
+            {
+                string status = "Label did not deleted";
+                return Ok(new { status, userId, model });
+            }
         }
 
         /// <summary>

@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ServiceStack.Redis" Version="5.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\NotesRepository\NotesRepository.csproj" />
   </ItemGroup>
 

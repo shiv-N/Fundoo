@@ -46,12 +46,21 @@ namespace FundooNotesApi.Controllers
             if (model != null)
             {
                 var userId = TokenUserId();
-                return Ok(await note.AddNotes(model, userId));
+                if(await note.AddNotes(model, userId))
+                {
+                    string status = "Note added";
+                    return Ok(new { status, userId, model });
+                }
+                else
+                {
+                    string status = "Input should not be empty!!!";
+                    return Ok(new { status, userId, model });
+                }
             }
             else
             {
-                string result = "Input should not be empty!!!";
-                return Ok(new { result });
+                string status = "Note did not added";
+                return Ok(new { status,  model });
             }
         }
 
@@ -63,7 +72,27 @@ namespace FundooNotesApi.Controllers
         public IActionResult DisplayNotes()
         {
             var userId = TokenUserId();
-            return Ok(note.DisplayNotes(userId));
+            if (userId != 0)
+            {
+
+                IList <DisplayResponceModel> model = note.DisplayNotes(userId);
+                if (model != null)
+                {
+                    string status = "Display notes operation is successful";
+                    return Ok(new { status,userId, model});
+
+                }
+                else
+                {
+                    string status = "Display notes operation is not successful";
+                    return Ok(new { status, userId, model });
+                }
+            }
+            else
+            {
+                string status = "Invalid user";
+                return Ok(new { status, userId });
+            }
 
         }
 
@@ -78,13 +107,21 @@ namespace FundooNotesApi.Controllers
             if (model != null)
             {
                 var userId = TokenUserId();
-                string result = await note.EditNote(model, userId);
-                return Ok(new { result });
+                if (await note.EditNote(model, userId))
+                {
+                    string status = "Note edited";
+                    return Ok(new { status, userId,model });
+                }
+                else
+                {
+                    string status = "Note did not edited";
+                    return BadRequest(new { status, userId,model });
+                }
             }
             else
             {
-                string result = "Input should not be empty!!!";
-                return Ok(new { result });
+                string status = "Input should not be empty!!!";
+                return Ok(new { status,model });
             }
         }
 
@@ -97,8 +134,16 @@ namespace FundooNotesApi.Controllers
         public async Task<IActionResult> DeleteNote(int Id)
         {
             var userId = TokenUserId();
-            string result = await note.DeleteNote(Id, userId);
-            return Ok(new { result });
+            if(await note.DeleteNote(Id, userId))
+            {
+                string status = "Note deleted";
+                return Ok(new { status, userId, Id });
+            }
+            else
+            {
+                string status = "Note is not deleted";
+                return Ok(new { status, userId, Id });
+            }
         }
 
         /// <summary>
@@ -113,8 +158,16 @@ namespace FundooNotesApi.Controllers
             if (file != null && noteId != 0)
             {
                 var userId = TokenUserId();
-                string result = await note.UploadImage(file, noteId, userId);
-                return Ok(new { result });
+                if (await note.UploadImage(file, noteId, userId))
+                {
+                    string status = "Image Uploaded SuccessFully";
+                    return Ok(new { status, userId, noteId });
+                }
+                else
+                {
+                    string status = "Image is not Uploaded SuccessFully";
+                    return Ok(new { status, userId, noteId });
+                }
             }
             else
             {
@@ -132,8 +185,16 @@ namespace FundooNotesApi.Controllers
         public async Task<IActionResult> ArchiveNote(int noteId)
         {
             var userId = TokenUserId();
-            string result = await note.ArchiveNote(noteId, userId);
-            return Ok(new { result });
+            if (await note.ArchiveNote(noteId, userId))
+            {
+                string status = "archive successful";
+                return Ok(new { status, userId, noteId });
+            }
+            else
+            {
+                string status = "archive is not successful";
+                return Ok(new { status, userId, noteId });
+            }
         }
 
         /// <summary>
@@ -145,8 +206,16 @@ namespace FundooNotesApi.Controllers
         public async Task<IActionResult> PinNote(int noteId)
         {
             var userId = TokenUserId();
-            string result = await note.PinNote(noteId, userId);
-            return Ok(new { result });
+            if (await note.PinNote(noteId, userId))
+            {
+                string status = "Pin successful";
+                return Ok(new { status, userId, noteId });
+            }
+            else
+            {
+                string status = "Pin is not successful";
+                return Ok(new { status, userId, noteId });
+            }
         }
 
         /// <summary>
@@ -158,8 +227,16 @@ namespace FundooNotesApi.Controllers
         public async Task<IActionResult> TrashNote(int noteId)
         {
             var userId = TokenUserId();
-            string result = await note.TrashNote(noteId, userId);
-            return Ok(new { result });
+            if (await note.TrashNote(noteId, userId))
+            {
+                string status = "Trash successful";
+                return Ok(new { status, userId, noteId });
+            }
+            else
+            {
+                string status = "Trash is not successful";
+                return Ok(new { status, userId, noteId });
+            }
         }
 
         /// <summary>
@@ -172,8 +249,16 @@ namespace FundooNotesApi.Controllers
         public async Task<IActionResult> ReminderNote(int noteId, AddReminderRequest reminder)
         {
             var userId = TokenUserId();
-            string result = await note.ReminderNote(noteId, userId, reminder);
-            return Ok(new { result });
+            if (await note.ReminderNote(noteId, userId, reminder))
+            {
+                string status = "reminder set successfully";
+                return Ok(new { status, userId, noteId, reminder });
+            }
+            else
+            {
+                string status = "reminder is not set";
+                return Ok(new { status, userId, noteId, reminder });
+            }
         }
 
         /// <summary>
@@ -186,8 +271,16 @@ namespace FundooNotesApi.Controllers
         public async Task<IActionResult> ColourNote(int noteId, ColourRequestModel colourRequest)
         {
             var userId = TokenUserId();
-            string result = await note.ColourNote(noteId, userId, colourRequest);
-            return Ok(new { result });
+            if (await note.ColourNote(noteId, userId, colourRequest))
+            {
+                string status = "color changed successfully";
+                return Ok(new { status, userId, noteId, colourRequest });
+            }
+            else
+            {
+                string status = "color is not changed.";
+                return Ok(new { status, userId, noteId, colourRequest });
+            }
         }
         /// <summary>
         /// Tokens the user identifier.
