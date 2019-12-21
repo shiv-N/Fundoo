@@ -8,6 +8,8 @@ namespace FundooNotesApi.Controllers
     using BusinessManager.Interface;
     using BusinessManager.Services;
     using CommonLayerModel.NotesModels;
+    using CommonLayerModel.NotesModels.Request;
+    using CommonLayerModel.NotesModels.Responce;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -43,7 +45,7 @@ namespace FundooNotesApi.Controllers
         [HttpPost]
         public async Task<IActionResult> AddNotes(AddNotesRequestModel model)
         {
-            if (model != null)
+            if (model != null && model.CreatedDate > DateTime.MinValue)
             {
                 var userId = TokenUserId();
                 if(await note.AddNotes(model, userId))
@@ -282,6 +284,62 @@ namespace FundooNotesApi.Controllers
                 return Ok(new { status, userId, noteId, colourRequest });
             }
         }
+        [HttpGet("Collabrators")]
+        public async Task<IActionResult> GetCollaborators()
+        {
+            var userId = TokenUserId();
+            IList<GetCollabratorResponce> data = await note.GetCollaborators(userId);
+            if (data!=null)
+            {
+                return Ok(new { success=true,Meassage="Get Collabrators SucessessFully", data });
+            }
+            else
+            {
+                return Ok(new { success = false, Meassage = "Get Collabrators unsuceessful" });
+            }
+        }
+
+        [HttpPost("AddCollaborators")]
+        public async Task<IActionResult> AddCollaborators(AddCollaboratorRequest collaborator)
+        {
+            try
+            {
+                if (collaborator.CollaboratorId != 0 && collaborator.NoteId != 0)
+                {
+                    var userId = TokenUserId();
+                    AddCollaboratorResponce data = await note.AddCollaborators(userId, collaborator);
+                    if (data.CollaborationRecordId != 0)
+                    {
+                        return Ok(new { success = true, Meassage = "Add Collabrators SucessessFully", data });
+                    }
+                    else
+                    {
+                        return Ok(new { success = false, Meassage = "Add Collabrators unsuceessful" });
+                    }
+                }
+                else
+                {
+                    return Ok(new { success = false, Meassage = "Invalid Credentials" });
+                }
+            }
+            catch(Exception e)
+            {
+                return Ok(new { success = false, Meassage = e.Message});
+            }
+        }
+        //[HttpDelete("bulkDelete")]
+        //public async Task<IActionResult> bulkTrash(List<int> No)
+        //{
+        //    try
+        //    {
+        //        var userId = TokenUserId();
+               
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return Ok(new { success = false, Meassage = e.Message });
+        //    }
+        //}
         /// <summary>
         /// Tokens the user identifier.
         /// </summary>

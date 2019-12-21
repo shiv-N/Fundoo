@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessManager.Interface;
+using CommonLayerModel.AccountModels.Response;
 using CommonLayerModel.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -33,28 +34,31 @@ namespace FundooNotesApi.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost("register")]
         [AllowAnonymous]
         public async Task<IActionResult> RegisterAsync(RegisterRequestModel model)
         {
-            string status;
-            if (model != null)
+            try
             {
-                if(await account.RegisterAsync(model))
+                if (model != null)
                 {
-                    status = "User is Registered SuccessFully";
-                    return Ok(new { status, model });
+                    if (await account.RegisterAsync(model))
+                    {
+                        return Ok(new { Success = true, Message = "User is Registered SuccessFully", model });
+                    }
+                    else
+                    {
+                        return Ok(new { Success = false, Message = "User is not Registered", model });
+                    }
                 }
                 else
                 {
-                    status = "Data is not Registered";
-                    return Ok(new { status, model });
+                    return Ok(new { Success = false, Message = "Insufficients details....", model });
                 }
             }
-            else
+            catch(Exception e)
             {
-                status = "Insufficients details....";
-                return Ok(new { status, model });
+                return Ok(new { Success = false, Message = e.Message });
             }
         }
 
@@ -68,25 +72,28 @@ namespace FundooNotesApi.Controllers
         [AllowAnonymous]
         public IActionResult Login(LoginRequestModel model)
         {
-            string status,token;
-            if (model != null)
+            try
             {
-                token = account.Login(model);
-                if (token != string.Empty)
+                if (model != null)
                 {
-                    status = "Login successful!! ";
-                    return Ok(new { status, token, model });
+                    AccountLoginResponce Data = account.Login(model);
+                    if (Data.Token != null)
+                    {
+                        return Ok(new { Success = true, Message = "Login successful!!", Data });
+                    }
+                    else
+                    {
+                        return Ok(new { Success = false, Message = "Invalid credentials" });
+                    }
                 }
                 else
                 {
-                    status = "Invalid credentials";
-                    return Ok(new { status, model });
+                    return Ok(new { Success = false, Message ="Invalid credentials"});
                 }
             }
-            else
+            catch (Exception e)
             {
-                status = "Invalid credentials";
-                return Ok(new { status, model });
+                return Ok(new { Success = false, Message = e.Message });
             }
 
         }

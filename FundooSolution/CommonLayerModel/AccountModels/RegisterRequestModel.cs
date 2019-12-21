@@ -70,5 +70,7 @@ namespace CommonLayerModel.Models
         [StringLength(250, MinimumLength = 3, ErrorMessage = "Name should be in between 3 and 250 character")]
         [DataType(DataType.MultilineText)]
         public string UserAddress { get; set; }
+        [Required]
+        public string ServiceType { get; set; }
     }
 }

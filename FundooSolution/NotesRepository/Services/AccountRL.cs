@@ -1,4 +1,5 @@
 ﻿using CommonLayerModel.AccountModels;
+using CommonLayerModel.AccountModels.Response;
 using CommonLayerModel.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -56,29 +57,36 @@ namespace NotesRepository.Services
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns></returns>
-        public string Login(LoginRequestModel model)
+        public AccountLoginResponce Login(LoginRequestModel model)
         {
             try
             {
                 SqlConnection connection = DBConnection();
                 string encrypted = EncryptPassword(model.Password);
-                SqlCommand command = StoreProcedureConnection("spLogin", connection);
+                SqlCommand command = StoreProcedureConnection("spUserLogin", connection);
                 command.Parameters.AddWithValue("@Email", model.Email);
                 command.Parameters.AddWithValue("@Password", encrypted);
                 connection.Open();
                 SqlDataReader dataReader = command.ExecuteReader();
-                string token = string.Empty;
+                AccountLoginResponce loginResponce = new AccountLoginResponce();
                 while (dataReader.Read())
                 {
                     if ((dataReader["Email"].ToString()).Equals(model.Email))
                     {
-                        int Id = (int)dataReader["Id"];
-                        token = GenrateJWTToken(model.Email, Id);
+                        loginResponce.Id = (int)dataReader["Id"];
+                        loginResponce.FirstName = dataReader["FirstName"].ToString();
+                        loginResponce.LastName = dataReader["LastName"].ToString();
+                        loginResponce.Email = dataReader["Email"].ToString();
+                        loginResponce.PhoneNumber = dataReader["PhoneNumber"].ToString();
+                        loginResponce.UserAddress = dataReader["UserAddress"].ToString();
+                        loginResponce.ServiceType = dataReader["ServiceType"].ToString();
+                        loginResponce.UserType = dataReader["UserType"].ToString();
+                        loginResponce.Token = GenrateJWTToken(model.Email, loginResponce.Id);
                         break;
                     }
                 }
                 connection.Close();
-                return token;
+                return loginResponce;
             }
             catch (Exception e)
             {
@@ -86,6 +94,42 @@ namespace NotesRepository.Services
             }
         }
 
+        public async Task<AccountLoginResponce> AdminLogin(LoginRequestModel model)
+        {
+            try
+            {
+                SqlConnection connection = DBConnection();
+                string encrypted = EncryptPassword(model.Password);
+                SqlCommand command = StoreProcedureConnection("spAdminLogin", connection);
+                command.Parameters.AddWithValue("@Email", model.Email);
+                command.Parameters.AddWithValue("@Password", encrypted);
+                connection.Open();
+                SqlDataReader dataReader = await command.ExecuteReaderAsync();
+                AccountLoginResponce loginResponce = new AccountLoginResponce();
+                while (dataReader.Read())
+                {
+                    if ((dataReader["Email"].ToString()).Equals(model.Email))
+                    {
+                        loginResponce.Id = (int)dataReader["Id"];
+                        loginResponce.FirstName = dataReader["FirstName"].ToString();
+                        loginResponce.LastName = dataReader["LastName"].ToString();
+                        loginResponce.Email = dataReader["Email"].ToString();
+                        loginResponce.PhoneNumber = dataReader["PhoneNumber"].ToString();
+                        loginResponce.UserAddress = dataReader["UserAddress"].ToString();
+                        loginResponce.ServiceType = dataReader["ServiceType"].ToString();
+                        loginResponce.UserType = dataReader["UserType"].ToString();
+                        loginResponce.Token = GenrateJWTToken(model.Email, loginResponce.Id);
+                        break;
+                    }
+                }
+                connection.Close();
+                return loginResponce;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         /// <summary>
         /// Registers the asynchronous.
         /// </summary>
@@ -98,13 +142,14 @@ namespace NotesRepository.Services
             {
                 SqlConnection connection = DBConnection();
                 string encrypted = EncryptPassword(model.Password);
-                SqlCommand command = StoreProcedureConnection("spInsertUser", connection);
+                SqlCommand command = StoreProcedureConnection("spRegisterUser", connection);
                 command.Parameters.AddWithValue("FirstName", model.FirstName);
                 command.Parameters.AddWithValue("LastName", model.LastName);
                 command.Parameters.AddWithValue("PhoneNumber", model.PhoneNumber);
                 command.Parameters.AddWithValue("Email", model.Email);
                 command.Parameters.AddWithValue("Password", encrypted);
                 command.Parameters.AddWithValue("UserAddress", model.UserAddress);
+                command.Parameters.AddWithValue("ServiceType", model.ServiceType);
                 connection.Open();
                 int result = await command.ExecuteNonQueryAsync();
                 connection.Close();
@@ -123,6 +168,37 @@ namespace NotesRepository.Services
             }
         }
 
+        public async Task<bool> AdminRegisterAsync(RegisterRequestModel model)
+        {
+            try
+            {
+                SqlConnection connection = DBConnection();
+                string encrypted = EncryptPassword(model.Password);
+                SqlCommand command = StoreProcedureConnection("spRegisterAdmin", connection);
+                command.Parameters.AddWithValue("FirstName", model.FirstName);
+                command.Parameters.AddWithValue("LastName", model.LastName);
+                command.Parameters.AddWithValue("PhoneNumber", model.PhoneNumber);
+                command.Parameters.AddWithValue("Email", model.Email);
+                command.Parameters.AddWithValue("Password", encrypted);
+                command.Parameters.AddWithValue("UserAddress", model.UserAddress);
+                command.Parameters.AddWithValue("ServiceType", model.ServiceType);
+                connection.Open();
+                int result = await command.ExecuteNonQueryAsync();
+                connection.Close();
+                if (result != 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         private SqlConnection DBConnection()
         {
             return new SqlConnection(configuration["Data:ConnectionString"]);
@@ -151,6 +227,60 @@ namespace NotesRepository.Services
             return token;
         }
 
+        public async Task<List<GetAllUserResponce>> GetAllUserByAdminAuthorization()
+        {
+            try
+            {
+                SqlConnection connection = DBConnection();
+                SqlCommand command = StoreProcedureConnection("spGetUserList", connection);
+                List<GetAllUserResponce> responces = new List<GetAllUserResponce>();
+                connection.Open();
+                SqlDataReader dataReader = command.ExecuteReader();
+                while(dataReader.Read())
+                {
+                    GetAllUserResponce get = new GetAllUserResponce();
+                    get.Id = (int)dataReader["Id"];
+                    get.FirstName = dataReader["FirstName"].ToString();
+                    get.LastName = dataReader["LastName"].ToString();
+                    get.Email = dataReader["Email"].ToString();
+                    get.PhoneNumber = dataReader["PhoneNumber"].ToString();
+                    get.UserAddress = dataReader["UserAddress"].ToString();
+                    get.ServiceType = dataReader["ServiceType"].ToString();
+                    get.UserType = dataReader["UserType"].ToString();
+                    responces.Add(get);
+                }
+                connection.Close();
+                return responces;
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
+        public async Task<Dictionary<string, int>> GetUserStatisticsByAdmin()
+        {
+            SqlConnection connection = DBConnection();
+            SqlCommand command = StoreProcedureConnection("spUserstatistics", connection);
+            Dictionary<string, int> keyValues = new Dictionary<string, int>();
+            connection.Open();
+            SqlDataReader dataReader = await command.ExecuteReaderAsync();
+            int basicCount = 0, advanceCount = 0;
+            while (dataReader.Read())
+            {
+                if(dataReader["ServiceType"].ToString().Equals("Advance") || dataReader["ServiceType"].ToString().Equals("advance"))
+                {
+                    advanceCount++;
+                }
+                else if(dataReader["ServiceType"].ToString().Equals("Basic") || dataReader["ServiceType"].ToString().Equals("basic"))
+                {
+                    basicCount++;
+                }
+            }
+            connection.Close();
+            keyValues.Add("Advance", advanceCount);
+            keyValues.Add("Basic", basicCount);
+            return keyValues;
+        }
         /// <summary>
         /// Stores the procedure connection.
         /// </summary>

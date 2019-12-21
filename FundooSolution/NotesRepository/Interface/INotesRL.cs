@@ -2,6 +2,8 @@
 namespace BusinessManager.Interface
 {
     using CommonLayerModel.NotesModels;
+    using CommonLayerModel.NotesModels.Request;
+    using CommonLayerModel.NotesModels.Responce;
     using Microsoft.AspNetCore.Http;
     using System;
     using System.Collections.Generic;
@@ -94,5 +96,8 @@ namespace BusinessManager.Interface
         /// <param name="colourRequest">The colour request.</param>
         /// <returns></returns>
         Task<bool> ColourNote(int noteId, int userId, ColourRequestModel colourRequest);
+
+        Task<IList<GetCollabratorResponce>> GetCollaborators(int userId);
+        Task<AddCollaboratorResponce> AddCollaborators(int userId, AddCollaboratorRequest collaborator);
     }
 }

@@ -4,6 +4,8 @@
     using CloudinaryDotNet;
     using CloudinaryDotNet.Actions;
     using CommonLayerModel.NotesModels;
+    using CommonLayerModel.NotesModels.Request;
+    using CommonLayerModel.NotesModels.Responce;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Configuration;
     using System;
@@ -110,6 +112,62 @@
             }
         }
 
+        public async Task<IList<GetCollabratorResponce>> GetCollaborators(int userId)
+        {
+            try
+            {
+                SqlConnection connection = DBConnection();
+                IList<GetCollabratorResponce> notes = new List<GetCollabratorResponce>();
+                SqlCommand command = StoreProcedureConnection("spGetCollaborators", connection);
+                connection.Open();
+                command.Parameters.AddWithValue("UserId", userId);
+                command.ExecuteNonQuery();
+                SqlDataReader dataReader = await command.ExecuteReaderAsync();
+                while (dataReader.Read())
+                {
+                    GetCollabratorResponce collabratorDetails = new GetCollabratorResponce();
+                    collabratorDetails.CollaboratorId = (int)dataReader["Id"];
+                    collabratorDetails.Email = dataReader["Email"].ToString();
+                    notes.Add(collabratorDetails);
+                }
+                connection.Close();
+                return notes;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<AddCollaboratorResponce> AddCollaborators(int userId, AddCollaboratorRequest collaborator)
+        {
+            try
+            {
+                SqlConnection connection = DBConnection();
+                SqlCommand command = StoreProcedureConnection("spAddValidCollaborator", connection);
+                command.Parameters.AddWithValue("@UserId", userId);
+                command.Parameters.AddWithValue("@CollaboratorWithId", collaborator.CollaboratorId);
+                command.Parameters.AddWithValue("@NoteId", collaborator.NoteId);
+                command.Parameters.AddWithValue("@CreatedDateTime", collaborator.CreatedDateTime);
+                connection.Open();
+                SqlDataReader dataReader = await command.ExecuteReaderAsync();
+                AddCollaboratorResponce collaboratorResponce = new AddCollaboratorResponce();
+                if (dataReader.Read())
+                {
+                    collaboratorResponce.CollaborationRecordId = (int)dataReader["CollabratorId"];
+                    collaboratorResponce.UserId = (int)dataReader["UserId"];
+                    collaboratorResponce.CollaboratorId = (int)dataReader["CollabratorWithId"];
+                    collaboratorResponce.NoteId = (int)dataReader["NoteId"];
+                    collaboratorResponce.CreatedDateTime = (DateTime)dataReader["CreatedDateTime"];
+                }
+                connection.Close();
+                return collaboratorResponce;
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
         /// <summary>
         /// Edits the note.
         /// </summary>

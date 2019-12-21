@@ -1,6 +1,7 @@
 ﻿namespace BusinessManager.Services
 {
     using BusinessManager.Interface;
+    using CommonLayerModel.AccountModels.Response;
     using CommonLayerModel.Models;
     using NotesRepository.Interface;
     using ServiceStack.Redis;
@@ -44,23 +45,67 @@
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns></returns>
-        public string Login(LoginRequestModel model)
+        public AccountLoginResponce Login(LoginRequestModel model)
         {
-            string token;
-            RedisEndpoint redisEndpoint = new RedisEndpoint("localhost", 6379);
-            using (RedisClient client = new RedisClient(redisEndpoint))
+            try
             {
-                if (client.Get<string>(model.Email + model.Password)==null)
+                AccountLoginResponce loginResponce = notesRL.Login(model);
+                if (loginResponce.Token != null)
                 {
-                    token = notesRL.Login(model);
-                    client.Set<string>(model.Email + model.Password, token);
+                    RedisEndpoint redisEndpoint = new RedisEndpoint("localhost", 6379);
+                    using (RedisClient client = new RedisClient(redisEndpoint))
+                    {
+                        if (client.Get<string>(model.Email + model.Password)==null)
+                        {
+                            client.Set<string>(model.Email + model.Password, DateTime.Now.ToString());
+                            loginResponce.LoginTime = client.Get<string>(model.Email + model.Password);
+                        }
+                        else
+                        {
+                            client.Remove(model.Email + model.Password);
+                            client.Set<string>(model.Email + model.Password, DateTime.Now.ToString());
+                            loginResponce.LoginTime = client.Get<string>(model.Email + model.Password);
+                        }
+                    }
                 }
-                else
-                {
-                    token = client.Get<string>(model.Email + model.Password);
-                }
+                return loginResponce;  
             }
-            return  token;  
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<AccountLoginResponce> AdminLogin(LoginRequestModel model)
+        {
+            
+            try
+            {
+                AccountLoginResponce loginResponce = await notesRL.AdminLogin(model);
+                if (loginResponce.Token != null)
+                {
+                    RedisEndpoint redisEndpoint = new RedisEndpoint("localhost", 6379);
+                    using (RedisClient client = new RedisClient(redisEndpoint))
+                    {
+                        if (client.Get<string>(model.Email + model.Password) == null)
+                        {
+                            client.Set<string>(model.Email + model.Password, DateTime.Now.ToString());
+                            loginResponce.LoginTime = client.Get<string>(model.Email + model.Password);
+                        }
+                        else
+                        {
+                            client.Remove(model.Email + model.Password);
+                            client.Set<string>(model.Email + model.Password, DateTime.Now.ToString());
+                            loginResponce.LoginTime = client.Get<string>(model.Email + model.Password);
+                        }
+                    }
+                }
+                return loginResponce;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         /// <summary>
@@ -70,9 +115,51 @@
         /// <returns></returns>
         public async Task<bool> RegisterAsync(RegisterRequestModel model)
         {
-            return await notesRL.RegisterAsync(model);
+            try
+            {
+                return await notesRL.RegisterAsync(model);
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
 
+        public async Task<bool> AdminRegisterAsync(RegisterRequestModel model)
+        {
+            try
+            {
+                return await notesRL.AdminRegisterAsync(model);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<List<GetAllUserResponce>> GetAllUserByAdminAuthorization()
+        {
+            try
+            {
+                return await notesRL.GetAllUserByAdminAuthorization();
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<Dictionary<string,int>> GetUserStatisticsByAdmin()
+        {
+            try
+            {
+                return await notesRL.GetUserStatisticsByAdmin();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         /// <summary>
         /// Resets the password.
         /// </summary>

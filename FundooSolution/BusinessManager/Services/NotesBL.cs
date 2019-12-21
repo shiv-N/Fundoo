@@ -2,6 +2,8 @@
 {
     using BusinessManager.Interface;
     using CommonLayerModel.NotesModels;
+    using CommonLayerModel.NotesModels.Request;
+    using CommonLayerModel.NotesModels.Responce;
     using Microsoft.AspNetCore.Http;
     using System;
     using System.Collections.Generic;
@@ -139,6 +141,23 @@
         public async Task<bool> ColourNote(int noteId, int userId, ColourRequestModel colourRequest)
         {
             return await notes.ColourNote(noteId, userId, colourRequest);
+        }
+
+        public async Task<IList<GetCollabratorResponce>> GetCollaborators(int userId)
+        {
+            return await notes.GetCollaborators(userId);
+        }
+
+        public async Task<AddCollaboratorResponce> AddCollaborators(int userId, AddCollaboratorRequest collaborator)
+        {
+            try
+            {
+                return await notes.AddCollaborators(userId, collaborator);
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace BusinessManager.Interface
 {
+    using CommonLayerModel.AccountModels.Response;
     using CommonLayerModel.Models;
     using System;
     using System.Collections.Generic;
@@ -18,12 +19,15 @@
         /// <returns></returns>
         Task<bool> RegisterAsync(RegisterRequestModel model);
 
+        Task<bool> AdminRegisterAsync(RegisterRequestModel model);
+
         /// <summary>
         /// Logins the specified model.
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns></returns>
-        string Login(LoginRequestModel model);
+        AccountLoginResponce Login(LoginRequestModel model);
+        Task<AccountLoginResponce> AdminLogin(LoginRequestModel model);
 
         /// <summary>
         /// Forgots the password.
@@ -38,5 +42,7 @@
         /// <param name="token">The token.</param>
         /// <returns></returns>
         ResetPasswordModel ResetPassword(ResetPasswordModel token);
+        Task<List<GetAllUserResponce>> GetAllUserByAdminAuthorization();
+        Task<Dictionary<string, int>> GetUserStatisticsByAdmin();
     }
 }
