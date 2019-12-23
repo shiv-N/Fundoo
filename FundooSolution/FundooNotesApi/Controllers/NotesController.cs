@@ -327,19 +327,65 @@ namespace FundooNotesApi.Controllers
                 return Ok(new { success = false, Meassage = e.Message});
             }
         }
-        //[HttpDelete("bulkDelete")]
-        //public async Task<IActionResult> bulkTrash(List<int> No)
-        //{
-        //    try
-        //    {
-        //        var userId = TokenUserId();
-               
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return Ok(new { success = false, Meassage = e.Message });
-        //    }
-        //}
+        [HttpDelete("bulkDelete")]
+        public async Task<IActionResult> BulkTrash(List<int> NoteId)
+        {
+            try
+            {
+                if (NoteId != null)
+                {
+                    var userId = TokenUserId();
+                    List<DisplayResponceModel> data = await note.BulkTrash(NoteId, userId);
+                    if(data.Count != 0)
+                    {
+                        return Ok(new { success = true, Meassage = "Bulk Trash SucessessFully", data });
+                    }
+                    else
+                    {
+                        return Ok(new { success = false, Meassage = "Bulk Trash unsuceessful" });
+                    }
+                }
+                else
+                {
+                    return Ok(new { success = false, Meassage = "Invalid Input!" });
+                }
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { success = false, Meassage = e.Message });
+            }
+        }
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchKeyword(string keyword)
+        {
+            try
+            {
+                if (keyword != null)
+                {
+                    var userId = TokenUserId();
+                    List<DisplayResponceModel> data = await note.SearchKeyword(keyword, userId);
+                    if (data.Count != 0)
+                    {
+                        return Ok(new { success = true, Meassage = "Search Keyword SucessessFully", data });
+                    }
+                    else
+                    {
+                        return Ok(new { success = false, Meassage = "Search Keyword unsuceessful" });
+                    }
+                }
+                else
+                {
+                    return Ok(new { success = false, Meassage = "Invalid Input!" });
+                }
+
+            }
+            catch (Exception e)
+            {
+                return Ok(new { success = false, Meassage = e.Message });
+            }
+        }
+
         /// <summary>
         /// Tokens the user identifier.
         /// </summary>

@@ -97,5 +97,7 @@
         Task<bool> ColourNote(int noteId, int userId, ColourRequestModel colourRequest);
         Task<IList<GetCollabratorResponce>> GetCollaborators(int userId);
         Task<AddCollaboratorResponce> AddCollaborators(int userId, AddCollaboratorRequest collaborator);
+        Task<List<DisplayResponceModel>> BulkTrash(List<int> NoteId, int UserId);
+        Task<List<DisplayResponceModel>> SearchKeyword(string keyword, int UserId);
     }
 }

@@ -375,6 +375,88 @@
             }
         }
 
+        public async Task<List<DisplayResponceModel>> BulkTrash(List<int> NoteId,int UserId)
+        {
+            try
+            {
+                SqlConnection connection = DBConnection();
+                SqlCommand command = StoreProcedureConnection("spBulkTrash", connection);
+                List<DisplayResponceModel> responceList = new List<DisplayResponceModel>();
+                string noteIdString = string.Empty;
+                foreach(int i in NoteId)
+                {
+                    noteIdString = noteIdString+ i + ",";
+                }
+                string noteId = noteIdString.Remove(noteIdString.Length - 1);
+                command.Parameters.AddWithValue("@Id", noteId);
+                command.Parameters.AddWithValue("@UId", UserId);
+                connection.Open();
+                SqlDataReader dataReader = await command.ExecuteReaderAsync();
+                while(dataReader.Read())
+                {
+                    DisplayResponceModel userDetails = new DisplayResponceModel();
+                    userDetails.Id = (int)dataReader["Id"];
+                    userDetails.Title = dataReader["Title"].ToString();
+                    userDetails.Message = dataReader["MeassageDescription"].ToString();
+                    userDetails.Image = dataReader["NoteImage"].ToString();
+                    userDetails.Color = dataReader["Color"].ToString();
+                    userDetails.CreatedDate = (DateTime)dataReader["CreatedDATETime"];
+                    userDetails.ModifiedDate = (DateTime)dataReader["ModifiedDateTime"];
+                    userDetails.AddReminder = (DateTime)dataReader["AddReminder"];
+                    userDetails.UserId = (int)dataReader["UserId"];
+                    userDetails.IsPin = (bool)dataReader["IsPin"];
+                    userDetails.IsNote = (bool)dataReader["IsNote"];
+                    userDetails.IsArchive = (bool)dataReader["IsArchive"];
+                    userDetails.IsTrash = (bool)dataReader["IsTrash"];
+                    responceList.Add(userDetails);
+                }
+                connection.Close();
+                return responceList;
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<List<DisplayResponceModel>> SearchKeyword(string keyword, int UserId)
+        {
+            try
+            {
+                SqlConnection connection = DBConnection();
+                SqlCommand command = StoreProcedureConnection("spSearch", connection);
+                List<DisplayResponceModel> responceList = new List<DisplayResponceModel>();
+                command.Parameters.AddWithValue("@SearchKeyword", keyword);
+                command.Parameters.AddWithValue("@UserId", UserId);
+                connection.Open();
+                SqlDataReader dataReader = await command.ExecuteReaderAsync();
+                while (dataReader.Read())
+                {
+                    DisplayResponceModel userDetails = new DisplayResponceModel();
+                    userDetails.Id = (int)dataReader["Id"];
+                    userDetails.Title = dataReader["Title"].ToString();
+                    userDetails.Message = dataReader["MeassageDescription"].ToString();
+                    userDetails.Image = dataReader["NoteImage"].ToString();
+                    userDetails.Color = dataReader["Color"].ToString();
+                    userDetails.CreatedDate = (DateTime)dataReader["CreatedDATETime"];
+                    userDetails.ModifiedDate = (DateTime)dataReader["ModifiedDateTime"];
+                    userDetails.AddReminder = (DateTime)dataReader["AddReminder"];
+                    userDetails.UserId = (int)dataReader["UserId"];
+                    userDetails.IsPin = (bool)dataReader["IsPin"];
+                    userDetails.IsNote = (bool)dataReader["IsNote"];
+                    userDetails.IsArchive = (bool)dataReader["IsArchive"];
+                    userDetails.IsTrash = (bool)dataReader["IsTrash"];
+                    responceList.Add(userDetails);
+                }
+                connection.Close();
+                return responceList;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         /// <summary>
         /// Reminders the note.
         /// </summary>
@@ -384,10 +466,10 @@
         /// <returns></returns>
         public async Task<bool> ReminderNote(int noteId, int userId, AddReminderRequest reminder)
         {
-            SqlConnection connection = DBConnection();
-            SqlCommand command = StoreProcedureConnection("spReminder", connection);
             try
             {
+                SqlConnection connection = DBConnection();
+                SqlCommand command = StoreProcedureConnection("spReminder", connection);
                 connection.Open();
                 command.Parameters.AddWithValue("@UserId", userId);
                 command.Parameters.AddWithValue("@Id", noteId);

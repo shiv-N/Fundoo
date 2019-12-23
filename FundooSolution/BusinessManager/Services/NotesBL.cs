@@ -159,5 +159,29 @@
                 throw e;
             }
         }
+
+        public async Task<List<DisplayResponceModel>> BulkTrash(List<int> NoteId, int UserId)
+        {
+            try
+            {
+                return await notes.BulkTrash(NoteId, UserId);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<List<DisplayResponceModel>> SearchKeyword(string keyword, int UserId)
+        {
+            try
+            {
+                return await notes.SearchKeyword(keyword, UserId);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }
