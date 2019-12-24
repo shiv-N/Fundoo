@@ -11,17 +11,34 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FundooNotesApi.Controllers
 {
+    /// <summary>
+    /// this is class AdminController implements ControllerBase
+    /// </summary>
+    /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class AdminController : ControllerBase
     {
+        /// <summary>
+        /// The account
+        /// </summary>
         private readonly IAccountBL account;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AdminController"/> class.
+        /// </summary>
+        /// <param name="account">The account.</param>
         public AdminController(IAccountBL account)
         {
             this.account = account;
         }
+
+        /// <summary>
+        /// Admins the registration.
+        /// </summary>
+        /// <param name="register">The register.</param>
+        /// <returns></returns>
         [HttpPost("register")]
         [AllowAnonymous]
         public async Task<IActionResult> AdminRegistration(RegisterRequestModel register)
@@ -51,6 +68,11 @@ namespace FundooNotesApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Logins the specified model.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         [Route("login")]
         [HttpPost]
         [AllowAnonymous]
@@ -82,7 +104,11 @@ namespace FundooNotesApi.Controllers
 
         }
 
-        [HttpGet("User")]
+        /// <summary>
+        /// Gets all user by admin authorization.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("Users")]
         public async Task<IActionResult> GetAllUserByAdminAuthorization()
         {
             try
@@ -103,6 +129,10 @@ namespace FundooNotesApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets the user statistics by admin.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("UserStatistics")]
         public async Task<IActionResult> GetUserStatisticsByAdmin()
         {

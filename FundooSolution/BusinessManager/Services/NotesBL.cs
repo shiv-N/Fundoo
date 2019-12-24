@@ -49,7 +49,14 @@
         /// <returns></returns>
         public async Task<bool> DeleteNote(int Id, int userId)
         {
-            return await notes.DeleteNote(Id, userId);
+            try
+            {
+                return await notes.DeleteNote(Id, userId);
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
 
         /// <summary>
@@ -57,9 +64,9 @@
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public IList<DisplayResponceModel> DisplayNotes(int userId)
+        public async Task<IList<DisplayResponceModel>> DisplayNotes(int userId)
         {
-            return notes.DisplayNotes(userId);
+            return await notes.DisplayNotes(userId);
         }
 
         /// <summary>
@@ -143,11 +150,22 @@
             return await notes.ColourNote(noteId, userId, colourRequest);
         }
 
+        /// <summary>
+        /// Gets the collaborators.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public async Task<IList<GetCollabratorResponce>> GetCollaborators(int userId)
         {
             return await notes.GetCollaborators(userId);
         }
 
+        /// <summary>
+        /// Adds the collaborators.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="collaborator">The collaborator.</param>
+        /// <returns></returns>
         public async Task<AddCollaboratorResponce> AddCollaborators(int userId, AddCollaboratorRequest collaborator)
         {
             try
@@ -160,6 +178,12 @@
             }
         }
 
+        /// <summary>
+        /// Bulks the trash.
+        /// </summary>
+        /// <param name="NoteId">The note identifier.</param>
+        /// <param name="UserId">The user identifier.</param>
+        /// <returns></returns>
         public async Task<List<DisplayResponceModel>> BulkTrash(List<int> NoteId, int UserId)
         {
             try
@@ -172,6 +196,12 @@
             }
         }
 
+        /// <summary>
+        /// Searches the keyword.
+        /// </summary>
+        /// <param name="keyword">The keyword.</param>
+        /// <param name="UserId">The user identifier.</param>
+        /// <returns></returns>
         public async Task<List<DisplayResponceModel>> SearchKeyword(string keyword, int UserId)
         {
             try

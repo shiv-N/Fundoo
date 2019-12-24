@@ -76,6 +76,11 @@
             }
         }
 
+        /// <summary>
+        /// Admins the login.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         public async Task<AccountLoginResponce> AdminLogin(LoginRequestModel model)
         {
             
@@ -125,6 +130,11 @@
             }
         }
 
+        /// <summary>
+        /// Admins the register asynchronous.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         public async Task<bool> AdminRegisterAsync(RegisterRequestModel model)
         {
             try
@@ -149,6 +159,10 @@
             }
         }
 
+        /// <summary>
+        /// Gets the user statistics by admin.
+        /// </summary>
+        /// <returns></returns>
         public async Task<Dictionary<string,int>> GetUserStatisticsByAdmin()
         {
             try

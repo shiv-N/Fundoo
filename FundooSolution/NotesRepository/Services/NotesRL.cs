@@ -74,36 +74,34 @@
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public IList<DisplayResponceModel> DisplayNotes(int userId)
+        public async Task<IList<DisplayResponceModel>> DisplayNotes(int userId)
         {
             try
             {
-                SqlConnection connection = DBConnection();
                 IList<DisplayResponceModel> notes = new List<DisplayResponceModel>();
-                SqlCommand command = StoreProcedureConnection("spDisplayNotesByUserId", connection);
-                connection.Open();
-                command.Parameters.AddWithValue("UserId", userId);
-                command.ExecuteNonQuery();
-                SqlDataReader dataReader = command.ExecuteReader();
-                while (dataReader.Read())
+                
+                List<SpParameterData> paramsList = new List<SpParameterData>();
+                paramsList.Add(new SpParameterData("@UserId", userId));
+                DataTable table = await spExecuteReader("spDisplayNotesByUserId", paramsList);
+               
+                foreach(DataRow row in table.Rows)
                 {
                     DisplayResponceModel userDetails = new DisplayResponceModel();
-                    userDetails.Id = (int)dataReader["Id"];
-                    userDetails.Title = dataReader["Title"].ToString();
-                    userDetails.Message = dataReader["MeassageDescription"].ToString();
-                    userDetails.Image = dataReader["NoteImage"].ToString();
-                    userDetails.Color = dataReader["Color"].ToString();
-                    userDetails.CreatedDate = (DateTime)dataReader["CreatedDATETime"];
-                    userDetails.ModifiedDate = (DateTime)dataReader["ModifiedDateTime"];
-                    userDetails.AddReminder = (DateTime)dataReader["AddReminder"];
-                    userDetails.UserId = (int)dataReader["UserId"];
-                    userDetails.IsPin = (bool)dataReader["IsPin"];
-                    userDetails.IsNote = (bool)dataReader["IsNote"];
-                    userDetails.IsArchive = (bool)dataReader["IsArchive"];
-                    userDetails.IsTrash = (bool)dataReader["IsTrash"];
+                    userDetails.Id = (int)row["Id"];
+                    userDetails.Title = row["Title"].ToString();
+                    userDetails.Message = row["MeassageDescription"].ToString();
+                    userDetails.Image = row["NoteImage"].ToString();
+                    userDetails.Color = row["Color"].ToString();
+                    userDetails.CreatedDate = (DateTime)row["CreatedDATETime"];
+                    userDetails.ModifiedDate = (DateTime)row["ModifiedDateTime"];
+                    userDetails.AddReminder = (DateTime)row["AddReminder"];
+                    userDetails.UserId = (int)row["UserId"];
+                    userDetails.IsPin = (bool)row["IsPin"];
+                    userDetails.IsNote = (bool)row["IsNote"];
+                    userDetails.IsArchive = (bool)row["IsArchive"];
+                    userDetails.IsTrash = (bool)row["IsTrash"];
                     notes.Add(userDetails);
                 }
-                connection.Close();
                 return notes;
             }
             catch(Exception e)
@@ -527,6 +525,29 @@
             }
         }
 
+        private async Task<DataTable> spExecuteReader(string spName, IList<SpParameterData> spParams)
+        {
+            try
+            {
+                SqlConnection connection = DBConnection();
+                SqlCommand command = StoreProcedureConnection(spName, connection);
+                for(int i = 0; i < spParams.Count; i++)
+                {
+                    command.Parameters.AddWithValue(spParams[i].name, spParams[i].value);
+                }
+                connection.Open();
+                DataTable table = new DataTable();
+                SqlDataReader dataReader = await command.ExecuteReaderAsync();
+                table.Load(dataReader);
+                connection.Close();
+                return table;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         private SqlConnection DBConnection()
         {
             return new SqlConnection(configuration["Data:ConnectionString"]);
@@ -544,5 +565,16 @@
             return command;
         }
 
+    }
+
+    class SpParameterData
+    {
+        public SpParameterData(string name,dynamic value)
+        {
+            this.name = name;
+            this.value = value;
+        }
+        public string name { get; set; }
+        public dynamic value { get; set; }
     }
 }

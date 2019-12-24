@@ -28,7 +28,7 @@ namespace BusinessManager.Interface
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        IList<DisplayResponceModel> DisplayNotes(int userId);
+        Task<IList<DisplayResponceModel>> DisplayNotes(int userId);
 
         /// <summary>
         /// Edits the note.
@@ -97,9 +97,35 @@ namespace BusinessManager.Interface
         /// <returns></returns>
         Task<bool> ColourNote(int noteId, int userId, ColourRequestModel colourRequest);
 
+        /// <summary>
+        /// Gets the collaborators.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         Task<IList<GetCollabratorResponce>> GetCollaborators(int userId);
+
+        /// <summary>
+        /// Adds the collaborators.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="collaborator">The collaborator.</param>
+        /// <returns></returns>
         Task<AddCollaboratorResponce> AddCollaborators(int userId, AddCollaboratorRequest collaborator);
+
+        /// <summary>
+        /// Bulks the trash.
+        /// </summary>
+        /// <param name="NoteId">The note identifier.</param>
+        /// <param name="UserId">The user identifier.</param>
+        /// <returns></returns>
         Task<List<DisplayResponceModel>> BulkTrash(List<int> NoteId, int UserId);
+
+        /// <summary>
+        /// Searches the keyword.
+        /// </summary>
+        /// <param name="keyword">The keyword.</param>
+        /// <param name="UserId">The user identifier.</param>
+        /// <returns></returns>
         Task<List<DisplayResponceModel>> SearchKeyword(string keyword, int UserId);
     }
 }

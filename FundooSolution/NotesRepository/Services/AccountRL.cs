@@ -94,6 +94,11 @@ namespace NotesRepository.Services
             }
         }
 
+        /// <summary>
+        /// Admins the login.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         public async Task<AccountLoginResponce> AdminLogin(LoginRequestModel model)
         {
             try
@@ -130,6 +135,7 @@ namespace NotesRepository.Services
                 throw e;
             }
         }
+
         /// <summary>
         /// Registers the asynchronous.
         /// </summary>
@@ -168,6 +174,11 @@ namespace NotesRepository.Services
             }
         }
 
+        /// <summary>
+        /// Admins the register asynchronous.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         public async Task<bool> AdminRegisterAsync(RegisterRequestModel model)
         {
             try
@@ -199,6 +210,11 @@ namespace NotesRepository.Services
                 throw e;
             }
         }
+
+        /// <summary>
+        /// Databases the connection.
+        /// </summary>
+        /// <returns></returns>
         private SqlConnection DBConnection()
         {
             return new SqlConnection(configuration["Data:ConnectionString"]);
@@ -227,6 +243,10 @@ namespace NotesRepository.Services
             return token;
         }
 
+        /// <summary>
+        /// Gets all user by admin authorization.
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<GetAllUserResponce>> GetAllUserByAdminAuthorization()
         {
             try
@@ -257,6 +277,11 @@ namespace NotesRepository.Services
                 throw e;
             }
         }
+
+        /// <summary>
+        /// Gets the user statistics by admin.
+        /// </summary>
+        /// <returns></returns>
         public async Task<Dictionary<string, int>> GetUserStatisticsByAdmin()
         {
             SqlConnection connection = DBConnection();

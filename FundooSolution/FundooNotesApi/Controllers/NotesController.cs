@@ -71,31 +71,37 @@ namespace FundooNotesApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult DisplayNotes()
+        public async Task<IActionResult> DisplayNotes()
         {
-            var userId = TokenUserId();
-            if (userId != 0)
+            try
             {
-
-                IList <DisplayResponceModel> model = note.DisplayNotes(userId);
-                if (model != null)
+                var userId = TokenUserId();
+                if (userId != 0)
                 {
-                    string status = "Display notes operation is successful";
-                    return Ok(new { status,userId, model});
 
+                    IList <DisplayResponceModel> model = await note.DisplayNotes(userId);
+                    if (model != null)
+                    {
+                        string status = "Display notes operation is successful";
+                        return Ok(new { status,userId, model});
+
+                    }
+                    else
+                    {
+                        string status = "Display notes operation is not successful";
+                        return Ok(new { status, userId, model });
+                    }
                 }
                 else
                 {
-                    string status = "Display notes operation is not successful";
-                    return Ok(new { status, userId, model });
+                    string status = "Invalid user";
+                    return Ok(new { status, userId });
                 }
             }
-            else
+            catch(Exception e)
             {
-                string status = "Invalid user";
-                return Ok(new { status, userId });
+                return Ok(new { success = false, Meassage = e.Message });
             }
-
         }
 
         /// <summary>
@@ -106,7 +112,7 @@ namespace FundooNotesApi.Controllers
         [HttpPut]
         public async Task<IActionResult> EditNote(EditNoteRequestModel model)
         {
-            if (model != null)
+            if (model.Id != 0 && (model.Message !=null || model.Title !=null || model.Image != null || model.Color != null))
             {
                 var userId = TokenUserId();
                 if (await note.EditNote(model, userId))
@@ -122,8 +128,7 @@ namespace FundooNotesApi.Controllers
             }
             else
             {
-                string status = "Input should not be empty!!!";
-                return Ok(new { status,model });
+                return BadRequest(new { success = false, Meassage = "Input should not be empty!!!" });
             }
         }
 
@@ -284,6 +289,11 @@ namespace FundooNotesApi.Controllers
                 return Ok(new { status, userId, noteId, colourRequest });
             }
         }
+
+        /// <summary>
+        /// Gets the collaborators.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("Collabrators")]
         public async Task<IActionResult> GetCollaborators()
         {
@@ -299,6 +309,11 @@ namespace FundooNotesApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Adds the collaborators.
+        /// </summary>
+        /// <param name="collaborator">The collaborator.</param>
+        /// <returns></returns>
         [HttpPost("AddCollaborators")]
         public async Task<IActionResult> AddCollaborators(AddCollaboratorRequest collaborator)
         {
@@ -327,6 +342,12 @@ namespace FundooNotesApi.Controllers
                 return Ok(new { success = false, Meassage = e.Message});
             }
         }
+
+        /// <summary>
+        /// Bulks the trash.
+        /// </summary>
+        /// <param name="NoteId">The note identifier.</param>
+        /// <returns></returns>
         [HttpDelete("bulkDelete")]
         public async Task<IActionResult> BulkTrash(List<int> NoteId)
         {
@@ -356,6 +377,12 @@ namespace FundooNotesApi.Controllers
                 return Ok(new { success = false, Meassage = e.Message });
             }
         }
+
+        /// <summary>
+        /// Searches the keyword.
+        /// </summary>
+        /// <param name="keyword">The keyword.</param>
+        /// <returns></returns>
         [HttpGet("search")]
         public async Task<IActionResult> SearchKeyword(string keyword)
         {
