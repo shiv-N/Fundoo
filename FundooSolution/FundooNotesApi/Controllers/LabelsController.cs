@@ -49,7 +49,7 @@ namespace FundooNotesApi.Controllers
             else
             {
                 string status = "Label did not added";
-                return Ok(new { status, userId, model });
+                return BadRequest(new { status, userId, model });
             }
         }
 
@@ -70,7 +70,7 @@ namespace FundooNotesApi.Controllers
             else
             {
                 string status = "Label did not edited";
-                return Ok(new { status, userId, model });
+                return BadRequest(new { status, userId, model });
             }
         }
 
@@ -91,7 +91,7 @@ namespace FundooNotesApi.Controllers
             else
             {
                 string status = "Label did not deleted";
-                return Ok(new { status, userId, model });
+                return BadRequest(new { status, userId, model });
             }
         }
 

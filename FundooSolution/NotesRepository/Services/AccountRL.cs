@@ -1,6 +1,7 @@
 ﻿using CommonLayerModel.AccountModels;
 using CommonLayerModel.AccountModels.Response;
 using CommonLayerModel.Models;
+using CommonLayerModel.MSMQ;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using NotesRepository.Interface;
@@ -23,6 +24,7 @@ namespace NotesRepository.Services
     public class AccountRL : IAccountRL
     {
         IConfiguration configuration;
+        MsmqSender msmq;
         public AccountRL(IConfiguration configuration)
         {
             this.configuration = configuration;
@@ -45,8 +47,8 @@ namespace NotesRepository.Services
             {
                 int id = (int)dataReader["Id"];
                 string token = GenrateJWTToken(email,id);
-                //msmq = new MsmqSender();
-                //msmq.SendToMsmq(token, model.Email);
+                msmq = new MsmqSender();
+                msmq.SendToMsmq(token, model.Email);
                 return token;
             }
             return string.Empty;
@@ -225,22 +227,25 @@ namespace NotesRepository.Services
         /// </summary>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        public ResetPasswordModel ResetPassword(ResetPasswordModel token)
+        public bool ResetPassword(ResetPasswordModel token, int userId)
         {
             SqlConnection connection = DBConnection();
-            token = DecodeToken(token);
+            //token = DecodeToken(token);
             string encrypted = EncryptPassword(token.Password);
+            List<SpParameterData> paramsList = new List<SpParameterData>();
+            //paramsList.Add(new SpParameterData("@UserId", userId));
+            //DataTable table = spExecuteReader("spDisplayNotesByUserId", paramsList);
             SqlCommand command = StoreProcedureConnection("spUpdatePasswordByEmail", connection);
-            command.Parameters.AddWithValue("@Email", token.Email);
+            command.Parameters.AddWithValue("@UserId", userId);
             command.Parameters.AddWithValue("@Password", encrypted);
             connection.Open();
             int result = command.ExecuteNonQuery();
+            connection.Close();
             if (result == 0)
             {
-                token.Id = string.Empty;
+                return false;
             }
-            connection.Close();
-            return token;
+            return true;
         }
 
         /// <summary>
@@ -365,16 +370,47 @@ namespace NotesRepository.Services
         /// </summary>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        private static ResetPasswordModel DecodeToken(ResetPasswordModel token)
+        //private static ResetPasswordModel DecodeToken(ResetPasswordModel token)
+        //{
+        //    var stream = token.Token;
+        //    var handler = new JwtSecurityTokenHandler();
+        //    var jsonToken = handler.ReadToken(stream);
+        //    var tokenS = handler.ReadToken(stream) as JwtSecurityToken;
+        //    token.Email = tokenS.Claims.FirstOrDefault(claim => claim.Type == "email").Value;
+        //    token.Id = tokenS.Claims.FirstOrDefault(claim => claim.Type == "id").Value;
+        //    return token;
+        //}
+        private async Task<DataTable> spExecuteReader(string spName, IList<SpParameterData> spParams)
         {
-            var stream = token.Token;
-            var handler = new JwtSecurityTokenHandler();
-            var jsonToken = handler.ReadToken(stream);
-            var tokenS = handler.ReadToken(stream) as JwtSecurityToken;
-            token.Email = tokenS.Claims.FirstOrDefault(claim => claim.Type == "email").Value;
-            token.Id = tokenS.Claims.FirstOrDefault(claim => claim.Type == "id").Value;
-            return token;
+            try
+            {
+                SqlConnection connection = DBConnection();
+                SqlCommand command = StoreProcedureConnection(spName, connection);
+                for (int i = 0; i < spParams.Count; i++)
+                {
+                    command.Parameters.AddWithValue(spParams[i].name, spParams[i].value);
+                }
+                connection.Open();
+                DataTable table = new DataTable();
+                SqlDataReader dataReader = await command.ExecuteReaderAsync();
+                table.Load(dataReader);
+                connection.Close();
+                return table;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
-
+        class SpParameterData
+        {
+            public SpParameterData(string name, dynamic value)
+            {
+                this.name = name;
+                this.value = value;
+            }
+            public string name { get; set; }
+            public dynamic value { get; set; }
+        }
     }
 }

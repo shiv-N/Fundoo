@@ -55,14 +55,14 @@ namespace FundooNotesApi.Controllers
                 }
                 else
                 {
-                    string status = "Input should not be empty!!!";
-                    return Ok(new { status, userId, model });
+                    string status = "Note did not added";
+                    return BadRequest(new { status, userId, model });
                 }
             }
             else
             {
-                string status = "Note did not added";
-                return Ok(new { status,  model });
+                string status = "Input should not be empty!!!";
+                return BadRequest(new { status,  model });
             }
         }
 
@@ -89,18 +89,18 @@ namespace FundooNotesApi.Controllers
                     else
                     {
                         string status = "Display notes operation is not successful";
-                        return Ok(new { status, userId, model });
+                        return BadRequest(new { status, userId, model });
                     }
                 }
                 else
                 {
                     string status = "Invalid user";
-                    return Ok(new { status, userId });
+                    return BadRequest(new { status, userId });
                 }
             }
             catch(Exception e)
             {
-                return Ok(new { success = false, Meassage = e.Message });
+                return BadRequest(new { success = false, Meassage = e.Message });
             }
         }
 
@@ -149,7 +149,7 @@ namespace FundooNotesApi.Controllers
             else
             {
                 string status = "Note is not deleted";
-                return Ok(new { status, userId, Id });
+                return BadRequest(new { status, userId, Id });
             }
         }
 
@@ -173,13 +173,13 @@ namespace FundooNotesApi.Controllers
                 else
                 {
                     string status = "Image is not Uploaded SuccessFully";
-                    return Ok(new { status, userId, noteId });
+                    return BadRequest(new { status, userId, noteId });
                 }
             }
             else
             {
                 string result = "input should not be empty";
-                return Ok(new { result });
+                return BadRequest(new { result });
             }
         }
 
@@ -200,7 +200,7 @@ namespace FundooNotesApi.Controllers
             else
             {
                 string status = "archive is not successful";
-                return Ok(new { status, userId, noteId });
+                return BadRequest(new { status, userId, noteId });
             }
         }
 
@@ -221,7 +221,7 @@ namespace FundooNotesApi.Controllers
             else
             {
                 string status = "Pin is not successful";
-                return Ok(new { status, userId, noteId });
+                return BadRequest(new { status, userId, noteId });
             }
         }
 
@@ -242,7 +242,7 @@ namespace FundooNotesApi.Controllers
             else
             {
                 string status = "Trash is not successful";
-                return Ok(new { status, userId, noteId });
+                return BadRequest(new { status, userId, noteId });
             }
         }
 
@@ -264,7 +264,7 @@ namespace FundooNotesApi.Controllers
             else
             {
                 string status = "reminder is not set";
-                return Ok(new { status, userId, noteId, reminder });
+                return BadRequest(new { status, userId, noteId, reminder });
             }
         }
 
@@ -286,7 +286,7 @@ namespace FundooNotesApi.Controllers
             else
             {
                 string status = "color is not changed.";
-                return Ok(new { status, userId, noteId, colourRequest });
+                return BadRequest(new { status, userId, noteId, colourRequest });
             }
         }
 
@@ -305,7 +305,7 @@ namespace FundooNotesApi.Controllers
             }
             else
             {
-                return Ok(new { success = false, Meassage = "Get Collabrators unsuceessful" });
+                return BadRequest(new { success = false, Meassage = "Get Collabrators unsuceessful" });
             }
         }
 
@@ -329,17 +329,17 @@ namespace FundooNotesApi.Controllers
                     }
                     else
                     {
-                        return Ok(new { success = false, Meassage = "Add Collabrators unsuceessful" });
+                        return BadRequest(new { success = false, Meassage = "Add Collabrators unsuceessful" });
                     }
                 }
                 else
                 {
-                    return Ok(new { success = false, Meassage = "Invalid Credentials" });
+                    return BadRequest(new { success = false, Meassage = "Invalid Credentials" });
                 }
             }
             catch(Exception e)
             {
-                return Ok(new { success = false, Meassage = e.Message});
+                return BadRequest(new { success = false, Meassage = e.Message});
             }
         }
 
@@ -363,18 +363,18 @@ namespace FundooNotesApi.Controllers
                     }
                     else
                     {
-                        return Ok(new { success = false, Meassage = "Bulk Trash unsuceessful" });
+                        return BadRequest(new { success = false, Meassage = "Bulk Trash unsuceessful" });
                     }
                 }
                 else
                 {
-                    return Ok(new { success = false, Meassage = "Invalid Input!" });
+                    return BadRequest(new { success = false, Meassage = "Invalid Input!" });
                 }
 
             }
             catch (Exception e)
             {
-                return Ok(new { success = false, Meassage = e.Message });
+                return BadRequest(new { success = false, Meassage = e.Message });
             }
         }
 
@@ -398,18 +398,18 @@ namespace FundooNotesApi.Controllers
                     }
                     else
                     {
-                        return Ok(new { success = false, Meassage = "Search Keyword unsuceessful" });
+                        return BadRequest(new { success = false, Meassage = "Search Keyword unsuceessful" });
                     }
                 }
                 else
                 {
-                    return Ok(new { success = false, Meassage = "Invalid Input!" });
+                    return BadRequest(new { success = false, Meassage = "Invalid Input!" });
                 }
 
             }
             catch (Exception e)
             {
-                return Ok(new { success = false, Meassage = e.Message });
+                return BadRequest(new { success = false, Meassage = e.Message });
             }
         }
 

@@ -48,17 +48,17 @@ namespace FundooNotesApi.Controllers
                     }
                     else
                     {
-                        return Ok(new { Success = false, Message = "User is not Registered", model });
+                        return BadRequest(new { Success = false, Message = "User is not Registered", model });
                     }
                 }
                 else
                 {
-                    return Ok(new { Success = false, Message = "Insufficients details....", model });
+                    return BadRequest(new { Success = false, Message = "Insufficients details....", model });
                 }
             }
             catch(Exception e)
             {
-                return Ok(new { Success = false, Message = e.Message });
+                return BadRequest(new { Success = false, Message = e.Message });
             }
         }
 
@@ -83,17 +83,17 @@ namespace FundooNotesApi.Controllers
                     }
                     else
                     {
-                        return Ok(new { Success = false, Message = "Invalid credentials" });
+                        return BadRequest(new { Success = false, Message = "Wrong Email or Password" });
                     }
                 }
                 else
                 {
-                    return Ok(new { Success = false, Message ="Invalid credentials"});
+                    return BadRequest(new { Success = false, Message ="Invalid credentials"});
                 }
             }
             catch (Exception e)
             {
-                return Ok(new { Success = false, Message = e.Message });
+                return BadRequest(new { Success = false, Message = e.Message });
             }
 
         }
@@ -107,7 +107,7 @@ namespace FundooNotesApi.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPassword(ForgotPassword model)
         {
-            string status, Token;
+            string Token;
             if (model != null)
             {
                 Token = account.ForgotPassword(model);
@@ -115,19 +115,16 @@ namespace FundooNotesApi.Controllers
                 {
                     var passwordRestLink = Url.Action("ResetPassword", "Account",
                         new { email = model.Email, token = Token }, Request.Scheme);
-                    status = "Forgot password conformation";
-                    return Ok(new { status, Token, model });
+                    return Ok(new { Suceess = true, Meassage = "Forgot password conformation", Token, model });
                 }
                 else
                 {
-                    status = "Invalid email";
-                    return Ok(new { status, model });
+                    return BadRequest(new { Suceess=false, Meassage = "Invalid email" });
                 }
             }
             else
             {
-                status = "Email Should not be empty";
-                return Ok(new { status,model });
+                return BadRequest(new { Suceess = false, Meassage = "Email Should not be empty" });
             }
         }
 
@@ -140,26 +137,34 @@ namespace FundooNotesApi.Controllers
         [HttpPost]
         public IActionResult ResetPassword(ResetPasswordModel model)
         {
-            string status;
+            var userId = TokenUserId();
+            //var userEmailId = TokenUserEmail();
             if (model != null)
             {
-                ResetPasswordModel responseModel = account.ResetPassword(model); ;
-                if (responseModel.Id != string.Empty)
+                if (account.ResetPassword(model, userId))
                 {
-                    status = "reset password conformation";
-                    return Ok(new { status, responseModel });
+                    return Ok(new { success=true,Message= "reset password conformation" });
                 }
                 else
                 {
-                    status = "reset password is not conformation";
-                    return Ok(new { status, model });
+                    return BadRequest(new { Suceess = false, Meassage = "reset password is not conformation" });
                 }
             }
             else
             {
-                status = "Invalid Credential";
-                return Ok(new { status, model });
+                return BadRequest(new { Suceess = false, Meassage = "Invalid Credential" });
             }
         }
+        private int TokenUserId()
+        {
+            return Convert.ToInt32(User.FindFirst("Id").Value);
+        }
+        //private string TokenUserEmail()
+        //{
+        //   // return User.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value;
+
+        //    string email = HttpContext.User.Claims.First(e => e.Type == "email").Value;
+        //    return email;
+        //}
     }
 }

@@ -52,6 +52,17 @@
           "lib/netstandard1.3/CloudinaryDotNet.dll": {}
         }
       },
+      "Experimental.System.Messaging/1.1.0": {
+        "runtime": {
+          "lib/netstandard2.0/Experimental.System.Messaging.dll": {
+            "assemblyVersion": "1.1.0.0",
+            "fileVersion": "1.1.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Experimental.System.Messaging.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Razor.Design/2.1.2": {},
       "Microsoft.CodeAnalysis.CSharp.Workspaces/2.8.0": {
         "dependencies": {
@@ -987,6 +998,9 @@
         }
       },
       "CommonLayerModel/1.0.0": {
+        "dependencies": {
+          "Experimental.System.Messaging": "1.1.0"
+        },
         "runtime": {
           "CommonLayerModel.dll": {}
         },
@@ -3864,6 +3878,13 @@
       "sha512": "sha512-E5nJnmmBiKcbnhNhjWai5STm+8lOgSwlbCiHJ10IOnFN4dkIyhi8IyswT5bESEPo2dDG7Jt/0JESoQVUPz4lIg==",
       "path": "cloudinarydotnet/1.9.1",
       "hashPath": "cloudinarydotnet.1.9.1.nupkg.sha512"
+    },
+    "Experimental.System.Messaging/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vub7Mtt2WFdFKTZKECVuZx6feP5kUpS9EfVy+Yu4GDfdlMwivRdX4TbdkDYS2lKqCjqzUbnxTbJei1IOqC+CnA==",
+      "path": "experimental.system.messaging/1.1.0",
+      "hashPath": "experimental.system.messaging.1.1.0.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Razor.Design/2.1.2": {
       "type": "package",

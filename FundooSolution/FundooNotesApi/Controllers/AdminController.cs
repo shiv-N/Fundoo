@@ -54,17 +54,17 @@ namespace FundooNotesApi.Controllers
                     }
                     else
                     {
-                        return Ok(new { Success = false, Message = "Admin is not Registered", register });
+                        return BadRequest(new { Success = false, Message = "Admin is not Registered", register });
                     }
                 }
                 else
                 {
-                    return Ok(new { Success = false, Message = "Insufficients details....", register });
+                    return BadRequest(new { Success = false, Message = "Insufficients details....", register });
                 }
             }
             catch (Exception e)
             {
-                return Ok(new { Success = false, Message = e.Message });
+                return BadRequest(new { Success = false, Message = e.Message });
             }
         }
 
@@ -89,17 +89,17 @@ namespace FundooNotesApi.Controllers
                     }
                     else
                     {
-                        return Ok(new { Success = false, Message = "Invalid credentials" });
+                        return BadRequest(new { Success = false, Message = "Invalid credentials" });
                     }
                 }
                 else
                 {
-                    return Ok(new { Success = false, Message = "Invalid credentials" });
+                    return BadRequest(new { Success = false, Message = "Invalid credentials" });
                 }
             }
             catch (Exception e)
             {
-                return Ok(new { Success = false, Message = e.Message });
+                return BadRequest(new { Success = false, Message = e.Message });
             }
 
         }
@@ -120,12 +120,12 @@ namespace FundooNotesApi.Controllers
                 }
                 else
                 {
-                    return Ok(new { Success = false, Message = "Get All User unsuccessful!!" });
+                    return BadRequest(new { Success = false, Message = "Get All User unsuccessful!!" });
                 }
             }
             catch(Exception e)
             {
-                return Ok(new { Success = false, Message = e.Message });
+                return BadRequest(new { Success = false, Message = e.Message });
             }
         }
 
@@ -145,12 +145,12 @@ namespace FundooNotesApi.Controllers
                 }
                 else
                 {
-                    return Ok(new { Success = false, Message = "Get User Statistics unsuccessful!!" });
+                    return BadRequest(new { Success = false, Message = "Get User Statistics unsuccessful!!" });
                 }
             }
             catch (Exception e)
             {
-                return Ok(new { Success = false, Message = e.Message });
+                return BadRequest(new { Success = false, Message = e.Message });
             }
         }
     }

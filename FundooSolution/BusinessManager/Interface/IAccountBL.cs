@@ -41,7 +41,7 @@
         /// </summary>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        ResetPasswordModel ResetPassword(ResetPasswordModel token);
+        bool ResetPassword(ResetPasswordModel token,int userId);
         Task<List<GetAllUserResponce>> GetAllUserByAdminAuthorization();
         Task<Dictionary<string, int>> GetUserStatisticsByAdmin();
     }

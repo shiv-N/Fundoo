@@ -36,7 +36,7 @@
         /// <param name="model">The model.</param>
         /// <returns></returns>
         public string ForgotPassword(ForgotPassword model)
-        {
+         {
             string Token = notesRL.ForgotPassword(model);
             return Token;
         }
@@ -179,9 +179,9 @@
         /// </summary>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        public ResetPasswordModel ResetPassword(ResetPasswordModel token)
+        public bool ResetPassword(ResetPasswordModel token,int userId)
         {
-            return notesRL.ResetPassword(token);
+            return notesRL.ResetPassword(token, userId);
         }
     }
 }
