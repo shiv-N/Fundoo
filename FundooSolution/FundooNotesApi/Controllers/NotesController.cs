@@ -45,25 +45,30 @@ namespace FundooNotesApi.Controllers
         [HttpPost]
         public async Task<IActionResult> AddNotes(AddNotesRequestModel model)
         {
-            if (model != null && model.CreatedDate > DateTime.MinValue)
+            try
             {
-                var userId = TokenUserId();
-                if(await note.AddNotes(model, userId))
+                if (model != null)
                 {
-                    string status = "Note added";
-                    return Ok(new { status, userId, model });
+                    var userId = TokenUserId();
+                    if (await note.AddNotes(model, userId))
+                    {
+                        return Ok(new { success = false, Message = "Note added" });
+                    }
+                    else
+                    {
+                        return BadRequest(new { success = false, Message = "Note did not added" });
+                    }
                 }
                 else
                 {
-                    string status = "Note did not added";
-                    return BadRequest(new { status, userId, model });
+                    return BadRequest(new { success = false, Message = "Input should not be empty!!!" });
                 }
             }
-            else
+            catch(Exception e)
             {
-                string status = "Input should not be empty!!!";
-                return BadRequest(new { status,  model });
+                return BadRequest(new { success=false, e.Message });
             }
+           
         }
 
         /// <summary>
@@ -79,23 +84,20 @@ namespace FundooNotesApi.Controllers
                 if (userId != 0)
                 {
 
-                    IList <DisplayResponceModel> model = await note.DisplayNotes(userId);
-                    if (model != null)
+                    IList <DisplayResponceModel> Data = await note.DisplayNotes(userId);
+                    if (Data != null)
                     {
-                        string status = "Display notes operation is successful";
-                        return Ok(new { status,userId, model});
+                        return Ok(new { success = true, Meassage = "Display notes operation is successful", Data });
 
                     }
                     else
                     {
-                        string status = "Display notes operation is not successful";
-                        return BadRequest(new { status, userId, model });
+                        return BadRequest(new { success = false, Meassage = "Display notes operation is not successful" });
                     }
                 }
                 else
                 {
-                    string status = "Invalid user";
-                    return BadRequest(new { status, userId });
+                    return BadRequest(new { success = false, Meassage = "Invalid user" });
                 }
             }
             catch(Exception e)

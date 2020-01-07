@@ -38,7 +38,14 @@
         /// <returns></returns>
         public async Task<bool> AddNotes(AddNotesRequestModel model, int userId)
         {
-            return await notes.AddNotes(model,userId); 
+            try
+            {
+                return await notes.AddNotes(model, userId);
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
 
         /// <summary>

@@ -55,7 +55,7 @@ namespace CommonLayerModel.NotesModels
         /// <value>
         /// The created date.
         /// </value>
-        public DateTime CreatedDate { get; set; }
+        //public DateTime CreatedDate { get; set; }
 
         /// <summary>
         /// Gets or sets the modified date.
@@ -63,7 +63,7 @@ namespace CommonLayerModel.NotesModels
         /// <value>
         /// The modified date.
         /// </value>
-        public DateTime ModifiedDate { get; set; }
+        //public DateTime ModifiedDate { get; set; }
 
         /// <summary>
         /// Gets or sets the add reminder.
@@ -71,7 +71,7 @@ namespace CommonLayerModel.NotesModels
         /// <value>
         /// The add reminder.
         /// </value>
-        public DateTime AddReminder { get; set; }
+        //public DateTime AddReminder { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is archive.
