@@ -44,9 +44,15 @@
                 command.Parameters.AddWithValue("NoteImage", model.Image);
                 command.Parameters.AddWithValue("Color", model.Color);
                 command.Parameters.AddWithValue("CreatedDATETime", DateTime.Now);
-                //command.Parameters.AddWithValue("ModifiedDateTime", model.ModifiedDate);
-                //command.Parameters.AddWithValue("AddReminder", model.AddReminder);
-                command.Parameters.AddWithValue("AddReminder", null);
+                command.Parameters.AddWithValue("ModifiedDateTime", DateTime.Now);
+                if(model.AddReminder < DateTime.MinValue || model.AddReminder == null)
+                {
+                    command.Parameters.AddWithValue("AddReminder", DateTime.Now);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("AddReminder", model.AddReminder);
+                }
                 command.Parameters.AddWithValue("UserId", userId);
                 command.Parameters.AddWithValue("IsPin", model.IsPin);
                 command.Parameters.AddWithValue("IsNote", model.IsNote);

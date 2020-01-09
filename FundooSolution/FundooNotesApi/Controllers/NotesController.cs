@@ -52,7 +52,7 @@ namespace FundooNotesApi.Controllers
                     var userId = TokenUserId();
                     if (await note.AddNotes(model, userId))
                     {
-                        return Ok(new { success = false, Message = "Note added" });
+                        return Ok(new { success = true, Message = "Note added" });
                     }
                     else
                     {
