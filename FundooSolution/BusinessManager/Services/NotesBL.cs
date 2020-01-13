@@ -100,6 +100,18 @@
             }
         }
 
+        public async Task<IList<DisplayResponceModel>> DisplayTrash(int userId)
+        {
+            try
+            {
+                return await notes.DisplayTrash(userId);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         /// <summary>
         /// Edits the note.
         /// </summary>

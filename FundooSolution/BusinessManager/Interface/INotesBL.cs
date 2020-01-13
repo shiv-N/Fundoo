@@ -36,6 +36,8 @@
         /// <returns></returns>
         Task<IList<DisplayResponceModel>> DisplayArchive(int userId);
 
+        Task<IList<DisplayResponceModel>> DisplayTrash(int userId);
+
         /// <summary>
         /// Edits the note.
         /// </summary>

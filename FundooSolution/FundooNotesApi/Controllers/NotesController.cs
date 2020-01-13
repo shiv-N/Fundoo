@@ -122,12 +122,43 @@ namespace FundooNotesApi.Controllers
                     IList<DisplayResponceModel> Data = await note.DisplayArchive(userId);
                     if (Data != null)
                     {
-                        return Ok(new { success = true, Meassage = "Display notes operation is successful", Data });
+                        return Ok(new { success = true, Meassage = "Display archive notes operation is successful", Data });
 
                     }
                     else
                     {
-                        return BadRequest(new { success = false, Meassage = "Display notes operation is not successful" });
+                        return BadRequest(new { success = false, Meassage = "Display archive notes operation is not successful" });
+                    }
+                }
+                else
+                {
+                    return BadRequest(new { success = false, Meassage = "Invalid user" });
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { success = false, Meassage = e.Message });
+            }
+        }
+
+        [HttpGet("trash")]
+        public async Task<IActionResult> DisplayTrash()
+        {
+            try
+            {
+                var userId = TokenUserId();
+                if (userId != 0)
+                {
+
+                    IList<DisplayResponceModel> Data = await note.DisplayTrash(userId);
+                    if (Data != null)
+                    {
+                        return Ok(new { success = true, Meassage = "Display trash notes operation is successful", Data });
+
+                    }
+                    else
+                    {
+                        return BadRequest(new { success = false, Meassage = "Display trash archive notes operation is not successful" });
                     }
                 }
                 else
