@@ -117,6 +117,43 @@
             }
         }
 
+
+        public async Task<IList<DisplayResponceModel>> DisplayArchive(int userId)
+        {
+            try
+            {
+                IList<DisplayResponceModel> notes = new List<DisplayResponceModel>();
+
+                List<SpParameterData> paramsList = new List<SpParameterData>();
+                paramsList.Add(new SpParameterData("@UserId", userId));
+                DataTable table = await spExecuteReader("spDisplayArchiveByUserId", paramsList);
+
+                foreach (DataRow row in table.Rows)
+                {
+                    DisplayResponceModel userDetails = new DisplayResponceModel();
+                    userDetails.Id = (int)row["Id"];
+                    userDetails.Title = row["Title"].ToString();
+                    userDetails.Message = row["MeassageDescription"].ToString();
+                    userDetails.Image = row["NoteImage"].ToString();
+                    userDetails.Color = row["Color"].ToString();
+                    userDetails.CreatedDate = (DateTime)row["CreatedDATETime"];
+                    userDetails.ModifiedDate = (DateTime)row["ModifiedDateTime"];
+                    userDetails.AddReminder = (DateTime)row["AddReminder"];
+                    userDetails.UserId = (int)row["UserId"];
+                    userDetails.IsPin = (bool)row["IsPin"];
+                    userDetails.IsNote = (bool)row["IsNote"];
+                    userDetails.IsArchive = (bool)row["IsArchive"];
+                    userDetails.IsTrash = (bool)row["IsTrash"];
+                    notes.Add(userDetails);
+                }
+                return notes;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public async Task<IList<GetCollabratorResponce>> GetCollaborators(int userId)
         {
             try
@@ -514,7 +551,7 @@
                 command.Parameters.AddWithValue("@UserId", userId);
                 command.Parameters.AddWithValue("@Id", noteId);
                 command.Parameters.AddWithValue("@Color", colourRequest.Color);
-                command.Parameters.AddWithValue("@ModifiedDateTime", colourRequest.ModifiedDate);
+                command.Parameters.AddWithValue("@ModifiedDateTime", DateTime.Now);
                 int result = await command.ExecuteNonQueryAsync();
                 connection.Close();
                 if (result != 0)

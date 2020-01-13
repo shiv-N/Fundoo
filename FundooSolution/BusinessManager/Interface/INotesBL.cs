@@ -30,6 +30,13 @@
         Task<IList<DisplayResponceModel>> DisplayNotes(int userId);
 
         /// <summary>
+        /// Displays the archive.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        Task<IList<DisplayResponceModel>> DisplayArchive(int userId);
+
+        /// <summary>
         /// Edits the note.
         /// </summary>
         /// <param name="model">The model.</param>

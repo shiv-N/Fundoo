@@ -73,7 +73,31 @@
         /// <returns></returns>
         public async Task<IList<DisplayResponceModel>> DisplayNotes(int userId)
         {
-            return await notes.DisplayNotes(userId);
+            try
+            {
+                return await notes.DisplayNotes(userId);
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
+
+        /// <summary>
+        /// Displays the archive.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public async Task<IList<DisplayResponceModel>> DisplayArchive(int userId)
+        {
+            try
+            {
+                return await notes.DisplayArchive(userId);
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
 
         /// <summary>

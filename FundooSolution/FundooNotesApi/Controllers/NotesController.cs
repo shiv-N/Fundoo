@@ -107,6 +107,41 @@ namespace FundooNotesApi.Controllers
         }
 
         /// <summary>
+        /// Displays the archive.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("archive")]
+        public async Task<IActionResult> DisplayArchive()
+        {
+            try
+            {
+                var userId = TokenUserId();
+                if (userId != 0)
+                {
+
+                    IList<DisplayResponceModel> Data = await note.DisplayArchive(userId);
+                    if (Data != null)
+                    {
+                        return Ok(new { success = true, Meassage = "Display notes operation is successful", Data });
+
+                    }
+                    else
+                    {
+                        return BadRequest(new { success = false, Meassage = "Display notes operation is not successful" });
+                    }
+                }
+                else
+                {
+                    return BadRequest(new { success = false, Meassage = "Invalid user" });
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { success = false, Meassage = e.Message });
+            }
+        }
+
+        /// <summary>
         /// Edits the note.
         /// </summary>
         /// <param name="model">The model.</param>

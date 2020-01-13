@@ -19,13 +19,5 @@ namespace CommonLayerModel.NotesModels
         [Required]
         public string Color { get; set; }
 
-        /// <summary>
-        /// Gets or sets the modified date.
-        /// </summary>
-        /// <value>
-        /// The modified date.
-        /// </value>
-        [Required]
-        public DateTime ModifiedDate { get; set; }
     }
 }
