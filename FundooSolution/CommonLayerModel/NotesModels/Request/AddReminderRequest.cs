@@ -17,15 +17,6 @@ namespace CommonLayerModel.NotesModels
         /// The add reminder.
         /// </value>
         [Required]
-        public DateTime AddReminder { get; set; }
-
-        /// <summary>
-        /// Gets or sets the modified date.
-        /// </summary>
-        /// <value>
-        /// The modified date.
-        /// </value>
-        [Required]
-        public DateTime ModifiedDate { get; set; }
+        public DateTime Reminder { get; set; }
     }
 }

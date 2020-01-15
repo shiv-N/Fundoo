@@ -552,8 +552,8 @@
                 connection.Open();
                 command.Parameters.AddWithValue("@UserId", userId);
                 command.Parameters.AddWithValue("@Id", noteId);
-                command.Parameters.AddWithValue("@AddReminder", reminder.AddReminder);
-                command.Parameters.AddWithValue("@ModifiedDateTime", reminder.ModifiedDate);
+                command.Parameters.AddWithValue("@AddReminder", reminder.Reminder);
+                command.Parameters.AddWithValue("@ModifiedDateTime", DateTime.Now);
                 int result = await command.ExecuteNonQueryAsync();
                 connection.Close();
                 if (result != 0)
