@@ -45,14 +45,7 @@
                 command.Parameters.AddWithValue("Color", model.Color);
                 command.Parameters.AddWithValue("CreatedDATETime", DateTime.Now);
                 command.Parameters.AddWithValue("ModifiedDateTime", DateTime.Now);
-                if(model.AddReminder < DateTime.MinValue || model.AddReminder == null)
-                {
-                    command.Parameters.AddWithValue("AddReminder", DateTime.Now);
-                }
-                else
-                {
-                    command.Parameters.AddWithValue("AddReminder", model.AddReminder);
-                }
+                command.Parameters.AddWithValue("AddReminder", model.AddReminder);
                 command.Parameters.AddWithValue("UserId", userId);
                 command.Parameters.AddWithValue("IsPin", model.IsPin);
                 command.Parameters.AddWithValue("IsNote", model.IsNote);
@@ -101,7 +94,14 @@
                     userDetails.Color = row["Color"].ToString();
                     userDetails.CreatedDate = (DateTime)row["CreatedDATETime"];
                     userDetails.ModifiedDate = (DateTime)row["ModifiedDateTime"];
-                    userDetails.AddReminder = (DateTime)row["AddReminder"];
+                    if(row["AddReminder"]==null || row["AddReminder"].Equals(DBNull.Value))
+                    {
+                        userDetails.AddReminder = null;
+                    }
+                    else
+                    {
+                        userDetails.AddReminder = (DateTime)row["AddReminder"];
+                    }
                     userDetails.UserId = (int)row["UserId"];
                     userDetails.IsPin = (bool)row["IsPin"];
                     userDetails.IsNote = (bool)row["IsNote"];
@@ -138,7 +138,14 @@
                     userDetails.Color = row["Color"].ToString();
                     userDetails.CreatedDate = (DateTime)row["CreatedDATETime"];
                     userDetails.ModifiedDate = (DateTime)row["ModifiedDateTime"];
-                    userDetails.AddReminder = (DateTime)row["AddReminder"];
+                    if(row["AddReminder"] == null || row["AddReminder"].Equals(DBNull.Value))
+                    {
+                        userDetails.AddReminder = null;
+                    }
+                    else
+                    {
+                        userDetails.AddReminder = (DateTime)row["AddReminder"];
+                    }
                     userDetails.UserId = (int)row["UserId"];
                     userDetails.IsPin = (bool)row["IsPin"];
                     userDetails.IsNote = (bool)row["IsNote"];
@@ -175,7 +182,14 @@
                     userDetails.Color = row["Color"].ToString();
                     userDetails.CreatedDate = (DateTime)row["CreatedDATETime"];
                     userDetails.ModifiedDate = (DateTime)row["ModifiedDateTime"];
-                    userDetails.AddReminder = (DateTime)row["AddReminder"];
+                    if (row["AddReminder"] == null || row["AddReminder"].Equals(DBNull.Value))
+                    {
+                        userDetails.AddReminder = null;
+                    }
+                    else
+                    {
+                        userDetails.AddReminder = (DateTime)row["AddReminder"];
+                    }
                     userDetails.UserId = (int)row["UserId"];
                     userDetails.IsPin = (bool)row["IsPin"];
                     userDetails.IsNote = (bool)row["IsNote"];
@@ -253,19 +267,18 @@
         /// <param name="model">The model.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<bool> EditNote(EditNoteRequestModel model, int userId)
+        public async Task<bool> EditNote(int noteId,EditNoteRequestModel model, int userId)
         {
             try
             {
                 SqlConnection connection = DBConnection();
                 SqlCommand command = StoreProcedureConnection("spEditNote", connection);
                 connection.Open();
-                command.Parameters.AddWithValue("Id", model.Id);
+                command.Parameters.AddWithValue("Id", noteId);
                 command.Parameters.AddWithValue("Title", model.Title);
                 command.Parameters.AddWithValue("MeassageDescription", model.Message);
-                command.Parameters.AddWithValue("NoteImage", model.Image);
-                command.Parameters.AddWithValue("Color", model.Color);
-                command.Parameters.AddWithValue("ModifiedDateTime", model.ModifiedDate);
+                command.Parameters.AddWithValue("AddReminder", model.Reminder);
+                command.Parameters.AddWithValue("ModifiedDateTime", DateTime.Now);
                 command.Parameters.AddWithValue("UserId", userId);
                 int result = await command.ExecuteNonQueryAsync();
                 connection.Close();
@@ -552,7 +565,7 @@
                 connection.Open();
                 command.Parameters.AddWithValue("@UserId", userId);
                 command.Parameters.AddWithValue("@Id", noteId);
-                command.Parameters.AddWithValue("@AddReminder", reminder.Reminder);
+                command.Parameters.AddWithValue("@AddReminder", reminder.Reminder.ToLocalTime());
                 command.Parameters.AddWithValue("@ModifiedDateTime", DateTime.Now);
                 int result = await command.ExecuteNonQueryAsync();
                 connection.Close();

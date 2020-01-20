@@ -11,3 +11,16 @@ C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\BusinessManager\obj\De
 C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\BusinessManager\obj\Debug\netcoreapp2.1\BusinessManager.csproj.CopyComplete
 C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\BusinessManager\obj\Debug\netcoreapp2.1\BusinessManager.dll
 C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\BusinessManager\obj\Debug\netcoreapp2.1\BusinessManager.pdb
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\BusinessManager\bin\Debug\netcoreapp2.1\BusinessManager.deps.json
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\BusinessManager\bin\Debug\netcoreapp2.1\BusinessManager.dll
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\BusinessManager\bin\Debug\netcoreapp2.1\BusinessManager.pdb
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\BusinessManager\bin\Debug\netcoreapp2.1\CommonLayerModel.dll
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\BusinessManager\bin\Debug\netcoreapp2.1\NotesRepository.dll
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\BusinessManager\bin\Debug\netcoreapp2.1\NotesRepository.pdb
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\BusinessManager\bin\Debug\netcoreapp2.1\CommonLayerModel.pdb
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\BusinessManager\obj\Debug\netcoreapp2.1\BusinessManager.csprojAssemblyReference.cache
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\BusinessManager\obj\Debug\netcoreapp2.1\BusinessManager.AssemblyInfoInputs.cache
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\BusinessManager\obj\Debug\netcoreapp2.1\BusinessManager.AssemblyInfo.cs
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\BusinessManager\obj\Debug\netcoreapp2.1\BusinessManager.csproj.CopyComplete
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\BusinessManager\obj\Debug\netcoreapp2.1\BusinessManager.dll
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\BusinessManager\obj\Debug\netcoreapp2.1\BusinessManager.pdb

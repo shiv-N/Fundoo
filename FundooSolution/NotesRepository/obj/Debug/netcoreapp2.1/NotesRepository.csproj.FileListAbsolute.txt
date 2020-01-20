@@ -9,3 +9,14 @@ C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\NotesRepository\bin\De
 C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\NotesRepository\obj\Debug\netcoreapp2.1\NotesRepository.csproj.CopyComplete
 C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\NotesRepository\obj\Debug\netcoreapp2.1\NotesRepository.dll
 C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\NotesRepository\obj\Debug\netcoreapp2.1\NotesRepository.pdb
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\NotesRepository\bin\Debug\netcoreapp2.1\NotesRepository.deps.json
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\NotesRepository\bin\Debug\netcoreapp2.1\NotesRepository.dll
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\NotesRepository\bin\Debug\netcoreapp2.1\NotesRepository.pdb
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\NotesRepository\bin\Debug\netcoreapp2.1\CommonLayerModel.dll
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\NotesRepository\bin\Debug\netcoreapp2.1\CommonLayerModel.pdb
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\NotesRepository\obj\Debug\netcoreapp2.1\NotesRepository.csprojAssemblyReference.cache
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\NotesRepository\obj\Debug\netcoreapp2.1\NotesRepository.AssemblyInfoInputs.cache
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\NotesRepository\obj\Debug\netcoreapp2.1\NotesRepository.AssemblyInfo.cs
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\NotesRepository\obj\Debug\netcoreapp2.1\NotesRepository.csproj.CopyComplete
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\NotesRepository\obj\Debug\netcoreapp2.1\NotesRepository.dll
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\NotesRepository\obj\Debug\netcoreapp2.1\NotesRepository.pdb

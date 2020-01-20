@@ -118,9 +118,9 @@
         /// <param name="model">The model.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<bool> EditNote(EditNoteRequestModel model, int userId)
+        public async Task<bool> EditNote(int noteId,EditNoteRequestModel model, int userId)
         {
-            return await notes.EditNote(model,userId);
+            return await notes.EditNote(noteId,model, userId);
         }
 
         /// <summary>

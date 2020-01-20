@@ -177,13 +177,13 @@ namespace FundooNotesApi.Controllers
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns></returns>
-        [HttpPut]
-        public async Task<IActionResult> EditNote(EditNoteRequestModel model)
+        [HttpPut("{noteId}")]
+        public async Task<IActionResult> EditNote(int noteId, EditNoteRequestModel model)
         {
-            if (model.Id != 0 && (model.Message !=null || model.Title !=null || model.Image != null || model.Color != null))
+            if (noteId != 0 && (model.Message !=null || model.Title !=null ))
             {
                 var userId = TokenUserId();
-                if (await note.EditNote(model, userId))
+                if (await note.EditNote(noteId,model, userId))
                 {
                     string status = "Note edited";
                     return Ok(new { status, userId,model });

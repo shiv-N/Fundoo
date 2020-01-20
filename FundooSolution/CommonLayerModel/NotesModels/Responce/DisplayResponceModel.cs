@@ -79,7 +79,7 @@ namespace CommonLayerModel.NotesModels
         /// <value>
         /// The add reminder.
         /// </value>
-        public DateTime AddReminder { get; set; }
+        public DateTime? AddReminder { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is archive.

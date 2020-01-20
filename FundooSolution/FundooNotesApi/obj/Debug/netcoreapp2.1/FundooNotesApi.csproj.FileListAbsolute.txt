@@ -21,3 +21,26 @@ C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\FundooNotesApi\bin\Deb
 C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\FundooNotesApi\bin\Debug\netcoreapp2.1\CommonLayerModel.pdb
 C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\FundooNotesApi\bin\Debug\netcoreapp2.1\NotesRepository.pdb
 C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\FundooNotesApi\obj\Debug\netcoreapp2.1\FundooNotesApi.csproj.CopyComplete
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\FundooNotesApi\bin\Debug\netcoreapp2.1\appsettings.Development.json
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\FundooNotesApi\bin\Debug\netcoreapp2.1\appsettings.json
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\FundooNotesApi\bin\Debug\netcoreapp2.1\Properties\launchSettings.json
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\FundooNotesApi\bin\Debug\netcoreapp2.1\FundooNotesApi.deps.json
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\FundooNotesApi\bin\Debug\netcoreapp2.1\FundooNotesApi.runtimeconfig.json
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\FundooNotesApi\bin\Debug\netcoreapp2.1\FundooNotesApi.runtimeconfig.dev.json
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\FundooNotesApi\bin\Debug\netcoreapp2.1\FundooNotesApi.dll
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\FundooNotesApi\bin\Debug\netcoreapp2.1\FundooNotesApi.pdb
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\FundooNotesApi\bin\Debug\netcoreapp2.1\BusinessManager.dll
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\FundooNotesApi\bin\Debug\netcoreapp2.1\CommonLayerModel.dll
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\FundooNotesApi\bin\Debug\netcoreapp2.1\NotesRepository.dll
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\FundooNotesApi\bin\Debug\netcoreapp2.1\BusinessManager.pdb
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\FundooNotesApi\bin\Debug\netcoreapp2.1\CommonLayerModel.pdb
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\FundooNotesApi\bin\Debug\netcoreapp2.1\NotesRepository.pdb
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\FundooNotesApi\obj\Debug\netcoreapp2.1\FundooNotesApi.csprojAssemblyReference.cache
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\FundooNotesApi\obj\Debug\netcoreapp2.1\FundooNotesApi.RazorAssemblyInfo.cache
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\FundooNotesApi\obj\Debug\netcoreapp2.1\FundooNotesApi.RazorAssemblyInfo.cs
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\FundooNotesApi\obj\Debug\netcoreapp2.1\FundooNotesApi.AssemblyInfoInputs.cache
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\FundooNotesApi\obj\Debug\netcoreapp2.1\FundooNotesApi.AssemblyInfo.cs
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\FundooNotesApi\obj\Debug\netcoreapp2.1\FundooNotesApi.RazorTargetAssemblyInfo.cache
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\FundooNotesApi\obj\Debug\netcoreapp2.1\FundooNotesApi.csproj.CopyComplete
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\FundooNotesApi\obj\Debug\netcoreapp2.1\FundooNotesApi.dll
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\FundooNotesApi\obj\Debug\netcoreapp2.1\FundooNotesApi.pdb

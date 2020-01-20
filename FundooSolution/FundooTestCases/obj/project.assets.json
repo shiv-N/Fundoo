@@ -8599,23 +8599,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Admin\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\bridgeit\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\Saurabh\\Week 7\\FundooSolution\\FundooTestCases\\FundooTestCases.csproj",
+      "projectUniqueName": "D:\\saurabh\\Fundoo-master\\Fundoo-master\\FundooSolution\\FundooTestCases\\FundooTestCases.csproj",
       "projectName": "FundooTestCases",
-      "projectPath": "C:\\Users\\Admin\\source\\repos\\Saurabh\\Week 7\\FundooSolution\\FundooTestCases\\FundooTestCases.csproj",
-      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Admin\\source\\repos\\Saurabh\\Week 7\\FundooSolution\\FundooTestCases\\obj\\",
+      "projectPath": "D:\\saurabh\\Fundoo-master\\Fundoo-master\\FundooSolution\\FundooTestCases\\FundooTestCases.csproj",
+      "packagesPath": "C:\\Users\\bridgeit\\.nuget\\packages\\",
+      "outputPath": "D:\\saurabh\\Fundoo-master\\Fundoo-master\\FundooSolution\\FundooTestCases\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\bridgeit\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -8628,11 +8624,11 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "C:\\Users\\Admin\\source\\repos\\Saurabh\\Week 7\\FundooSolution\\BusinessManager\\BusinessManager.csproj": {
-              "projectPath": "C:\\Users\\Admin\\source\\repos\\Saurabh\\Week 7\\FundooSolution\\BusinessManager\\BusinessManager.csproj"
+            "D:\\saurabh\\Fundoo-master\\Fundoo-master\\FundooSolution\\BusinessManager\\BusinessManager.csproj": {
+              "projectPath": "D:\\saurabh\\Fundoo-master\\Fundoo-master\\FundooSolution\\BusinessManager\\BusinessManager.csproj"
             },
-            "C:\\Users\\Admin\\source\\repos\\Saurabh\\Week 7\\FundooSolution\\NotesRepository\\NotesRepository.csproj": {
-              "projectPath": "C:\\Users\\Admin\\source\\repos\\Saurabh\\Week 7\\FundooSolution\\NotesRepository\\NotesRepository.csproj"
+            "D:\\saurabh\\Fundoo-master\\Fundoo-master\\FundooSolution\\NotesRepository\\NotesRepository.csproj": {
+              "projectPath": "D:\\saurabh\\Fundoo-master\\Fundoo-master\\FundooSolution\\NotesRepository\\NotesRepository.csproj"
             }
           }
         }

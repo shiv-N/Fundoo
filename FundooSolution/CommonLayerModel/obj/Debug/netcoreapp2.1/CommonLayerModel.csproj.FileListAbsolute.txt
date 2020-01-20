@@ -6,3 +6,11 @@ C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\CommonLayerModel\obj\D
 C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\CommonLayerModel\obj\Debug\netcoreapp2.1\CommonLayerModel.dll
 C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\CommonLayerModel\obj\Debug\netcoreapp2.1\CommonLayerModel.pdb
 C:\Users\Admin\source\repos\Saurabh\Week 7\FundooSolution\CommonLayerModel\obj\Debug\netcoreapp2.1\CommonLayerModel.csprojAssemblyReference.cache
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\CommonLayerModel\bin\Debug\netcoreapp2.1\CommonLayerModel.deps.json
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\CommonLayerModel\bin\Debug\netcoreapp2.1\CommonLayerModel.dll
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\CommonLayerModel\bin\Debug\netcoreapp2.1\CommonLayerModel.pdb
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\CommonLayerModel\obj\Debug\netcoreapp2.1\CommonLayerModel.csprojAssemblyReference.cache
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\CommonLayerModel\obj\Debug\netcoreapp2.1\CommonLayerModel.AssemblyInfoInputs.cache
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\CommonLayerModel\obj\Debug\netcoreapp2.1\CommonLayerModel.AssemblyInfo.cs
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\CommonLayerModel\obj\Debug\netcoreapp2.1\CommonLayerModel.dll
+D:\saurabh\Fundoo-master\Fundoo-master\FundooSolution\CommonLayerModel\obj\Debug\netcoreapp2.1\CommonLayerModel.pdb

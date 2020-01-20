@@ -9,13 +9,6 @@ namespace CommonLayerModel.NotesModels
     /// </summary>
     public class EditNoteRequestModel
     {
-        /// <summary>
-        /// Gets or sets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public int Id { get; set; }
 
         /// <summary>
         /// Gets or sets the title.
@@ -33,28 +26,7 @@ namespace CommonLayerModel.NotesModels
         /// </value>
         public string Message { get; set; }
 
-        /// <summary>
-        /// Gets or sets the image.
-        /// </summary>
-        /// <value>
-        /// The image.
-        /// </value>
-        public string Image { get; set; }
+        public DateTime? Reminder { get; set; }
 
-        /// <summary>
-        /// Gets or sets the color.
-        /// </summary>
-        /// <value>
-        /// The color.
-        /// </value>
-        public string Color { get; set; }
-
-        /// <summary>
-        /// Gets or sets the modified date.
-        /// </summary>
-        /// <value>
-        /// The modified date.
-        /// </value>
-        public DateTime ModifiedDate { get; set; }
     }
 }

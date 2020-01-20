@@ -44,7 +44,7 @@
         /// <param name="model">The model.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        Task<bool> EditNote(EditNoteRequestModel model, int userId);
+        Task<bool> EditNote(int noteId,EditNoteRequestModel model, int userId);
 
         /// <summary>
         /// Deletes the note.
