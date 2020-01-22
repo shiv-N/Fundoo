@@ -232,7 +232,7 @@
             }
         }
 
-        public async Task<AddCollaboratorResponce> AddCollaborators(int userId, AddCollaboratorRequest collaborator)
+        public async Task<AddCollaboratorResponce> AddCollaborators(int NoteId,int userId, AddCollaboratorRequest collaborator)
         {
             try
             {
@@ -240,8 +240,8 @@
                 SqlCommand command = StoreProcedureConnection("spAddValidCollaborator", connection);
                 command.Parameters.AddWithValue("@UserId", userId);
                 command.Parameters.AddWithValue("@CollaboratorWithId", collaborator.CollaboratorId);
-                command.Parameters.AddWithValue("@NoteId", collaborator.NoteId);
-                command.Parameters.AddWithValue("@CreatedDateTime", collaborator.CreatedDateTime);
+                command.Parameters.AddWithValue("@NoteId", NoteId);
+                command.Parameters.AddWithValue("@CreatedDateTime", DateTime.Now);
                 connection.Open();
                 SqlDataReader dataReader = await command.ExecuteReaderAsync();
                 AddCollaboratorResponce collaboratorResponce = new AddCollaboratorResponce();
@@ -538,6 +538,39 @@
                     userDetails.IsNote = (bool)dataReader["IsNote"];
                     userDetails.IsArchive = (bool)dataReader["IsArchive"];
                     userDetails.IsTrash = (bool)dataReader["IsTrash"];
+                    responceList.Add(userDetails);
+                }
+                connection.Close();
+                return responceList;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+
+        public async Task<List<GetCollaboratorResponse>> SearchCollaborators(string keyword, int UserId)
+        {
+            try
+            {
+                SqlConnection connection = DBConnection();
+                SqlCommand command = StoreProcedureConnection("spSearchCollaborators", connection);
+                List<GetCollaboratorResponse> responceList = new List<GetCollaboratorResponse>();
+                command.Parameters.AddWithValue("@SearchKeyword", keyword);
+                command.Parameters.AddWithValue("@UserId", UserId);
+                connection.Open();
+                SqlDataReader dataReader = await command.ExecuteReaderAsync();
+                while (dataReader.Read())
+                {
+                    GetCollaboratorResponse userDetails = new GetCollaboratorResponse();
+                    userDetails.Id = (int)dataReader["Id"];
+                    userDetails.FirstName = dataReader["FirstName"].ToString();
+                    userDetails.LastName = dataReader["LastName"].ToString();
+                    userDetails.UserAddress = dataReader["UserAddress"].ToString();
+                    userDetails.PhoneNumber = dataReader["PhoneNumber"].ToString();
+                    userDetails.email = dataReader["Email"].ToString();
                     responceList.Add(userDetails);
                 }
                 connection.Close();

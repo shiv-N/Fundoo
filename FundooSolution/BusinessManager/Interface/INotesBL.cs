@@ -118,7 +118,7 @@
         /// <param name="userId">The user identifier.</param>
         /// <param name="collaborator">The collaborator.</param>
         /// <returns></returns>
-        Task<AddCollaboratorResponce> AddCollaborators(int userId, AddCollaboratorRequest collaborator);
+        Task<AddCollaboratorResponce> AddCollaborators(int NoteId,int userId, AddCollaboratorRequest collaborator);
 
         /// <summary>
         /// Bulks the trash.
@@ -135,5 +135,7 @@
         /// <param name="UserId">The user identifier.</param>
         /// <returns></returns>
         Task<List<DisplayResponceModel>> SearchKeyword(string keyword, int UserId);
+
+        Task<List<GetCollaboratorResponse>> SearchCollaborators(string keyword, int UserId);
     }
 }

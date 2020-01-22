@@ -8,10 +8,6 @@ namespace CommonLayerModel.NotesModels.Request
     public class AddCollaboratorRequest
     {
         [Required]
-        public int NoteId { get; set; }
-        [Required]
         public int CollaboratorId { get; set; }
-        [Required]
-        public DateTime CreatedDateTime { get; set; }
     }
 }

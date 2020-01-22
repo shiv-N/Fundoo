@@ -209,11 +209,11 @@
         /// <param name="userId">The user identifier.</param>
         /// <param name="collaborator">The collaborator.</param>
         /// <returns></returns>
-        public async Task<AddCollaboratorResponce> AddCollaborators(int userId, AddCollaboratorRequest collaborator)
+        public async Task<AddCollaboratorResponce> AddCollaborators(int NoteId,int userId, AddCollaboratorRequest collaborator)
         {
             try
             {
-                return await notes.AddCollaborators(userId, collaborator);
+                return await notes.AddCollaborators(NoteId,userId, collaborator);
             }
             catch(Exception e)
             {
@@ -250,6 +250,18 @@
             try
             {
                 return await notes.SearchKeyword(keyword, UserId);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<List<GetCollaboratorResponse>> SearchCollaborators(string keyword, int UserId)
+        {
+            try
+            {
+                return await notes.SearchCollaborators(keyword, UserId);
             }
             catch (Exception e)
             {

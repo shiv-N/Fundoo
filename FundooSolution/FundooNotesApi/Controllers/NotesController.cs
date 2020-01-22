@@ -382,15 +382,15 @@ namespace FundooNotesApi.Controllers
         /// </summary>
         /// <param name="collaborator">The collaborator.</param>
         /// <returns></returns>
-        [HttpPost("AddCollaborators")]
-        public async Task<IActionResult> AddCollaborators(AddCollaboratorRequest collaborator)
+        [HttpPost("AddCollaborators/{NoteId}")]
+        public async Task<IActionResult> AddCollaborators(int NoteId, AddCollaboratorRequest collaborator)
         {
             try
             {
-                if (collaborator.CollaboratorId != 0 && collaborator.NoteId != 0)
+                if (collaborator.CollaboratorId != 0 && NoteId != 0)
                 {
                     var userId = TokenUserId();
-                    AddCollaboratorResponce data = await note.AddCollaborators(userId, collaborator);
+                    AddCollaboratorResponce data = await note.AddCollaborators(NoteId,userId, collaborator);
                     if (data.CollaborationRecordId != 0)
                     {
                         return Ok(new { success = true, Meassage = "Add Collabrators SucessessFully", data });
@@ -467,6 +467,38 @@ namespace FundooNotesApi.Controllers
                     else
                     {
                         return BadRequest(new { success = false, Meassage = "Search Keyword unsuceessful" });
+                    }
+                }
+                else
+                {
+                    return BadRequest(new { success = false, Meassage = "Invalid Input!" });
+                }
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { success = false, Meassage = e.Message });
+            }
+        }
+
+
+
+        [HttpPost("SearchCollaborators")]
+        public async Task<IActionResult> SearchCollaborators(SearchRequestModel model)
+        {
+            try
+            {
+                if (model.Keyword != null && model.Keyword !=string.Empty)
+                {
+                    var userId = TokenUserId();
+                    List<GetCollaboratorResponse> data = await note.SearchCollaborators(model.Keyword, userId);
+                    if (data.Count != 0)
+                    {
+                        return Ok(new { success = true, Meassage = "Search Collaborators SucessessFully", data });
+                    }
+                    else
+                    {
+                        return BadRequest(new { success = false, Meassage = "Search Collaborators unsuceessful" });
                     }
                 }
                 else
