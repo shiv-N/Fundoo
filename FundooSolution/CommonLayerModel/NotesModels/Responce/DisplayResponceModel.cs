@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonLayerModel.NotesModels.Responce;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -112,5 +113,7 @@ namespace CommonLayerModel.NotesModels
         /// The user identifier.
         /// </value>
         public int UserId { get; set; }     /// foreign key..
+
+        public IList<GetNoteCollaborator> collaborators { get; set; }
     }
 }

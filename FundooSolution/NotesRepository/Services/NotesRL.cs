@@ -103,6 +103,7 @@
                         userDetails.AddReminder = (DateTime)row["AddReminder"];
                     }
                     userDetails.UserId = (int)row["UserId"];
+                    userDetails.collaborators = await GetNoteallCollaborator(userDetails.Id, userId);
                     userDetails.IsPin = (bool)row["IsPin"];
                     userDetails.IsNote = (bool)row["IsNote"];
                     userDetails.IsArchive = (bool)row["IsArchive"];
@@ -117,7 +118,38 @@
             }
         }
 
-
+        private async Task<IList<GetNoteCollaborator>> GetNoteallCollaborator(int noteId, int UserId)
+        {
+            IList<GetNoteCollaborator> noteCollaborator = new List<GetNoteCollaborator>();
+            List<SpParameterData> paramsList = new List<SpParameterData>();
+            paramsList.Add(new SpParameterData("@UserId", UserId));
+            paramsList.Add(new SpParameterData("@NoteId", noteId));
+            DataTable table = await spExecuteReader("spGetNoteAllCollaborator", paramsList);
+            foreach (DataRow row in table.Rows)
+            {
+                GetNoteCollaborator collaborator = new GetNoteCollaborator();
+                collaborator.CollabratorId = (int)row["CollabratorId"];
+                collaborator.UserId = (int)row["UserId"];
+                collaborator.CollabratorWithId = (int)row["CollabratorWithId"];
+                collaborator.NoteId = (int)row["NoteId"];
+                if(row["CreatedDateTime"]== null || row["CreatedDateTime"].Equals(DBNull.Value)){
+                    collaborator.CreatedDateTime = null;
+                }
+                else
+                {
+                    collaborator.CreatedDateTime = (DateTime)row["CreatedDateTime"];
+                }
+                if (row["ModifiedDateTime"] == null || row["ModifiedDateTime"].Equals(DBNull.Value)) { 
+                    collaborator.ModifiedDateTime = null;
+                }
+                else
+                {
+                    collaborator.ModifiedDateTime = (DateTime)row["ModifiedDateTime"];
+                }
+                noteCollaborator.Add(collaborator);
+            }
+            return noteCollaborator;
+        }
         public async Task<IList<DisplayResponceModel>> DisplayArchive(int userId)
         {
             try
