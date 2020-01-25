@@ -451,15 +451,15 @@ namespace FundooNotesApi.Controllers
         /// </summary>
         /// <param name="keyword">The keyword.</param>
         /// <returns></returns>
-        [HttpGet("search")]
-        public async Task<IActionResult> SearchKeyword(string keyword)
+        [HttpPost("search")]
+        public async Task<IActionResult> SearchKeyword(SearchRequestModel model)
         {
             try
             {
-                if (keyword != null)
+                if (model.Keyword != null)
                 {
                     var userId = TokenUserId();
-                    List<DisplayResponceModel> data = await note.SearchKeyword(keyword, userId);
+                    List<DisplayResponceModel> data = await note.SearchKeyword(model.Keyword, userId);
                     if (data.Count != 0)
                     {
                         return Ok(new { success = true, Meassage = "Search Keyword SucessessFully", data });
