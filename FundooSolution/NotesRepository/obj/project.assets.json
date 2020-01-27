@@ -515,7 +515,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
         "dependencies": {
-          "Experimental.System.Messaging": "1.1.0"
+          "Experimental.System.Messaging": "1.1.0",
+          "Microsoft.AspNetCore.Http.Features": "2.1.0"
         },
         "compile": {
           "bin/placeholder/CommonLayerModel.dll": {}
