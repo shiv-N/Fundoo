@@ -1,4 +1,5 @@
-﻿using CommonLayerModel.NotesModels.Responce;
+﻿using CommonLayerModel.LabelModels;
+using CommonLayerModel.NotesModels.Responce;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -115,5 +116,7 @@ namespace CommonLayerModel.NotesModels
         public int UserId { get; set; }     /// foreign key..
 
         public IList<GetNoteCollaborator> collaborators { get; set; }
+
+        public IList<DisplayNoteLabelsResponce> Labels { get; set; }
     }
 }

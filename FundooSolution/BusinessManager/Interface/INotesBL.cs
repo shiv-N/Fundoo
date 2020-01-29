@@ -1,5 +1,6 @@
 ﻿namespace BusinessManager.Interface
 {
+    using CommonLayerModel.LabelModels;
     using CommonLayerModel.NotesModels;
     using CommonLayerModel.NotesModels.Request;
     using CommonLayerModel.NotesModels.Responce;
@@ -22,6 +23,7 @@
         /// <returns></returns>
         Task<bool> AddNotes(AddNotesRequestModel model, int userId);
 
+        Task<bool> AddNoteLabel(AddNoteLabelRequest model, int userId, int NoteId);
         /// <summary>
         /// Displays the notes.
         /// </summary>
@@ -36,6 +38,7 @@
         /// <returns></returns>
         Task<IList<DisplayResponceModel>> DisplayArchive(int userId);
 
+        Task<IList<DisplayResponceModel>> DisplayLabel(string labelName,int userId);
         Task<IList<DisplayResponceModel>> DisplayTrash(int userId);
 
         /// <summary>

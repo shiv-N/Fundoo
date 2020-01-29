@@ -3,6 +3,7 @@ namespace BusinessManager.Services
 {
     using BusinessManager.Interface;
     using CommonLayerModel.LabelModels;
+    using CommonLayerModel.NotesModels.Responce;
     using System;
     using System.Collections.Generic;
     using System.Text;
@@ -60,6 +61,18 @@ namespace BusinessManager.Services
         public async Task<bool> EditLabel(EditLabel model,int userId)
         {
             return await labels.EditLabel(model, userId);
+        }
+
+        public async Task<IList<GetAllLabelsResponce>> GetAllLabels(int userId)
+        {
+            try
+            {
+                return await labels.GetAllLabels(userId);
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

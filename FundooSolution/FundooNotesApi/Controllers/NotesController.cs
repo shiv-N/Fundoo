@@ -7,6 +7,7 @@ namespace FundooNotesApi.Controllers
     using System.Threading.Tasks;
     using BusinessManager.Interface;
     using BusinessManager.Services;
+    using CommonLayerModel.LabelModels;
     using CommonLayerModel.NotesModels;
     using CommonLayerModel.NotesModels.Request;
     using CommonLayerModel.NotesModels.Responce;
@@ -71,6 +72,34 @@ namespace FundooNotesApi.Controllers
            
         }
 
+        [HttpPost("AddNoteLabel/{NoteId}")]
+        public async Task<IActionResult> AddNoteLabel(AddNoteLabelRequest model,int NoteId)
+        {
+            try
+            {
+                if (model != null)
+                {
+                    var userId = TokenUserId();
+                    if (await note.AddNoteLabel(model, userId,NoteId))
+                    {
+                        return Ok(new { success = true, Message = "Label added" });
+                    }
+                    else
+                    {
+                        return BadRequest(new { success = false, Message = "Label did not added" });
+                    }
+                }
+                else
+                {
+                    return BadRequest(new { success = false, Message = "Input should not be empty!!!" });
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { success = false, e.Message });
+            }
+
+        }
         /// <summary>
         /// Displays the notes.
         /// </summary>
@@ -85,7 +114,7 @@ namespace FundooNotesApi.Controllers
                 {
 
                     IList <DisplayResponceModel> Data = await note.DisplayNotes(userId);
-                    if (Data != null)
+                    if (Data.Count != 0)
                     {
                         return Ok(new { success = true, Meassage = "Display notes operation is successful", Data });
 
@@ -141,6 +170,36 @@ namespace FundooNotesApi.Controllers
             }
         }
 
+        [HttpGet("NoteLabel/{labelName}")]
+        public async Task<IActionResult> DisplayLabel(string labelName)
+        {
+            try
+            {
+                var userId = TokenUserId();
+                if (userId != 0)
+                {
+
+                    IList<DisplayResponceModel> Data = await note.DisplayLabel(labelName,userId);
+                    if (Data != null)
+                    {
+                        return Ok(new { success = true, Meassage = "Display Label notes operation is successful", Data });
+
+                    }
+                    else
+                    {
+                        return BadRequest(new { success = false, Meassage = "Display Label notes operation is not successful" });
+                    }
+                }
+                else
+                {
+                    return BadRequest(new { success = false, Meassage = "Invalid user" });
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { success = false, Meassage = e.Message });
+            }
+        }
         [HttpGet("trash")]
         public async Task<IActionResult> DisplayTrash()
         {
@@ -512,6 +571,7 @@ namespace FundooNotesApi.Controllers
                 return BadRequest(new { success = false, Meassage = e.Message });
             }
         }
+
 
         /// <summary>
         /// Tokens the user identifier.

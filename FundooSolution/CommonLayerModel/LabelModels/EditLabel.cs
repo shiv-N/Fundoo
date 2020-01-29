@@ -24,13 +24,5 @@ namespace CommonLayerModel.LabelModels
         /// The name of the label.
         /// </value>
         public string LabelName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the modified date time.
-        /// </summary>
-        /// <value>
-        /// The modified date time.
-        /// </value>
-        public DateTime ModifiedDateTime { get; set; }
     }
 }

@@ -3,6 +3,7 @@ namespace BusinessManager.Services
 {
     using BusinessManager.Interface;
     using CommonLayerModel.LabelModels;
+    using CommonLayerModel.NotesModels.Responce;
     using Microsoft.Extensions.Configuration;
     using System;
     using System.Collections.Generic;
@@ -38,7 +39,7 @@ namespace BusinessManager.Services
                 connection.Open();
                 command.Parameters.AddWithValue("LabelName", model.LabelName);
                 command.Parameters.AddWithValue("UserId", userId);
-                command.Parameters.AddWithValue("CreatedDateTime", model.CreatedDateTime);
+                command.Parameters.AddWithValue("CreatedDateTime",DateTime.Now);
                 int result = await command.ExecuteNonQueryAsync();
                 connection.Close();
                 if (result != 0)
@@ -72,7 +73,7 @@ namespace BusinessManager.Services
                 command.Parameters.AddWithValue("Id", model.Id);
                 command.Parameters.AddWithValue("LabelName", model.LabelName);
                 command.Parameters.AddWithValue("UserId", userId);
-                command.Parameters.AddWithValue("ModifiedDateTime", model.ModifiedDateTime);
+                command.Parameters.AddWithValue("ModifiedDateTime",DateTime.Now);
                 int result = await command.ExecuteNonQueryAsync();
                 connection.Close();
                 if (result != 0)
@@ -137,6 +138,43 @@ namespace BusinessManager.Services
             SqlCommand command = new SqlCommand(Name, connection);
             command.CommandType = CommandType.StoredProcedure;
             return command;
+        }
+
+        public async Task<IList<GetAllLabelsResponce>> GetAllLabels(int userId)
+        {
+            try
+            {
+                IList<GetAllLabelsResponce> noteLabels = new List<GetAllLabelsResponce>();
+                SqlConnection connection = DBConnection();
+                SqlCommand command = StoreProcedureConnection("spLabelByUserId", connection);
+                command.Parameters.AddWithValue("UserId", userId);
+                connection.Open();
+                SqlDataReader dataReader = await command.ExecuteReaderAsync();
+                while (dataReader.Read())
+                {
+                    GetAllLabelsResponce label = new GetAllLabelsResponce();
+                    label.Id = (int)dataReader["Id"];
+                    label.LabelName = dataReader["LabelName"].ToString();
+                    label.UserId = (int)dataReader["UserId"];
+                    label.CreatedDateTime = (DateTime)dataReader["CreatedDateTime"];
+                    if(dataReader["ModifiedDateTime"] == null || dataReader["ModifiedDateTime"] == DBNull.Value)
+                    {
+                        label.ModifiedDateTime = null;
+                    }
+                    else
+                    {
+                        label.ModifiedDateTime = (DateTime)dataReader["ModifiedDateTime"];
+                    }
+                    noteLabels.Add(label);
+                }
+                connection.Close();
+                return noteLabels;
+               
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

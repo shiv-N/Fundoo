@@ -7,6 +7,7 @@ namespace FundooNotesApi.Controllers
     using System.Threading.Tasks;
     using BusinessManager.Interface;
     using CommonLayerModel.LabelModels;
+    using CommonLayerModel.NotesModels.Responce;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
@@ -32,12 +33,40 @@ namespace FundooNotesApi.Controllers
             this.labels = labels;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllLabels()
+        {
+            try
+            {
+                int userId = TokenUserId();
+                if (userId != 0)
+                {
+                    IList<GetAllLabelsResponce> Data = await labels.GetAllLabels(userId);
+                    if (Data.Count != 0)
+                    {
+                        return Ok(new { success = true, Meassage = "Get Note Label operation is successful", Data });
+                    }
+                    else
+                    {
+                        return BadRequest(new { success = false, Meassage = "Get Note Label operation is not successful" });
+                    }
+                }
+                else
+                {
+                    return BadRequest(new { success = false, Meassage = "Invalid user" });
+                }
+            }
+            catch(Exception e)
+            {
+                return BadRequest(new { success = false, Meassage = e.Message });
+            }
+        }
         /// <summary>
         /// Adds the label.
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns></returns>
-        [HttpPost("Add")]
+        [HttpPost]
         public async Task<IActionResult> AddLabel(AddLabel model)
         {
             int userId = TokenUserId();

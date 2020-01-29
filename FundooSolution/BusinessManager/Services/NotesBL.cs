@@ -1,6 +1,7 @@
 ﻿namespace BusinessManager.Services
 {
     using BusinessManager.Interface;
+    using CommonLayerModel.LabelModels;
     using CommonLayerModel.NotesModels;
     using CommonLayerModel.NotesModels.Request;
     using CommonLayerModel.NotesModels.Responce;
@@ -48,6 +49,17 @@
             }
         }
 
+        public async Task<bool> AddNoteLabel(AddNoteLabelRequest model, int userId, int NoteId)
+        {
+            try
+            {
+                return await notes.AddNoteLabel(model, userId,NoteId);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         /// <summary>
         /// Deletes the note.
         /// </summary>
@@ -100,6 +112,17 @@
             }
         }
 
+        public async Task<IList<DisplayResponceModel>> DisplayLabel(string labelName, int userId)
+        {
+            try
+            {
+                return await notes.DisplayLabel(labelName,userId);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         public async Task<IList<DisplayResponceModel>> DisplayTrash(int userId)
         {
             try

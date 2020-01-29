@@ -3,6 +3,7 @@
     using BusinessManager.Interface;
     using CloudinaryDotNet;
     using CloudinaryDotNet.Actions;
+    using CommonLayerModel.LabelModels;
     using CommonLayerModel.NotesModels;
     using CommonLayerModel.NotesModels.Request;
     using CommonLayerModel.NotesModels.Responce;
@@ -69,6 +70,35 @@
             }
         }
 
+        public async Task<bool> AddNoteLabel(AddNoteLabelRequest model, int userId, int NoteId)
+        {
+            try
+            {
+                SqlConnection connection = DBConnection();
+                SqlCommand command = StoreProcedureConnection("spAddNoteLabel", connection);
+                command.Parameters.AddWithValue("UserId", userId);
+                command.Parameters.AddWithValue("NoteId", NoteId);
+                command.Parameters.AddWithValue("LabelId", model.LabelId);
+                command.Parameters.AddWithValue("LabelName", model.LabelName);
+                command.Parameters.AddWithValue("CreatedDATETime", DateTime.Now);
+                command.Parameters.AddWithValue("ModifiedDateTime", DateTime.Now);
+                connection.Open();
+                int result = await command.ExecuteNonQueryAsync();
+                connection.Close();
+                if (result > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                };
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         /// <summary>
         /// Displays the notes.
         /// </summary>
@@ -104,6 +134,7 @@
                     }
                     userDetails.UserId = (int)row["UserId"];
                     userDetails.collaborators = await GetNoteallCollaborator(userDetails.Id, userId);
+                    userDetails.Labels = await GetNoteLabels(userDetails.Id, userId);
                     userDetails.IsPin = (bool)row["IsPin"];
                     userDetails.IsNote = (bool)row["IsNote"];
                     userDetails.IsArchive = (bool)row["IsArchive"];
@@ -150,6 +181,36 @@
             }
             return noteCollaborator;
         }
+
+        private async Task<IList<DisplayNoteLabelsResponce>> GetNoteLabels(int noteId, int UserId)
+        {
+            IList<DisplayNoteLabelsResponce> noteLabel = new List<DisplayNoteLabelsResponce>();
+            List<SpParameterData> paramsList = new List<SpParameterData>();
+            paramsList.Add(new SpParameterData("@UserId", UserId));
+            paramsList.Add(new SpParameterData("@NoteId", noteId));
+            DataTable table = await spExecuteReader("spGetNoteLabels", paramsList);
+            foreach (DataRow row in table.Rows)
+            {
+                DisplayNoteLabelsResponce label = new DisplayNoteLabelsResponce();
+                label.Id = (int)row["Id"];
+                label.UserId = (int)row["UserId"];
+                label.NoteId = (int)row["NoteId"];
+                label.LabelId = (int)row["LabelId"];
+                label.LabelName = row["LabelName"].ToString();
+                label.CreatedTime = (DateTime)row["CreatedDATETime"];
+                if(row["ModifiedDateTime"] == null || row["ModifiedDateTime"] == DBNull.Value)
+                {
+                    label.ModifiedTime = null;
+                }
+                else
+                {
+                    label.ModifiedTime = (DateTime)row["ModifiedDateTime"];
+                }
+                
+                noteLabel.Add(label);
+            }
+            return noteLabel;
+        }
         public async Task<IList<DisplayResponceModel>> DisplayArchive(int userId)
         {
             try
@@ -193,7 +254,51 @@
             }
         }
 
+        public async Task<IList<DisplayResponceModel>> DisplayLabel(string labelName, int userId)
+        {
+            try
+            {
+                IList<DisplayResponceModel> notes = new List<DisplayResponceModel>();
 
+                List<SpParameterData> paramsList = new List<SpParameterData>();
+                paramsList.Add(new SpParameterData("@UserId", userId));
+                paramsList.Add(new SpParameterData("@LabelName", labelName));
+                DataTable table = await spExecuteReader("spDisplayLabelNotes", paramsList);
+
+                foreach (DataRow row in table.Rows)
+                {
+                    DisplayResponceModel userDetails = new DisplayResponceModel();
+                    userDetails.Id = (int)row["Id"];
+                    userDetails.Title = row["Title"].ToString();
+                    userDetails.Message = row["MeassageDescription"].ToString();
+                    userDetails.Image = row["NoteImage"].ToString();
+                    userDetails.Color = row["Color"].ToString();
+                    userDetails.CreatedDate = (DateTime)row["CreatedDATETime"];
+                    userDetails.ModifiedDate = (DateTime)row["ModifiedDateTime"];
+                    if (row["AddReminder"] == null || row["AddReminder"].Equals(DBNull.Value))
+                    {
+                        userDetails.AddReminder = null;
+                    }
+                    else
+                    {
+                        userDetails.AddReminder = (DateTime)row["AddReminder"];
+                    }
+                    userDetails.collaborators = await GetNoteallCollaborator(userDetails.Id, userId);
+                    userDetails.Labels = await GetNoteLabels(userDetails.Id, userId);
+                    userDetails.UserId = (int)row["UserId"];
+                    userDetails.IsPin = (bool)row["IsPin"];
+                    userDetails.IsNote = (bool)row["IsNote"];
+                    userDetails.IsArchive = (bool)row["IsArchive"];
+                    userDetails.IsTrash = (bool)row["IsTrash"];
+                    notes.Add(userDetails);
+                }
+                return notes;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         public async Task<IList<DisplayResponceModel>> DisplayTrash(int userId)
         {
             try
@@ -526,7 +631,14 @@
                     userDetails.Color = dataReader["Color"].ToString();
                     userDetails.CreatedDate = (DateTime)dataReader["CreatedDATETime"];
                     userDetails.ModifiedDate = (DateTime)dataReader["ModifiedDateTime"];
-                    userDetails.AddReminder = (DateTime)dataReader["AddReminder"];
+                    if (dataReader["AddReminder"] == null || dataReader["AddReminder"].Equals(DBNull.Value))
+                    {
+                        userDetails.AddReminder = null;
+                    }
+                    else
+                    {
+                        userDetails.AddReminder = (DateTime)dataReader["AddReminder"];
+                    }
                     userDetails.UserId = (int)dataReader["UserId"];
                     userDetails.IsPin = (bool)dataReader["IsPin"];
                     userDetails.IsNote = (bool)dataReader["IsNote"];
@@ -564,7 +676,14 @@
                     userDetails.Color = dataReader["Color"].ToString();
                     userDetails.CreatedDate = (DateTime)dataReader["CreatedDATETime"];
                     userDetails.ModifiedDate = (DateTime)dataReader["ModifiedDateTime"];
-                    userDetails.AddReminder = (DateTime)dataReader["AddReminder"];
+                    if (dataReader["AddReminder"] == null || dataReader["AddReminder"].Equals(DBNull.Value))
+                    {
+                        userDetails.AddReminder = null;
+                    }
+                    else
+                    {
+                        userDetails.AddReminder = (DateTime)dataReader["AddReminder"];
+                    }
                     userDetails.UserId = (int)dataReader["UserId"];
                     userDetails.IsPin = (bool)dataReader["IsPin"];
                     userDetails.IsNote = (bool)dataReader["IsNote"];

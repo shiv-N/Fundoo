@@ -2,6 +2,7 @@
 namespace BusinessManager.Interface
 {
     using CommonLayerModel.LabelModels;
+    using CommonLayerModel.NotesModels.Responce;
     using System;
     using System.Collections.Generic;
     using System.Text;
@@ -20,6 +21,7 @@ namespace BusinessManager.Interface
         /// <returns></returns>
         Task<bool> AddLabel(AddLabel model,int userId);
 
+        Task<IList<GetAllLabelsResponce>> GetAllLabels(int userId);
         /// <summary>
         /// Edits the label.
         /// </summary>
