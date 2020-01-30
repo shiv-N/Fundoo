@@ -99,6 +99,8 @@
         /// <returns></returns>
         Task<bool> ReminderNote(int noteId, int userId, AddReminderRequest reminder);
 
+        Task<bool> DeleteReminderNote(int noteId, int userId, DeleteReminderRequest reminder);
+        Task<bool> DeleteNoteLabel(int NotelabelId, int userId);
         /// <summary>
         /// Colours the note.
         /// </summary>

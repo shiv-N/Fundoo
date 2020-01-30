@@ -100,6 +100,35 @@ namespace FundooNotesApi.Controllers
             }
 
         }
+
+        [HttpDelete("DeleteNoteLabel/{NotelabelId}")]
+        public async Task<IActionResult> DeleteNoteLabel(int NotelabelId)
+        {
+            try
+            {
+                if (NotelabelId != 0)
+                {
+                    var userId = TokenUserId();
+                    if (await note.DeleteNoteLabel(NotelabelId, userId))
+                    {
+                        return Ok(new { success = true, Message = "Label deleted" });
+                    }
+                    else
+                    {
+                        return BadRequest(new { success = false, Message = "Label did not deleted" });
+                    }
+                }
+                else
+                {
+                    return BadRequest(new { success = false, Message = "Input should not be empty!!!" });
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { success = false, e.Message });
+            }
+
+        }
         /// <summary>
         /// Displays the notes.
         /// </summary>
@@ -395,6 +424,21 @@ namespace FundooNotesApi.Controllers
             }
         }
 
+        [HttpPut("deleteReminder/{noteId}")]
+        public async Task<IActionResult> DeleteReminderNote(int noteId, DeleteReminderRequest reminder)
+        {
+            var userId = TokenUserId();
+            if (await note.DeleteReminderNote(noteId, userId, reminder))
+            {
+                string status = "delete reminder successfully";
+                return Ok(new { status, userId, noteId, reminder });
+            }
+            else
+            {
+                string status = "delete reminder not successfully";
+                return BadRequest(new { status, userId, noteId, reminder });
+            }
+        }
         /// <summary>
         /// Colours the note.
         /// </summary>

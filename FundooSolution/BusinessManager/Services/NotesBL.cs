@@ -204,6 +204,15 @@
             return await notes.ReminderNote(noteId,userId,reminder);
         }
 
+        public async Task<bool> DeleteReminderNote(int noteId, int userId, DeleteReminderRequest reminder)
+        {
+            return await notes.DeleteReminderNote(noteId, userId, reminder);
+        }
+
+        public async Task<bool> DeleteNoteLabel(int NotelabelId, int userId)
+        {
+            return await notes.DeleteNoteLabel(NotelabelId, userId);
+        }
         /// <summary>
         /// Colours the note.
         /// </summary>

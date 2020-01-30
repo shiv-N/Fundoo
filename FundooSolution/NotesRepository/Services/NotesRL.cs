@@ -240,6 +240,8 @@
                         userDetails.AddReminder = (DateTime)row["AddReminder"];
                     }
                     userDetails.UserId = (int)row["UserId"];
+                    userDetails.collaborators = await GetNoteallCollaborator(userDetails.Id, userId);
+                    userDetails.Labels = await GetNoteLabels(userDetails.Id, userId);
                     userDetails.IsPin = (bool)row["IsPin"];
                     userDetails.IsNote = (bool)row["IsNote"];
                     userDetails.IsArchive = (bool)row["IsArchive"];
@@ -328,6 +330,8 @@
                         userDetails.AddReminder = (DateTime)row["AddReminder"];
                     }
                     userDetails.UserId = (int)row["UserId"];
+                    userDetails.collaborators = await GetNoteallCollaborator(userDetails.Id, userId);
+                    userDetails.Labels = await GetNoteLabels(userDetails.Id, userId);
                     userDetails.IsPin = (bool)row["IsPin"];
                     userDetails.IsNote = (bool)row["IsNote"];
                     userDetails.IsArchive = (bool)row["IsArchive"];
@@ -768,6 +772,59 @@
             }
         }
 
+        public async Task<bool> DeleteReminderNote(int noteId, int userId, DeleteReminderRequest reminder)
+        {
+            try
+            {
+                SqlConnection connection = DBConnection();
+                SqlCommand command = StoreProcedureConnection("spReminder", connection);
+                connection.Open();
+                command.Parameters.AddWithValue("@UserId", userId);
+                command.Parameters.AddWithValue("@Id", noteId);
+                command.Parameters.AddWithValue("@AddReminder", reminder.Reminder);
+                command.Parameters.AddWithValue("@ModifiedDateTime", DateTime.Now);
+                int result = await command.ExecuteNonQueryAsync();
+                connection.Close();
+                if (result != 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                };
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<bool> DeleteNoteLabel(int NotelabelId, int userId)
+        {
+            try
+            {
+                SqlConnection connection = DBConnection();
+                SqlCommand command = StoreProcedureConnection("spDeleteNoteLabel", connection);
+                connection.Open();
+                command.Parameters.AddWithValue("@UserId", userId);
+                command.Parameters.AddWithValue("@NoteLabelId", NotelabelId);
+                int result = await command.ExecuteNonQueryAsync();
+                connection.Close();
+                if (result > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                };
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         /// <summary>
         /// Colours the note.
         /// </summary>
