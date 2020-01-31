@@ -160,7 +160,8 @@ namespace FundooNotesApi.Controllers
             }
             catch(Exception e)
             {
-                return BadRequest(new { success = false, Meassage = e.Message });
+                // return BadRequest(new { success = false, Meassage = e.Message });
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
 
@@ -323,19 +324,16 @@ namespace FundooNotesApi.Controllers
                 var userId = TokenUserId();
                 if (await note.UploadImage(file, noteId, userId))
                 {
-                    string status = "Image Uploaded SuccessFully";
-                    return Ok(new { status, userId, noteId });
+                    return Ok(new { status=true,Message= "Image Uploaded SuccessFully"});
                 }
                 else
                 {
-                    string status = "Image is not Uploaded SuccessFully";
-                    return BadRequest(new { status, userId, noteId });
+                    return BadRequest(new { status = false, Message = "Image is not Uploaded SuccessFully" });
                 }
             }
             else
             {
-                string result = "input should not be empty";
-                return BadRequest(new { result });
+                return BadRequest(new { status = false, Message = "input should not be emptyy" });
             }
         }
 

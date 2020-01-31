@@ -2,6 +2,7 @@
 {
     using CommonLayerModel.AccountModels.Response;
     using CommonLayerModel.Models;
+    using Microsoft.AspNetCore.Http;
     using System;
     using System.Collections.Generic;
     using System.Text;
@@ -21,6 +22,7 @@
 
         Task<bool> AdminRegisterAsync(RegisterRequestModel model);
 
+        Task<string> AddProfilePhoto(IFormFile file, int userId);
         /// <summary>
         /// Logins the specified model.
         /// </summary>

@@ -124,7 +124,7 @@
                     userDetails.Color = row["Color"].ToString();
                     userDetails.CreatedDate = (DateTime)row["CreatedDATETime"];
                     userDetails.ModifiedDate = (DateTime)row["ModifiedDateTime"];
-                    if(row["AddReminder"]==null || row["AddReminder"].Equals(DBNull.Value))
+                    if (row["AddReminder"] == null || row["AddReminder"].Equals(DBNull.Value))
                     {
                         userDetails.AddReminder = null;
                     }
@@ -177,6 +177,8 @@
                 {
                     collaborator.ModifiedDateTime = (DateTime)row["ModifiedDateTime"];
                 }
+                collaborator.ProfilePhoto = row["ProfilePhoto"].ToString();
+                collaborator.CollaboratorEmail = row["Email"].ToString();
                 noteCollaborator.Add(collaborator);
             }
             return noteCollaborator;
@@ -231,7 +233,7 @@
                     userDetails.Color = row["Color"].ToString();
                     userDetails.CreatedDate = (DateTime)row["CreatedDATETime"];
                     userDetails.ModifiedDate = (DateTime)row["ModifiedDateTime"];
-                    if(row["AddReminder"] == null || row["AddReminder"].Equals(DBNull.Value))
+                    if (row["AddReminder"] == null || row["AddReminder"].Equals(DBNull.Value))
                     {
                         userDetails.AddReminder = null;
                     }

@@ -2,6 +2,7 @@
 {
     using CommonLayerModel.AccountModels.Response;
     using CommonLayerModel.Models;
+    using Microsoft.AspNetCore.Http;
     using System;
     using System.Collections.Generic;
     using System.Text;
@@ -44,5 +45,6 @@
         bool ResetPassword(ResetPasswordModel token,int userId);
         Task<List<GetAllUserResponce>> GetAllUserByAdminAuthorization();
         Task<Dictionary<string, int>> GetUserStatisticsByAdmin();
+        Task<string> AddProfilePhoto(IFormFile file, int userId);
     }
 }

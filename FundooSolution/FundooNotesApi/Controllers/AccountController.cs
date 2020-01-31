@@ -62,6 +62,34 @@ namespace FundooNotesApi.Controllers
             }
         }
 
+        [HttpPost("AddProfilePhoto")]
+        public async Task<IActionResult> AddProfilePhoto(IFormFile file)
+        {
+            try
+            {
+                var userId = TokenUserId();
+                if (file != null)
+                {
+                    string data = await account.AddProfilePhoto(file, userId);
+                    if ( data != null)
+                    {
+                        return Ok(new { Success = true, Message = "Profile photo added",data});
+                    }
+                    else
+                    {
+                        return BadRequest(new { Success = false, Message = "Profile photo did not added" });
+                    }
+                }
+                else
+                {
+                    return BadRequest(new { Success = false, Message = "Null data found" });
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { Success = false, message = e.Message });
+            }
+        }
         /// <summary>
         /// this is method Login
         /// </summary>

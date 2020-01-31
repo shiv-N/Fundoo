@@ -1,7 +1,10 @@
-﻿using CommonLayerModel.AccountModels;
+﻿using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using CommonLayerModel.AccountModels;
 using CommonLayerModel.AccountModels.Response;
 using CommonLayerModel.Models;
 using CommonLayerModel.MSMQ;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using NotesRepository.Interface;
@@ -30,6 +33,39 @@ namespace NotesRepository.Services
             this.configuration = configuration;
         }
 
+        public async Task<string> AddProfilePhoto(IFormFile file, int userId)
+        {
+            try
+            {
+                SqlConnection connection = DBConnection();
+                Account account = new Account(configuration["Data:CloudName"], configuration["Data:API_Key"], configuration["Data:API_Secret"]);
+                var Path = file.OpenReadStream();
+                Cloudinary cloudinary = new Cloudinary(account);
+                var uploadParams = new ImageUploadParams()
+                {
+                    File = new FileDescription(file.FileName, Path),
+                };
+                var uploadResult = await cloudinary.UploadAsync(uploadParams);
+                SqlCommand command = StoreProcedureConnection("spUpdateProfileImage", connection);
+                command.Parameters.AddWithValue("@ProfileImage", uploadResult.Uri.ToString());
+                command.Parameters.AddWithValue("@UserId", userId);
+                connection.Open();
+                int result = command.ExecuteNonQuery();
+                connection.Close();
+                if (result != 0)
+                {
+                    return uploadResult.Uri.ToString();
+                }
+                else
+                {
+                    return null;
+                };
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         /// <summary>
         /// Forgots the password.
         /// </summary>
@@ -84,6 +120,7 @@ namespace NotesRepository.Services
                         loginResponce.ServiceType = dataReader["ServiceType"].ToString();
                         loginResponce.UserType = dataReader["UserType"].ToString();
                         loginResponce.Token = GenrateJWTToken(model.Email, loginResponce.Id);
+                        loginResponce.ProfilePhoto = dataReader["ProfilePhoto"].ToString();
                         break;
                     }
                 }

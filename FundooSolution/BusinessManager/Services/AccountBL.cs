@@ -3,6 +3,7 @@
     using BusinessManager.Interface;
     using CommonLayerModel.AccountModels.Response;
     using CommonLayerModel.Models;
+    using Microsoft.AspNetCore.Http;
     using NotesRepository.Interface;
     using ServiceStack.Redis;
     using System;
@@ -182,6 +183,10 @@
         public bool ResetPassword(ResetPasswordModel token,int userId)
         {
             return notesRL.ResetPassword(token, userId);
+        }
+        public async Task<string> AddProfilePhoto(IFormFile file,int userId)
+        {
+            return await notesRL.AddProfilePhoto(file, userId);
         }
     }
 }

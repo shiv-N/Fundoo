@@ -17,5 +17,6 @@ namespace CommonLayerModel.AccountModels.Response
         public string UserType { get; set; }
         public string LoginTime { get; set; }
 
+        public string ProfilePhoto { get; set; }
     }
 }

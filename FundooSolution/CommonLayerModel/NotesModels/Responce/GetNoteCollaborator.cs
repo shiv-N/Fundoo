@@ -12,5 +12,7 @@ namespace CommonLayerModel.NotesModels.Responce
         public int NoteId { get; set; }
         public DateTime? CreatedDateTime { get; set; }
         public DateTime? ModifiedDateTime { get; set; }
+        public string ProfilePhoto { get; set; }
+        public string CollaboratorEmail { get; set; }
     }
 }
