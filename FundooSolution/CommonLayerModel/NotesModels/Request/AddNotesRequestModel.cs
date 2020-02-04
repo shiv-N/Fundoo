@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -48,22 +49,6 @@ namespace CommonLayerModel.NotesModels
         ///   <c>true</c> if this instance is pin; otherwise, <c>false</c>.
         /// </value>
         public bool IsPin { get; set; }
-
-        /// <summary>
-        /// Gets or sets the created date.
-        /// </summary>
-        /// <value>
-        /// The created date.
-        /// </value>
-        //public DateTime CreatedDate { get; set; }
-
-        /// <summary>
-        /// Gets or sets the modified date.
-        /// </summary>
-        /// <value>
-        /// The modified date.
-        /// </value>
-        //public DateTime ModifiedDate { get; set; }
 
         /// <summary>
         /// Gets or sets the add reminder.

@@ -64,11 +64,12 @@
                     return false;
                 };
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
         }
+
 
         public async Task<bool> AddNoteLabel(AddNoteLabelRequest model, int userId, int NoteId)
         {

@@ -7,6 +7,8 @@ namespace FundooNotesApi.Controllers
     using System.Threading.Tasks;
     using BusinessManager.Interface;
     using BusinessManager.Services;
+    using CloudinaryDotNet;
+    using CloudinaryDotNet.Actions;
     using CommonLayerModel.LabelModels;
     using CommonLayerModel.NotesModels;
     using CommonLayerModel.NotesModels.Request;
@@ -14,6 +16,7 @@ namespace FundooNotesApi.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
 
     /// <summary>
     /// this is class NotesController
@@ -24,6 +27,7 @@ namespace FundooNotesApi.Controllers
     [Authorize]
     public class NotesController : ControllerBase
     {
+        IConfiguration configuration;
         /// <summary>
         /// The note
         /// </summary>
@@ -33,9 +37,10 @@ namespace FundooNotesApi.Controllers
         /// Initializes a new instance of the <see cref="NotesController"/> class.
         /// </summary>
         /// <param name="note">The note.</param>
-        public NotesController(INotesBL note)
+        public NotesController(INotesBL note, IConfiguration configuration)
         {
             this.note = note;
+            this.configuration = configuration;
         }
 
         /// <summary>
@@ -70,6 +75,27 @@ namespace FundooNotesApi.Controllers
                 return BadRequest(new { success=false, e.Message });
             }
            
+        }
+        [HttpPost("AddImageOnNote")]
+        public async Task<IActionResult> AddNoteImage(IFormFile file)
+        {
+            try
+            {
+                Account account = new Account(configuration["Data:CloudName"], configuration["Data:API_Key"], configuration["Data:API_Secret"]);
+                var Path = file.OpenReadStream();
+                Cloudinary cloudinary = new Cloudinary(account);
+                var uploadParams = new ImageUploadParams()
+                {
+                    File = new FileDescription(file.FileName, Path),
+                };
+                var cloudData = await cloudinary.UploadAsync(uploadParams);
+                string data = cloudData.Uri.ToString();
+                return Ok(new { success = true, Message = "image uploaded", data }); 
+            }
+            catch(Exception e)
+            {
+                return BadRequest(new { success = false, e.Message });
+            }
         }
 
         [HttpPost("AddNoteLabel/{NoteId}")]
